@@ -16,6 +16,13 @@ public class Mob extends Entity implements Moveable, Health {
 		healthbar = new Healthbar(this);
 	}
 	
+	public Mob(double x, double y, int width, int height) {
+		super(x, y, width, height);
+		xSpeed = speed = 5;
+		health = maxHealth = 100;
+		healthbar = new Healthbar(this);
+	}
+	
 	public void update() {
 		super.update();
 		healthbar.update();

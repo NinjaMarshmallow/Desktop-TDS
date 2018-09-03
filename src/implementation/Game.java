@@ -5,6 +5,7 @@ import util.Mouse;
 import util.Printer;
 import engine.Entity;
 import engine.Player;
+import engine.World;
 
 
 public class Game {
@@ -12,16 +13,18 @@ public class Game {
 	private int currentFrame = 0;
 	private int renderLimit = 120;
 	private Screen screen;
-	private Entity player;
+	
 	private Thread updateThread, renderThread;
 	private Environment env;
 	private Keyboard keyboard;
 	private Mouse mouse;
+	private World world;
 
 	public Game() {
-		env = Environment.getInstance();
+		mouse = new Mouse();
 		keyboard = new Keyboard();
-		player = new Player(keyboard);
+		world = new World(keyboard);
+		env = Environment.getInstance();
 		screen = new Screen(env.getWidth(), env.getHeight());
 		screen.addInput(keyboard, mouse);
 		screen.fill(0x0);
@@ -82,14 +85,14 @@ public class Game {
 	}
 
 	private void update() {
-		player.update();
+		world.update();
 		currentFrame++;
 		currentFrame %= env.getFPS();
 	}
 
 	private void render() {
 		screen.clear();
-		player.draw(screen);
+		world.draw(screen);
 		screen.render();
 	}
 }

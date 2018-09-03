@@ -1,28 +1,36 @@
 package engine;
 
+import engine.behaviors.Weapon;
 import util.Keyboard;
+import util.Mouse;
 import util.Printer;
 
 public class Player extends Mob {
 	
 	private Keyboard keyboard;
+	private Weapon weapon;
 	
 	public Player(Keyboard keyboard) {
-		super();
-		x = y = 100;
-		width = height = 100;
+		super(100, 100, 100, 100);
 		this.keyboard = keyboard;
+		this.weapon = new NullWeapon();
 	}
 	
 	public Player(double x, double y, Keyboard keyboard) {
-		super();
-		this.x = x;
-		this.y = y;
-		width = height = 100;
+		super(x, y, 100, 100);
+	}
+	
+	public Player(double x, double y, Sprite sprite, Keyboard keyboard) {
+		super(x, y, sprite.getWidth(), sprite.getHeight());
+	}
+	
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
 	
 	public void update() {
 		keyboard.update();
+		handleShooting();
 		super.update();
 		
 	}
@@ -49,8 +57,16 @@ public class Player extends Mob {
 		this.y += ySpeed;
 	}
 	
-	public Player(double x, double y, Sprite sprite, Keyboard keyboard) {
-		super();
+	public void handleShooting() {
+		if(Mouse.getB() == 1) {
+			double mx = Mouse.getX();
+			double my = Mouse.getY();
+			double angle = angleTo(mx, my);
+			Printer.print("Shooting at " + angle);
+			weapon.shoot(angle);
+		}
 	}
+	
+	
 
 }

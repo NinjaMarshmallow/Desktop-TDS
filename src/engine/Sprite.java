@@ -35,4 +35,12 @@ public class Sprite {
 	public int getPixelAt(int x, int y) {
 		return pixels[x + y * width];
 	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
 }

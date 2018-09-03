@@ -43,6 +43,7 @@ public class Screen {
 	public void addInput(Keyboard keyboard, Mouse mouse) {
 		canvas.addKeyListener(keyboard);
 		canvas.addMouseListener(mouse);
+		canvas.addMouseMotionListener(mouse);
 	}
 
 	public void clear() {

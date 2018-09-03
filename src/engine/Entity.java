@@ -50,10 +50,26 @@ public class Entity implements Positionable, Drawable {
 		Printer.print(result);
 		return result;
 	}
+	
+	public double distanceTo(double x, double y) {
+		double xdiff = (this.x - x) * (this.x - x);
+		double ydiff = (this.y - y) * (this.y - y);
+		double result = Math.sqrt(xdiff + ydiff);
+		Printer.print(result);
+		return result;
+	}
 
 	public double angleTo(Positionable pos) {
 		double xdiff = this.x - pos.getX();
 		double ydiff = this.y - pos.getY();
+		double result = Math.atan2(ydiff, xdiff);
+		Printer.print(result);
+		return result;
+	}
+	
+	public double angleTo(double x, double y) {
+		double xdiff = this.x - x;
+		double ydiff = this.y - y;
 		double result = Math.atan2(ydiff, xdiff);
 		Printer.print(result);
 		return result;
