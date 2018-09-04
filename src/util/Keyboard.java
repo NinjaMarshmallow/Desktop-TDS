@@ -21,7 +21,7 @@ public class Keyboard implements KeyListener{
 		
 		for(int q = 0; q < keys.length; q++) {
 			if(keys[q]) {
-				System.out.println("Key: " + q);
+				//System.out.println("Key: " + q);
 			}
 		}
 	}

@@ -6,7 +6,7 @@ import util.Keyboard;
 public class World {
 	
 	private Keyboard keyboard;
-	private Entity player;
+	private Player player;
 	private Mediator mediator;
 	
 	public World(Keyboard keyboard) {

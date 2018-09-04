@@ -12,7 +12,7 @@ public class Flamethrower implements Weapon {
 	}
 	
 	public void shoot(double angle) {
-		mediator.addEntity(new Fireball(angle));
+		mediator.add(new Fireball(owner, angle));
 	}
 
 	public boolean hasAmmo() {

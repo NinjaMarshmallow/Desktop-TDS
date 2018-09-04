@@ -1,9 +1,10 @@
 package engine;
 
-import engine.behaviors.Weapon;
+import util.Color;
 import util.Keyboard;
 import util.Mouse;
 import util.Printer;
+import engine.behaviors.Weapon;
 
 public class Player extends Mob {
 	
@@ -13,7 +14,8 @@ public class Player extends Mob {
 	public Player(Keyboard keyboard) {
 		super(100, 100, 100, 100);
 		this.keyboard = keyboard;
-		this.weapon = new NullWeapon();
+		this.weapon = new Flamethrower(this);
+		sprite = new Sprite(width, height, Color.ROYAL_BLUE);
 	}
 	
 	public Player(double x, double y, Keyboard keyboard) {
