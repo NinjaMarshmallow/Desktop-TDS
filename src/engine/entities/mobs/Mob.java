@@ -14,14 +14,14 @@ public class Mob extends Entity implements Moveable, Health {
 	private MoveBehavior moveBehavior;
 	public Mob() {
 		super();
-		xSpeed = speed = 5;
+		speed = 5;
 		health = maxHealth = 100;
 		healthbar = new Healthbar(this);
 	}
 	
 	public Mob(double x, double y, int width, int height) {
 		super(x, y, width, height);
-		xSpeed = speed = 5;
+		speed = 5;
 		health = maxHealth = 100;
 		healthbar = new Healthbar(this);
 	}

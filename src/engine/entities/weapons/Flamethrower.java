@@ -1,7 +1,7 @@
 package engine.entities.weapons;
 
-import util.Environment;
 import util.Printer;
+import util.Stats;
 import engine.behaviors.Weapon;
 import engine.entities.Entity;
 import engine.entities.projectiles.Fireball;
@@ -11,27 +11,30 @@ public class Flamethrower implements Weapon {
 	
 	private Mediator mediator;
 	private Entity owner;
-	private double fireRate, shootCounter; 
-	private int ammo, maxAmmo, clips, reloadTimer;
+	private double fireRate;
+	private double shootTimer, reloadTimer;
+	private int ammo, maxAmmo, clips, reloadTime;
+	
 	private boolean unlimited = true;
 	public Flamethrower(Entity owner) {
 		this.owner = owner;
 		mediator = Mediator.getInstance();
-		fireRate = 10; //10 times per second
-		shootCounter = 0;
-		ammo = maxAmmo = 5;
-		clips = 3; // 3 Reloads
+		fireRate = Stats.FLAMETHROWER_FIRE_RATE;
+		ammo = maxAmmo = Stats.FLAMETHROWER_MAX_AMMO;
+		clips = Stats.FLAMETHROWER_INITIAL_CLIPS;
+		reloadTime = Stats.FLAMETHROWER_RELOAD_TIME;
+		shootTimer = 0;
 		reloadTimer = 0;
 	}
 	
 	public void shoot(double angle) {
 		if(reloadTimer <= 0) {
 			if(hasAmmo()) {
-				if(shootCounter % fireRate == 0) {
+				if(shootTimer % fireRate == 0) {
 					mediator.add(new Fireball(owner, angle));
 					if(!unlimited) ammo--;
 				}
-				shootCounter += 1;
+				shootTimer += 1;
 			} else {
 				reload();
 			}
@@ -46,7 +49,7 @@ public class Flamethrower implements Weapon {
 	
 	public void reload() {
 		if(clips > 0) {
-			reloadTimer = 3 * Environment.getInstance().getFPS();
+			reloadTimer = reloadTime;
 			ammo = maxAmmo;
 			clips--;
 		} else {

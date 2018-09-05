@@ -1,22 +1,24 @@
 package engine.entities.projectiles;
 
 import util.Color;
-import engine.behaviors.Moveable;
+import util.Stats;
 import engine.entities.Entity;
 import engine.graphics.Sprite;
 
 public class Projectile extends Entity {
 	
-	private double angle, speed;
-	private double start, age;
-	private double range, distanceTraveled;
-	private Entity owner;
+	protected double angle;
+	protected double start, age;
+	protected double speed, range;
+	protected double distanceTraveled;
+	protected Entity owner;
+	
 	public Projectile(Entity owner, double angle) {
 		super(owner.getX(), owner.getY());
 		this.owner = owner;
 		this.angle = angle;
-		this.speed = 10;
-		this.range = 300;
+		this.speed = Stats.DEFAULT_SPEED;
+		this.range = Stats.DEFAULT_SPEED;
 		sprite = new Sprite(10, 10, Color.ORANGE);
 		width = sprite.getWidth();
 		height = sprite.getHeight();
