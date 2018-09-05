@@ -1,6 +1,6 @@
 package engine.behaviors;
 
-import engine.Entity;
+import engine.entities.Entity;
 
 public class BounceSideways implements MoveBehavior{
 	

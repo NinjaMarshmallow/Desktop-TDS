@@ -1,4 +1,4 @@
-package engine;
+package engine.entities.weapons;
 
 import util.Printer;
 import engine.behaviors.Weapon;

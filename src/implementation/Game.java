@@ -3,8 +3,6 @@ import util.Environment;
 import util.Keyboard;
 import util.Mouse;
 import util.Printer;
-import engine.Entity;
-import engine.Player;
 import engine.World;
 
 

@@ -1,4 +1,6 @@
-package engine;
+package engine.entities.projectiles;
+
+import engine.entities.Entity;
 
 public class Fireball extends Projectile {
 

@@ -1,10 +1,12 @@
-package engine;
+package engine.entities.mobs;
 
 import util.Color;
 import util.Keyboard;
 import util.Mouse;
 import util.Printer;
 import engine.behaviors.Weapon;
+import engine.entities.weapons.Flamethrower;
+import engine.graphics.Sprite;
 
 public class Player extends Mob {
 	
@@ -40,19 +42,15 @@ public class Player extends Mob {
 	public void move() {
 		xSpeed = ySpeed = 0;
 		if (keyboard.up) {
-			Printer.print("Move Up");
 			ySpeed = -speed;
 		}
 		if (keyboard.down) {
-			Printer.print("Move Down");
 			ySpeed = speed;
 		}
 		if (keyboard.left) {
-			Printer.print("Move Left");
 			xSpeed = -speed;
 		}
 		if (keyboard.right) {
-			Printer.print("Move Right");
 			xSpeed = speed;
 		}
 		this.x += xSpeed;
@@ -64,7 +62,6 @@ public class Player extends Mob {
 			double mx = Mouse.getX();
 			double my = Mouse.getY();
 			double angle = angleTo(mx, my);
-			Printer.print("Shooting at " + angle);
 			weapon.shoot(angle);
 		}
 	}
