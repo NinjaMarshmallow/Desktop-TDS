@@ -1,7 +1,6 @@
 package implementation;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -13,7 +12,8 @@ import javax.swing.JFrame;
 import util.Keyboard;
 import util.Mouse;
 import util.Printer;
-import engine.Entity;
+import engine.entities.Entity;
+import engine.graphics.Sprite;
 
 public class Screen {
 
@@ -59,12 +59,24 @@ public class Screen {
 
 	public void renderEntity(Entity e) {
 		for (int y = 0; y < e.getHeight(); y++) {
-			int yLocal = (int) e.getY() + y;
+			int yLocal = (int) e.getY() + y - e.getHeight()/2;
 			if(yLocal < 0 || yLocal >= height) continue;
 			for (int x = 0; x < e.getWidth(); x++) {
-				int xLocal = (int) e.getX() + x;
+				int xLocal = (int) e.getX() + x - e.getWidth()/2;
 				if(xLocal < 0 || xLocal >= width) continue;
 				pixels[xLocal + yLocal * width] = e.readPixel(x, y);
+			}
+		}
+	}
+	
+	public void renderSprite(int x, int y, Sprite sprite) {
+		for (int startY = 0; startY < sprite.getHeight(); startY++) {
+			int yLocal = (int) y + startY;
+			if(yLocal < 0 || yLocal >= height) continue;
+			for (int startX = 0; startX < sprite.getWidth(); startX++) {
+				int xLocal = (int) x + startX;
+				if(xLocal < 0 || xLocal >= width) continue;
+				pixels[xLocal + yLocal * width] = sprite.getPixelAt(startX, startY);
 			}
 		}
 	}
