@@ -1,15 +1,19 @@
 package engine.entities.projectiles;
 
 import util.Color;
+import util.Printer;
 import util.Stats;
 import engine.entities.Entity;
+import engine.entities.mobs.Enemy;
+import engine.entities.mobs.Mob;
+import engine.entities.mobs.Player;
 import engine.graphics.Sprite;
 
 public class Projectile extends Entity {
 	
 	protected double angle;
 	protected double start, age;
-	protected double speed, range;
+	protected double speed, range, power;
 	protected double distanceTraveled;
 	protected Entity owner;
 	
@@ -17,8 +21,9 @@ public class Projectile extends Entity {
 		super(owner.getX(), owner.getY());
 		this.owner = owner;
 		this.angle = angle;
-		this.speed = Stats.DEFAULT_SPEED;
-		this.range = Stats.DEFAULT_SPEED;
+		speed = Stats.DEFAULT_SPEED;
+		range = Stats.DEFAULT_SPEED;
+		power = Stats.DEFAULT_POWER;
 		sprite = new Sprite(10, 10, Color.ORANGE);
 		width = sprite.getWidth();
 		height = sprite.getHeight();
@@ -42,5 +47,26 @@ public class Projectile extends Entity {
 	
 	public double getAge() {
 		return age;
+	}
+	
+	public void hit(Entity e) {
+		Printer.print(owner + "\t" + e);
+		if(owner instanceof Player) {
+			if(e instanceof Enemy) {
+				Enemy enemy = ((Enemy) e);
+				enemy.damage(power);
+				kill();
+			}
+		} else if (owner instanceof Enemy) {
+			if(e instanceof Player) {
+				Player player = (Player) e;
+				player.damage(power);
+				kill();
+			}
+		} else if(e instanceof Mob) {
+			Mob mob = (Mob) e;
+			mob.damage(power);
+			kill();
+		}
 	}
 }

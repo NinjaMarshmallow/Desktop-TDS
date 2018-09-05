@@ -1,6 +1,9 @@
 package engine.entities;
 
 import implementation.Screen;
+
+import java.awt.Rectangle;
+
 import util.Environment;
 import util.Printer;
 import engine.behaviors.Drawable;
@@ -68,7 +71,6 @@ public class Entity implements Positionable, Drawable {
 		double xdiff = (this.x - pos.getX()) * (this.x - pos.getX());
 		double ydiff = (this.y - pos.getY()) * (this.y - pos.getY());
 		double result = Math.sqrt(xdiff + ydiff);
-		Printer.print(result);
 		return result;
 	}
 	
@@ -76,7 +78,6 @@ public class Entity implements Positionable, Drawable {
 		double xdiff = (this.x - x) * (this.x - x);
 		double ydiff = (this.y - y) * (this.y - y);
 		double result = Math.sqrt(xdiff + ydiff);
-		Printer.print(result);
 		return result;
 	}
 
@@ -84,7 +85,6 @@ public class Entity implements Positionable, Drawable {
 		double xdiff = pos.getX() - this.x;
 		double ydiff = pos.getY() - this.y;
 		double result = Math.atan2(ydiff, xdiff);
-		Printer.print(result);
 		return result;
 	}
 	
@@ -92,7 +92,6 @@ public class Entity implements Positionable, Drawable {
 		double xdiff = x - this.x;
 		double ydiff = y - this.y;
 		double result = Math.atan2(ydiff, xdiff);
-		Printer.print(result);
 		return result;
 	}
 
@@ -111,9 +110,17 @@ public class Entity implements Positionable, Drawable {
 	public int getHeight() {
 		return height;
 	}
+	
+	public int getSize() {
+		return height > width ? height : width;
+	}
 
-	public boolean collide(Positionable pos) {
-		return false;
+	public boolean collides(Positionable pos) {
+		int px = (int) pos.getX() - pos.getWidth()/2;
+		int py = (int) pos.getY() - pos.getHeight()/2;
+		Rectangle thisRect = new Rectangle((int) x, (int) y, width, height);
+		Rectangle otherRect = new Rectangle(px, py, pos.getWidth(), pos.getHeight());
+		return thisRect.intersects(otherRect);
 	}
 	
 	public boolean onScreen() {

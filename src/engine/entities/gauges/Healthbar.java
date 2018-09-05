@@ -1,6 +1,7 @@
 package engine.entities.gauges;
 
 import util.Color;
+import util.Printer;
 import engine.entities.Entity;
 import engine.entities.mobs.Mob;
 
@@ -32,7 +33,8 @@ public class Healthbar extends Entity {
 	
 	private void drawRemainingHP() {
 		double percentFull = owner.getHealth()/owner.getMaxHealth();
-		int fillerWidth = (int) percentFull * width;
+		int fillerWidth = (int) (percentFull * width);
+		sprite.fill(backgroundColor);
 		sprite.fill(foregroundColor, fillerWidth);
 	}
 }

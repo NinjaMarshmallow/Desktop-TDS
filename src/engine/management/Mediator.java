@@ -8,7 +8,9 @@ import java.util.List;
 
 import util.Printer;
 import engine.entities.Entity;
+import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Mob;
+import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
 
 public class Mediator {
@@ -16,9 +18,9 @@ public class Mediator {
 	private List<List<?>> lists;
 	private List<Entity> entities;
 	private List<Projectile> projectiles;
-	private List<Mob> enemies;
+	private List<Enemy> enemies;
+	private List<Player> players;
 	private static Mediator instance;
-	private boolean locked;
 
 	public static Mediator getInstance() {
 		if (instance == null)
@@ -29,42 +31,25 @@ public class Mediator {
 	private Mediator() {
 		entities = new ArrayList<Entity>();
 		projectiles = new ArrayList<Projectile>();
-		enemies = new ArrayList<Mob>();
+		enemies = new ArrayList<Enemy>();
+		players = new ArrayList<Player>();
+		
 		lists = new ArrayList<List<?>>();
 		lists.add(entities);
 		lists.add(projectiles);
 		lists.add(enemies);
-		locked = false;
+		lists.add(players);
 
-	}
-
-	public void add(Entity e) {
-		Printer.print("Entity Added" + e);
-		if (e instanceof Projectile) {
-			if (projectiles.size() < PROJECTILE_LIMIT)
-				projectiles.add((Projectile) e);
-		} else if (e instanceof Mob) {
-			enemies.add((Mob) e);
-		} else {
-			entities.add(e);
-		}
 	}
 
 	public void update() {
 		Printer.print(projectiles.size());
-		// Use this for safe deletion for enemies and projectiles otherwise
-		// Concurrent Modification Exception
-		// for (Iterator<String> iterator = list.iterator();
-		// iterator.hasNext();) {
-		// String string = iterator.next();
-		// if (string.isEmpty()) {
-		// // Remove the current element from the iterator and the list.
-		// iterator.remove();
-		// }
-		// }
 		updateList(entities);
 		updateList(projectiles);
 		updateList(enemies);
+		updateList(players);
+		collideProjectilesWithEnemies();
+		//collideEnemiesWithPlayer();
 
 	}
 
@@ -81,12 +66,36 @@ public class Mediator {
 		
 	}
 	
+	private void collideProjectilesWithEnemies() {
+		for(Projectile p : projectiles) {
+			for(Enemy e : enemies) {
+				double dist = e.distanceTo(p);
+				double maximumCollisionDistance = e.getSize() + p.getSize(); 
+				if(dist > maximumCollisionDistance) continue;
+				if(e.collides(p)) p.hit(e);
+			}
+		}
+	}
+	
+	public void add(Entity e) {
+		if (e instanceof Projectile) {
+			if (projectiles.size() < PROJECTILE_LIMIT) projectiles.add((Projectile) e);
+		} else if (e instanceof Enemy) {
+			enemies.add((Enemy) e);
+		} else if (e instanceof Player) {
+			players.add((Player) e);
+		} else {
+			entities.add(e);
+		}
+	}
+	
 	public void removeEntity(Entity e) {
-		Printer.print("Entity Removed" + e);
 		if (e instanceof Projectile) {
 			projectiles.remove(e);
-		} else if (e instanceof Mob) {
+		} else if (e instanceof Enemy) {
 			enemies.remove(e);
+		} else if (e instanceof Player) {
+			players.remove(e);
 		} else {
 			entities.remove(e);
 		}
@@ -101,6 +110,10 @@ public class Mediator {
 	
 	public void drawEnemies(Screen screen) {
 		drawList(screen, enemies);
+	}
+	
+	public void drawPlayers(Screen screen) {
+		drawList(screen, players);
 	}
 	
 	private void drawList(Screen screen, List<?> list) {

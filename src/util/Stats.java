@@ -5,9 +5,11 @@ public class Stats {
 	
 	public final static double DEFAULT_SPEED = 10;
 	public final static double DEFAULT_RANGE = 300;
+	public final static double DEFAULT_POWER = 5;
 	
 	public final static double FIREBALL_SPEED = 10;
 	public final static double FIREBALL_RANGE = 300;
+	public final static double FIREBALL_POWER = 15;
 	
 	
 	//Weapon Data
