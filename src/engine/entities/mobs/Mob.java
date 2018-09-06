@@ -7,6 +7,7 @@ import engine.behaviors.MoveBehavior;
 import engine.behaviors.Moveable;
 import engine.entities.Entity;
 import engine.entities.gauges.Healthbar;
+import engine.graphics.Sprite;
 
 public class Mob extends Entity implements Moveable, Health {
 	protected double speed, xSpeed, ySpeed, health, maxHealth;
@@ -21,6 +22,13 @@ public class Mob extends Entity implements Moveable, Health {
 	
 	public Mob(double x, double y, int width, int height) {
 		super(x, y, width, height);
+		speed = 5;
+		health = maxHealth = 100;
+		healthbar = new Healthbar(this);
+	}
+	
+	public Mob(double x, double y, Sprite sprite) {
+		super(x, y, sprite);
 		speed = 5;
 		health = maxHealth = 100;
 		healthbar = new Healthbar(this);

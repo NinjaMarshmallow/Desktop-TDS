@@ -3,12 +3,15 @@ package implementation;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import util.Color;
+import util.Environment;
 import util.Keyboard;
 import util.Mouse;
 import util.Printer;
@@ -64,7 +67,7 @@ public class Screen {
 			for (int x = 0; x < e.getWidth(); x++) {
 				int xLocal = (int) e.getX() + x - e.getWidth()/2;
 				if(xLocal < 0 || xLocal >= width) continue;
-				pixels[xLocal + yLocal * width] = e.readPixel(x, y);
+				renderPixel(xLocal, yLocal, e.readPixel(x, y));
 			}
 		}
 	}
@@ -76,8 +79,24 @@ public class Screen {
 			for (int startX = 0; startX < sprite.getWidth(); startX++) {
 				int xLocal = (int) x + startX;
 				if(xLocal < 0 || xLocal >= width) continue;
-				pixels[xLocal + yLocal * width] = sprite.getPixelAt(startX, startY);
+				renderPixel(xLocal, yLocal, sprite.getPixelAt(startX, startY));
 			}
+		}
+	}
+	
+	public void renderHitbox(Rectangle rect) {
+		for(int y = rect.y; y < rect.y + rect.height; y++) {
+			if(rect.y < 0 || rect.y + rect.height > Environment.getInstance().getHeight()) continue;
+			if(rect.x < 0 || rect.x + rect.width > Environment.getInstance().getWidth()) continue;
+			pixels[rect.x + y * width] = 0x0;
+			pixels[rect.x + rect.width + y * width] = 0x0;
+		}
+		
+		for(int x = rect.x; x < rect.x + rect.width; x++) {
+			if(rect.x < 0 || rect.x + rect.width > Environment.getInstance().getWidth()) continue;
+			if(rect.y < 0 || rect.y + rect.height > Environment.getInstance().getHeight()) continue;
+			pixels[x + rect.y * width] = 0x0;
+			pixels[x + (rect.y + rect.height) * width] = 0x0;
 		}
 	}
 	
@@ -92,5 +111,10 @@ public class Screen {
 		g.drawImage(image, 0, 0, window.getWidth(), window.getHeight(), null);
 		g.dispose();
 		bs.show();
+	}
+	
+	private void renderPixel(int x, int y, int color) {
+		if(color == Color.NO_DRAW) return;
+		pixels[x + y * width] = color;
 	}
 }

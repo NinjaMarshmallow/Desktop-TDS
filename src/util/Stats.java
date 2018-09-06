@@ -8,7 +8,7 @@ public class Stats {
 	public final static double DEFAULT_POWER = 5;
 	
 	public final static double FIREBALL_SPEED = 10;
-	public final static double FIREBALL_RANGE = 300;
+	public final static double FIREBALL_RANGE = 500;
 	public final static double FIREBALL_POWER = 15;
 	
 	

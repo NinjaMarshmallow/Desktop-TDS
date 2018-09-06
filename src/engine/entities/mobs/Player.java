@@ -1,9 +1,7 @@
 package engine.entities.mobs;
 
-import util.Color;
 import util.Keyboard;
 import util.Mouse;
-import util.Printer;
 import engine.behaviors.Weapon;
 import engine.entities.weapons.Flamethrower;
 import engine.graphics.Sprite;
@@ -14,18 +12,21 @@ public class Player extends Mob {
 	private Weapon weapon;
 	
 	public Player(Keyboard keyboard) {
-		super(100, 100, 100, 100);
+		super(100, 100, Sprite.PLAYER);
 		this.keyboard = keyboard;
 		this.weapon = new Flamethrower(this);
-		sprite = new Sprite(width, height, Color.ROYAL_BLUE);
 	}
 	
 	public Player(double x, double y, Keyboard keyboard) {
-		super(x, y, 100, 100);
+		super(x, y, Sprite.PLAYER);
+		this.keyboard = keyboard;
+		this.weapon = new Flamethrower(this);
 	}
 	
 	public Player(double x, double y, Sprite sprite, Keyboard keyboard) {
-		super(x, y, sprite.getWidth(), sprite.getHeight());
+		super(x, y, sprite);
+		this.keyboard = keyboard;
+		this.weapon = new Flamethrower(this);
 	}
 	
 	public void setWeapon(Weapon weapon) {
@@ -65,7 +66,4 @@ public class Player extends Mob {
 			weapon.shoot(angle);
 		}
 	}
-	
-	
-
 }

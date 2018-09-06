@@ -13,6 +13,7 @@ import engine.graphics.Sprite;
 public class Entity implements Positionable, Drawable {
 	protected double x, y;
 	protected int width, height;
+	protected Rectangle hitbox;
 	protected Sprite sprite;
 	protected boolean alive = false;
 
@@ -20,6 +21,7 @@ public class Entity implements Positionable, Drawable {
 		x = y = width = height = 100;
 		sprite = new Sprite(width, height, 0xFF0000);
 		alive = true;
+		hitbox = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	public Entity(double x, double y) {
@@ -28,6 +30,7 @@ public class Entity implements Positionable, Drawable {
 		width = height = 100;
 		sprite = new Sprite(width, height, 0xFF0000);
 		alive = true;
+		hitbox = new Rectangle((int) x, (int) y, width, height);
 	}
 
 	public Entity(double x, double y, int width, int height) {
@@ -37,10 +40,29 @@ public class Entity implements Positionable, Drawable {
 		this.height = height;
 		sprite = new Sprite(width, height, 0xFF0000);
 		alive = true;
+		hitbox = new Rectangle((int) x, (int) y, width, height);
+	}
+	
+	public Entity(double x, double y, Sprite sprite) {
+		this.x = x;
+		this.y = y;
+		this.sprite = sprite;
+		width = sprite.getWidth();
+		height = sprite.getHeight();
+		alive = true;
+		hitbox = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	public void update() {
-		
+		setHitbox();
+	}
+	
+	private void setHitbox() {
+		hitbox.setBounds((int)(x - width/2), (int)(y - height/2), width, height);
+	}
+	
+	public Rectangle getHitbox() {
+		return hitbox;
 	}
 
 	public void setX(double x) {
@@ -97,6 +119,7 @@ public class Entity implements Positionable, Drawable {
 
 	public void draw(Screen screen) {
 		screen.renderEntity(this);
+		//screen.renderHitbox(hitbox);
 	}
 
 	public int readPixel(int x, int y) {
@@ -116,9 +139,9 @@ public class Entity implements Positionable, Drawable {
 	}
 
 	public boolean collides(Positionable pos) {
-		int px = (int) pos.getX() - pos.getWidth()/2;
-		int py = (int) pos.getY() - pos.getHeight()/2;
-		Rectangle thisRect = new Rectangle((int) x, (int) y, width, height);
+		int px = (int) (pos.getX() - pos.getWidth()/2);
+		int py = (int) (pos.getY() - pos.getHeight()/2);
+		Rectangle thisRect = new Rectangle((int) x - width/2, (int) y - height/2, width, height);
 		Rectangle otherRect = new Rectangle(px, py, pos.getWidth(), pos.getHeight());
 		return thisRect.intersects(otherRect);
 	}

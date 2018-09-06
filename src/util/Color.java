@@ -1,6 +1,9 @@
 package util;
 
 public class Color {
+	
+	public static final int NO_DRAW = 0xEE00EE;
+	
 	public static final int BLACK = 0x0;
 	public static final int WHITE = 0xFFFFFF;
 	
