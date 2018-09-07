@@ -17,6 +17,8 @@ import util.Mouse;
 import util.Printer;
 import engine.entities.Entity;
 import engine.graphics.Sprite;
+import engine.level.World;
+import engine.level.tile.Tile;
 
 public class Screen {
 
@@ -59,7 +61,7 @@ public class Screen {
 			pixels[i] = color;
 		}
 	}
-
+	
 	public void renderEntity(Entity e) {
 		for (int y = 0; y < e.getHeight(); y++) {
 			int yLocal = (int) e.getY() + y - e.getHeight()/2;
@@ -114,7 +116,9 @@ public class Screen {
 	}
 	
 	private void renderPixel(int x, int y, int color) {
-		if(color == Color.NO_DRAW) return;
-		pixels[x + y * width] = color;
+		if(color != Color.NO_DRAW) {
+			pixels[x + y * width] = color;
+		}
+		
 	}
 }

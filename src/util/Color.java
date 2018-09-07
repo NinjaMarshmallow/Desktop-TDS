@@ -1,9 +1,11 @@
 package util;
 
 public class Color {
+	// This color will never be rendered, so it is transparent
+	public static final int NO_DRAW = 0xFFEE00EE; //Alpha Channel for comparing colors
 	
-	public static final int NO_DRAW = 0xEE00EE;
 	
+	// Normal Colors
 	public static final int BLACK = 0x0;
 	public static final int WHITE = 0xFFFFFF;
 	
@@ -11,20 +13,30 @@ public class Color {
 	public static final int GREEN = 0x00FF00;
 	public static final int BLUE = 0x00FF00;
 	
-	public static final int ORANGE = 0xFFA100;
-	public static final int PURPLE = 0x9800FF;
+	public static final int ORANGE = 0xFFA000;
+	public static final int PURPLE = 0x9900FF;
 	public static final int YELLOW = 0xFFFF00;
 	
 	public static final int ROYAL_BLUE = 0x009DFF;
-	public static final int FOREST_GREEN = 0x057700;
+	public static final int FOREST_GREEN = 0x077700;
 	public static final int GOLD = 0xF2DA00;
 	
 	
-	public static final int LIME_GREEN = 0xC3FF00;
+	public static final int LIME_GREEN = 0xCCFF00;
 	public static final int PINK = 0xFF7AE8;
 	public static final int SKY_BLUE = 0xBCFCFF;
 	
+	public static final int LIMEADE = 0x80BB00;
+	public static final int SAND = 0xDDBB88;
+	public static final int LAVENDER = 0xDBBDDD;
 	
 	
-
+	
+	//Tilemapping Colors
+	public static final int GRASS = GREEN + 0xFF000000;
+	public static final int DARK_GRASS = LIMEADE  + 0xFF000000;
+	public static final int BEACH = LAVENDER  + 0xFF000000;
+	public static final int WATER = BLUE  + 0xFF000000;
+	public static final int WALL = BLACK  + 0xFF000000;
+	public static final int BUSH = FOREST_GREEN  + 0xFF000000;
 }
