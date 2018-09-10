@@ -7,19 +7,21 @@ import java.util.Iterator;
 import java.util.List;
 
 import util.Printer;
+import engine.behaviors.Drawable;
 import engine.entities.Entity;
 import engine.entities.mobs.Enemy;
-import engine.entities.mobs.Mob;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
+import engine.graphics.AnimatedSprite;
 
 public class Mediator {
 	private static final int PROJECTILE_LIMIT = 200;
 	private List<List<?>> lists;
-	private List<Entity> entities;
+	private List<Drawable> entities;
 	private List<Projectile> projectiles;
 	private List<Enemy> enemies;
 	private List<Player> players;
+	private List<AnimatedSprite> animations;
 	private static Mediator instance;
 
 	public static Mediator getInstance() {
@@ -29,11 +31,11 @@ public class Mediator {
 	}
 
 	private Mediator() {
-		entities = new ArrayList<Entity>();
+		entities = new ArrayList<Drawable>();
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		players = new ArrayList<Player>();
-		
+		animations = new ArrayList<AnimatedSprite>();
 		lists = new ArrayList<List<?>>();
 		lists.add(entities);
 		lists.add(projectiles);
@@ -48,6 +50,7 @@ public class Mediator {
 		updateList(projectiles);
 		updateList(enemies);
 		updateList(players);
+		updateList(animations);
 		collideProjectilesWithEnemies();
 		//collideEnemiesWithPlayer();
 
@@ -77,7 +80,7 @@ public class Mediator {
 		}
 	}
 	
-	public void add(Entity e) {
+	public void add(Drawable e) {
 		if (e instanceof Projectile) {
 			if (projectiles.size() < PROJECTILE_LIMIT) projectiles.add((Projectile) e);
 		} else if (e instanceof Enemy) {
@@ -89,7 +92,7 @@ public class Mediator {
 		}
 	}
 	
-	public void removeEntity(Entity e) {
+	public void remove(Drawable e) {
 		if (e instanceof Projectile) {
 			projectiles.remove(e);
 		} else if (e instanceof Enemy) {
@@ -119,7 +122,7 @@ public class Mediator {
 	private void drawList(Screen screen, List<?> list) {
 		try {
 			for(Object e : list) {
-				((Entity) e).draw(screen);
+				((Drawable) e).draw(screen);
 			}
 		} catch (Exception e) {
 		e.printStackTrace();

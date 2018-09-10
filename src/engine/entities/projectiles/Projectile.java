@@ -7,6 +7,8 @@ import engine.entities.Entity;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Mob;
 import engine.entities.mobs.Player;
+import engine.graphics.AnimatedSprite;
+import engine.graphics.NullAnimation;
 import engine.graphics.Sprite;
 
 public class Projectile extends Entity {
@@ -15,6 +17,7 @@ public class Projectile extends Entity {
 	protected double start, age;
 	protected double speed, range, power;
 	protected double distanceTraveled;
+	protected AnimatedSprite hitAnimation;
 	protected Entity owner;
 	
 	public Projectile(Entity owner, double angle) {
@@ -28,7 +31,20 @@ public class Projectile extends Entity {
 		width = sprite.getWidth();
 		height = sprite.getHeight();
 		start = System.currentTimeMillis();
-		
+		hitAnimation = new NullAnimation(null);
+	}
+	
+	public Projectile(Entity owner, double angle, Sprite sprite) {
+		super(owner.getX(), owner.getY());
+		this.owner = owner;
+		this.angle = angle;
+		this.sprite = sprite;
+		speed = Stats.DEFAULT_SPEED;
+		range = Stats.DEFAULT_SPEED;
+		power = Stats.DEFAULT_POWER;
+		width = sprite.getWidth();
+		height = sprite.getHeight();
+		start = System.currentTimeMillis();
 	}
 	
 	public void update() {
@@ -68,5 +84,10 @@ public class Projectile extends Entity {
 			mob.damage(power);
 			kill();
 		}
+	}
+	
+	public void kill() {
+		super.kill();
+		hitAnimation.play((int)this.x, (int)this.y);
 	}
 }

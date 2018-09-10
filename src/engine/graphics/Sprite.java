@@ -14,6 +14,7 @@ public class Sprite {
 
 	public static Sprite PLAYER = new Sprite("/mobs/player.png");
 	public static Sprite WORLD = new Sprite("/maps/world.png");
+	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
 	
 	//Tiles
 	public static Sprite VOID_TILE = new Sprite(World.TILE_SIZE, World.TILE_SIZE, Color.PINK);
