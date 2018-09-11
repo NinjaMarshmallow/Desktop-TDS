@@ -12,8 +12,7 @@ import engine.management.Mediator;
 
 public class AnimatedSprite extends Sprite implements Drawable {
 	
-	public static AnimatedSprite nullAnimation = new AnimatedSprite();
-	public static AnimatedSprite explosionAnimation = new AnimatedSprite(Arrays.asList(Sprite.EXPLOSION_1, Sprite.EXPLOSION_2, Sprite.EXPLOSION_3));
+	public static final int EXPLOSION = 1;
 	
 	private Sprite currentSprite;
 	private Sprite[] frames;
@@ -53,18 +52,20 @@ public class AnimatedSprite extends Sprite implements Drawable {
 	}
 
 	public void update() {
-		time++;
 		if(!alive) {
 			Mediator.getInstance().remove(this);
 		} else {
-			int mod = ((int) (60/animationSpeed));
+			int mod = ((int) (7/animationSpeed));
 			Printer.print("Mod: " + mod);
 			if(time % mod == 0) {
-				currentSprite = frames[currentFrame];
-				currentFrame++;
+				if(currentFrame > frames.length - 1) {
+					alive = false;
+				} else {
+					currentSprite = frames[currentFrame++];
+				}
 			}
-			if(currentFrame > frames.length - 1) alive = false;
 		}
+		time++;
 	}
 
 	public void draw(Screen screen) {

@@ -1,0 +1,28 @@
+package engine.graphics;
+
+import java.util.Arrays;
+
+import engine.entities.projectiles.Fireball;
+import engine.entities.projectiles.Projectile;
+
+public class AnimationFactory {
+	
+	public AnimationFactory() {
+		
+	}
+	
+	public static AnimatedSprite createAnimation(int type) {
+		switch(type) {
+		case AnimatedSprite.EXPLOSION:
+			return new AnimatedSprite(Arrays.asList(Sprite.EXPLOSION_1, Sprite.EXPLOSION_2, Sprite.EXPLOSION_3));
+		default:
+			return new AnimatedSprite();
+		}
+	}
+	
+	public static AnimatedSprite createAnimation(Projectile p) {
+		if(p instanceof Fireball) return new AnimatedSprite(Arrays.asList(Sprite.EXPLOSION_1, Sprite.EXPLOSION_2, Sprite.EXPLOSION_3));
+		return new AnimatedSprite();
+	}
+
+}

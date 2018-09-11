@@ -8,6 +8,7 @@ import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Mob;
 import engine.entities.mobs.Player;
 import engine.graphics.AnimatedSprite;
+import engine.graphics.AnimationFactory;
 import engine.graphics.Sprite;
 
 public class Projectile extends Entity {
@@ -30,7 +31,7 @@ public class Projectile extends Entity {
 		width = sprite.getWidth();
 		height = sprite.getHeight();
 		start = System.currentTimeMillis();
-		hitAnimation = AnimatedSprite.nullAnimation;
+		hitAnimation = AnimationFactory.createAnimation(this);
 	}
 	
 	public Projectile(Entity owner, double angle, Sprite sprite) {
@@ -44,7 +45,7 @@ public class Projectile extends Entity {
 		width = sprite.getWidth();
 		height = sprite.getHeight();
 		start = System.currentTimeMillis();
-		hitAnimation = AnimatedSprite.nullAnimation;
+		hitAnimation = AnimationFactory.createAnimation(this);
 	}
 	
 	public void update() {
