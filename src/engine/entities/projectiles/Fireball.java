@@ -2,6 +2,7 @@ package engine.entities.projectiles;
 
 import util.Stats;
 import engine.entities.Entity;
+import engine.graphics.AnimatedSprite;
 import engine.graphics.Sprite;
 
 public class Fireball extends Projectile {
@@ -10,6 +11,7 @@ public class Fireball extends Projectile {
 		super(owner, angle, Sprite.FIREBALL);
 		speed = Stats.FIREBALL_SPEED;
 		range = Stats.FIREBALL_RANGE;
+		hitAnimation = AnimatedSprite.explosionAnimation;
 	}
 	
 

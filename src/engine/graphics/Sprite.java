@@ -12,9 +12,15 @@ public class Sprite {
 	private int width, height;
 	private int[] pixels;
 
+	// Entity Sprites
 	public static Sprite PLAYER = new Sprite("/mobs/player.png");
 	public static Sprite WORLD = new Sprite("/maps/world.png");
 	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
+	
+	//Animation Sprites
+	public static Sprite EXPLOSION_1 = new Sprite("/anim/fire/fire01.png");
+	public static Sprite EXPLOSION_2 = new Sprite("/anim/fire/fire02.png");
+	public static Sprite EXPLOSION_3 = new Sprite("/anim/fire/fire03.png");
 	
 	//Tiles
 	public static Sprite VOID_TILE = new Sprite(World.TILE_SIZE, World.TILE_SIZE, Color.PINK);

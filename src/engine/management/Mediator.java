@@ -3,12 +3,12 @@ package engine.management;
 import implementation.Screen;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
 import util.Printer;
 import engine.behaviors.Drawable;
-import engine.entities.Entity;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
@@ -52,37 +52,48 @@ public class Mediator {
 		updateList(players);
 		updateList(animations);
 		collideProjectilesWithEnemies();
-		//collideEnemiesWithPlayer();
+		// collideEnemiesWithPlayer();
 
 	}
 
 	private void updateList(List<?> list) {
-		List<Entity> dead = new ArrayList<Entity>();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			Entity element = (Entity) iterator.next();
-			element.update();
-			if (!element.isAlive()) dead.add(element);
+		try {
+			List<Drawable> dead = new ArrayList<Drawable>();
+			for (int i = 0; i < list.size(); i++) {
+				Drawable drawable = ((Drawable) list.get(i));
+				drawable.update();
+				if (!drawable.isAlive())
+					dead.add(drawable);
+			}
+			synchronized (list) {
+				list.removeAll(dead);
+			}
+		} catch (ConcurrentModificationException e) {
+			e.printStackTrace();
+			Printer.print("Error caught and ignored");
 		}
-		synchronized(list) {
-			list.removeAll(dead);
-		}
-		
+
 	}
-	
+
 	private void collideProjectilesWithEnemies() {
-		for(Projectile p : projectiles) {
-			for(Enemy e : enemies) {
+		for (int i = 0; i < projectiles.size(); i++) {
+			for (int j = 0; j < enemies.size(); j++) {
+				Projectile p = projectiles.get(i);
+				Enemy e = enemies.get(j);
 				double dist = e.distanceTo(p);
-				double maximumCollisionDistance = e.getSize() + p.getSize(); 
-				if(dist > maximumCollisionDistance) continue;
-				if(e.collides(p)) p.hit(e);
+				double maximumCollisionDistance = e.getSize() + p.getSize();
+				if (dist > maximumCollisionDistance)
+					continue;
+				if (e.collides(p))
+					p.hit(e);
 			}
 		}
 	}
-	
+
 	public void add(Drawable e) {
 		if (e instanceof Projectile) {
-			if (projectiles.size() < PROJECTILE_LIMIT) projectiles.add((Projectile) e);
+			if (projectiles.size() < PROJECTILE_LIMIT)
+				projectiles.add((Projectile) e);
 		} else if (e instanceof Enemy) {
 			enemies.add((Enemy) e);
 		} else if (e instanceof Player) {
@@ -91,7 +102,7 @@ public class Mediator {
 			entities.add(e);
 		}
 	}
-	
+
 	public void remove(Drawable e) {
 		if (e instanceof Projectile) {
 			projectiles.remove(e);
@@ -107,27 +118,29 @@ public class Mediator {
 	public void drawEntities(Screen screen) {
 		drawList(screen, entities);
 	}
+
 	public void drawProjectiles(Screen screen) {
 		drawList(screen, projectiles);
 	}
-	
+
 	public void drawEnemies(Screen screen) {
 		drawList(screen, enemies);
 	}
-	
+
 	public void drawPlayers(Screen screen) {
 		drawList(screen, players);
 	}
-	
+
 	private void drawList(Screen screen, List<?> list) {
 		try {
-			for(Object e : list) {
-				((Drawable) e).draw(screen);
+			for (int i = 0; i < list.size(); i++) {
+				Drawable drawable = (Drawable) list.get(i);
+				drawable.draw(screen);
 			}
 		} catch (Exception e) {
-		e.printStackTrace();
-		Printer.print("Concurrent Modification Error...",
-				Printer.FLAGS.ERROR);
+			e.printStackTrace();
+			Printer.print("Concurrent Modification Error...",
+					Printer.FLAGS.ERROR);
 		}
 	}
 }
