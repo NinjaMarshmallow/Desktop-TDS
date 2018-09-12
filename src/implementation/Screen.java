@@ -116,7 +116,7 @@ public class Screen {
 	}
 	
 	private void renderPixel(int x, int y, int color) {
-		if(color != Color.NO_DRAW) {
+		if(color != Color.NO_DRAW_PINK && color != Color.NO_DRAW_BLACK) {
 			pixels[x + y * width] = color;
 		}
 		

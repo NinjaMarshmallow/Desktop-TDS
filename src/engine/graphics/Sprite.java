@@ -13,9 +13,14 @@ public class Sprite {
 	private int[] pixels;
 
 	// Entity Sprites
-	public static Sprite PLAYER = new Sprite("/mobs/player.png");
+	public static Sprite EMMA = new Sprite("/mobs/emma.png");
+	public static Sprite TYLER = new Sprite("/mobs/tyler.png");
+	public static Sprite PLAYER = EMMA;
 	public static Sprite WORLD = new Sprite("/maps/world.png");
+	
+	// Projectile Sprites
 	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
+	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
 	
 	//Animation Sprites
 	public static Sprite EXPLOSION_1 = new Sprite("/anim/fire/fire01.png");

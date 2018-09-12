@@ -9,7 +9,7 @@ public class Tile implements ITile {
 	protected Sprite sprite;
 	protected boolean solid = false, traversable = !solid;
 	public Tile() {
-		type = Color.NO_DRAW;
+		type = Color.NO_DRAW_PINK;
 		sprite = Sprite.VOID_TILE;
 	}
 	

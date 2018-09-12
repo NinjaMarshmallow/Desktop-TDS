@@ -56,7 +56,6 @@ public class AnimatedSprite extends Sprite implements Drawable {
 			Mediator.getInstance().remove(this);
 		} else {
 			int mod = ((int) (7/animationSpeed));
-			Printer.print("Mod: " + mod);
 			if(time % mod == 0) {
 				if(currentFrame > frames.length - 1) {
 					alive = false;
