@@ -2,8 +2,9 @@ package engine.entities.mobs;
 
 import util.Keyboard;
 import util.Mouse;
+import util.Stats;
 import engine.behaviors.Weapon;
-import engine.entities.weapons.Flamethrower;
+import engine.entities.weapons.WatermelonLauncher;
 import engine.graphics.Sprite;
 
 public class Player extends Mob {
@@ -13,20 +14,23 @@ public class Player extends Mob {
 	
 	public Player(Keyboard keyboard) {
 		super(100, 100, Sprite.PLAYER);
-		this.keyboard = keyboard;
-		this.weapon = new Flamethrower(this);
+		initialize(keyboard);
 	}
 	
 	public Player(double x, double y, Keyboard keyboard) {
 		super(x, y, Sprite.PLAYER);
-		this.keyboard = keyboard;
-		this.weapon = new Flamethrower(this);
+		initialize(keyboard);
 	}
 	
 	public Player(double x, double y, Sprite sprite, Keyboard keyboard) {
 		super(x, y, sprite);
+		initialize(keyboard);
+	}
+	
+	private void initialize(Keyboard keyboard) {
 		this.keyboard = keyboard;
-		this.weapon = new Flamethrower(this);
+		this.weapon = new WatermelonLauncher(this);
+		baseSpeed = Stats.PLAYER_SPEED;
 	}
 	
 	public void setWeapon(Weapon weapon) {
@@ -43,16 +47,16 @@ public class Player extends Mob {
 	public void move() {
 		xSpeed = ySpeed = 0;
 		if (keyboard.up) {
-			ySpeed = -speed;
+			ySpeed = -baseSpeed;
 		}
 		if (keyboard.down) {
-			ySpeed = speed;
+			ySpeed = baseSpeed;
 		}
 		if (keyboard.left) {
-			xSpeed = -speed;
+			xSpeed = -baseSpeed;
 		}
 		if (keyboard.right) {
-			xSpeed = speed;
+			xSpeed = baseSpeed;
 		}
 		this.x += xSpeed;
 		this.y += ySpeed;

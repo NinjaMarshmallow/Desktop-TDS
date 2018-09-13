@@ -1,7 +1,7 @@
 package engine.entities.mobs;
 
 import implementation.Screen;
-import util.Environment;
+import engine.behaviors.BounceSideways;
 import engine.behaviors.Health;
 import engine.behaviors.MoveBehavior;
 import engine.behaviors.Moveable;
@@ -10,28 +10,30 @@ import engine.entities.gauges.Healthbar;
 import engine.graphics.Sprite;
 
 public class Mob extends Entity implements Moveable, Health {
-	protected double speed, xSpeed, ySpeed, health, maxHealth;
+	protected double baseSpeed, xSpeed, ySpeed, health, maxHealth;
 	protected Healthbar healthbar;
-	private MoveBehavior moveBehavior;
+	protected MoveBehavior moveBehavior;
+	
 	public Mob() {
 		super();
-		speed = 5;
-		health = maxHealth = 100;
-		healthbar = new Healthbar(this);
+		initialize();
 	}
 	
 	public Mob(double x, double y, int width, int height) {
 		super(x, y, width, height);
-		speed = 5;
-		health = maxHealth = 100;
-		healthbar = new Healthbar(this);
+		initialize();
 	}
 	
 	public Mob(double x, double y, Sprite sprite) {
 		super(x, y, sprite);
-		speed = 5;
+		initialize();
+	}
+	
+	private void initialize() {
+		baseSpeed = 5;
 		health = maxHealth = 100;
 		healthbar = new Healthbar(this);
+		moveBehavior = new BounceSideways();
 	}
 	
 	public void update() {
@@ -42,8 +44,13 @@ public class Mob extends Entity implements Moveable, Health {
 	}
 	
 	public void move() {
-		if(x < 0 || x > Environment.getInstance().getWidth() - width) xSpeed *= -1;
+		moveBehavior.execute(this);
 		this.x += getXSpeed();
+		this.y += getYSpeed();
+	}
+	
+	public double getBaseSpeed() {
+		return baseSpeed;
 	}
 	
 	public double getXSpeed() {
@@ -51,7 +58,7 @@ public class Mob extends Entity implements Moveable, Health {
 	}
 	
 	public double getYSpeed() {
-		return this.xSpeed;
+		return this.ySpeed;
 	}
 
 	public void setXSpeed(double speed) {

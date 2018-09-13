@@ -1,8 +1,8 @@
 package engine.behaviors;
 
-import engine.entities.Entity;
+import engine.entities.mobs.Mob;
 
 public interface MoveBehavior {
 	
-	public void move(Entity e);
+	public void execute(Mob m);
 }

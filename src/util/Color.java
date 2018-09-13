@@ -2,9 +2,10 @@ package util;
 
 public class Color {
 	// This color will never be rendered, so it is transparent
+	
 	public static final int NO_DRAW_PINK = 0xFFEE00EE; //Alpha Channel for comparing colors
 	public static final int NO_DRAW_BLACK = 0xFF000007; //Alpha Channel for comparing colors
-	
+	public static final int NO_DRAW = NO_DRAW_PINK;
 	
 	// Normal Colors
 	public static final int BLACK = 0x0;

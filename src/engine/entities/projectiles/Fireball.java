@@ -11,6 +11,7 @@ public class Fireball extends Projectile {
 		super(owner, angle, Sprite.FIREBALL);
 		speed = Stats.FIREBALL_SPEED;
 		range = Stats.FIREBALL_RANGE;
+		power = Stats.FIREBALL_POWER;
 	}
 	
 

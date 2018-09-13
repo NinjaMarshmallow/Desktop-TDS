@@ -13,10 +13,12 @@ import engine.management.Mediator;
 public class AnimatedSprite extends Sprite implements Drawable {
 	
 	public static final int EXPLOSION = 1;
+	public static final int WATERMELON = 2;
 	
 	private Sprite currentSprite;
 	private Sprite[] frames;
-	private int time, currentFrame, animationSpeed;
+	private int time, currentFrame;
+	private double animationSpeed;
 	private int x, y;
 	private boolean alive;
 	
@@ -34,6 +36,16 @@ public class AnimatedSprite extends Sprite implements Drawable {
 	
 	public AnimatedSprite(List<Sprite> sprites) {
 		super(sprites.get(0).getWidth(), sprites.get(0).getHeight(), Color.BLACK);
+		initialize(sprites);
+	}
+	
+	public AnimatedSprite(List<Sprite> sprites, double animationSpeed) {
+		super(sprites.get(0).getWidth(), sprites.get(0).getHeight(), Color.BLACK);
+		initialize(sprites);
+		this.animationSpeed = animationSpeed;
+	}
+	
+	private void initialize(List<Sprite> sprites) {
 		frames = new Sprite[sprites.size()];
 		for(int i = 0; i < sprites.size(); i++) {
 			frames[i] = sprites.get(i);

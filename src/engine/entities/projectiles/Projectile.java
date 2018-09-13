@@ -89,6 +89,6 @@ public class Projectile extends Entity {
 	
 	public void kill() {
 		super.kill();
-		hitAnimation.play((int)this.x, (int)this.y);
+		hitAnimation.play((int)this.x - this.getWidth()/2, (int)this.y - this.getHeight()/2);
 	}
 }

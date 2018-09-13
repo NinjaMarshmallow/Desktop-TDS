@@ -16,6 +16,9 @@ public class Sprite {
 	public static Sprite EMMA = new Sprite("/mobs/emma.png");
 	public static Sprite TYLER = new Sprite("/mobs/tyler.png");
 	public static Sprite PLAYER = EMMA;
+	
+	public static Sprite HOPE_STUDENT = new Sprite("/mobs/hope_student.png");
+	
 	public static Sprite WORLD = new Sprite("/maps/world.png");
 	
 	// Projectile Sprites
@@ -23,9 +26,16 @@ public class Sprite {
 	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
 	
 	//Animation Sprites
+	
+	//Fire Explosion
 	public static Sprite EXPLOSION_1 = new Sprite("/anim/fire/fire01.png");
 	public static Sprite EXPLOSION_2 = new Sprite("/anim/fire/fire02.png");
 	public static Sprite EXPLOSION_3 = new Sprite("/anim/fire/fire03.png");
+	
+	//Watermelon Explosion
+	public static Sprite MELON_EXPLOSION_1 = new Sprite("/anim/melon/melon_explosion01.png");
+	public static Sprite MELON_EXPLOSION_2 = new Sprite("/anim/melon/melon_explosion02.png");
+	public static Sprite MELON_EXPLOSION_3 = new Sprite("/anim/melon/melon_explosion03.png");
 	
 	//Tiles
 	public static Sprite VOID_TILE = new Sprite(World.TILE_SIZE, World.TILE_SIZE, Color.PINK);
