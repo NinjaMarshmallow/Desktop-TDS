@@ -1,12 +1,19 @@
 package engine.entities.mobs;
 
-import util.Color;
-import util.Stats;
-import engine.entities.gauges.Healthbar;
-import engine.graphics.Sprite;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Enemy extends Mob {
-	
+import util.Color;
+import util.Printer;
+import util.Stats;
+import engine.behaviors.PlayerObserver;
+import engine.graphics.Sprite;
+import engine.management.Mediator;
+
+public class Enemy extends Mob implements PlayerObserver {
+	protected List<Player> players;
+	protected double meleeDamage;
+	protected double meleeRate;
 	public Enemy() {
 		super();
 	}
@@ -15,5 +22,25 @@ public class Enemy extends Mob {
 		super(x, y, width, height);
 		baseSpeed = Stats.ENEMY_SPEED;
 		sprite = new Sprite(width, height, Color.RED);
+		meleeDamage = Stats.ENEMY_MELEE_DAMAGE;
+		meleeRate = Stats.ENEMY_MELEE_RATE;
+		Mediator.getInstance().addPlayersObserver(this);
+		players = new ArrayList<Player>();
 	}
+	
+	public void notify(List<Player> players) {
+		Printer.print("New Player List!");
+		this.players = players;
+	}
+	
+	public void update() {
+		super.update();
+		for(int i =0; i < players.size(); i++) {
+			Player player = players.get(i);
+			if(collides(player) && time % meleeRate == 0) {
+				player.damage(meleeDamage);
+			}
+		}
+	}
+	
 }

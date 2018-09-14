@@ -1,6 +1,5 @@
-package engine.behaviors;
+package engine.behaviors.move;
 
-import engine.behaviors.MoveBehavior;
 
 public interface Moveable {
 	

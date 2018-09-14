@@ -4,11 +4,12 @@ import implementation.Screen;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.List;
 
 import util.Printer;
 import engine.behaviors.Drawable;
+import engine.behaviors.PlayerObserver;
+import engine.entities.Entity;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
@@ -22,6 +23,8 @@ public class Mediator {
 	private List<Enemy> enemies;
 	private List<Player> players;
 	private List<AnimatedSprite> animations;
+	
+	private List<PlayerObserver> playerObservers;
 	private static Mediator instance;
 
 	public static Mediator getInstance() {
@@ -41,6 +44,8 @@ public class Mediator {
 		lists.add(projectiles);
 		lists.add(enemies);
 		lists.add(players);
+		
+		playerObservers = new ArrayList<PlayerObserver>();
 
 	}
 
@@ -72,6 +77,7 @@ public class Mediator {
 			e.printStackTrace();
 			Printer.print("Error caught and ignored");
 		}
+		notifyPlayerObservers();
 
 	}
 
@@ -141,6 +147,17 @@ public class Mediator {
 			e.printStackTrace();
 			Printer.print("Concurrent Modification Error...",
 					Printer.FLAGS.ERROR);
+		}
+	}
+
+	public void addPlayersObserver(PlayerObserver playerObserver) {
+		playerObservers.add(playerObserver);
+	}
+	
+	public void notifyPlayerObservers() {
+		for(int i = 0;i < playerObservers.size(); i++) {
+			PlayerObserver en = playerObservers.get(i);
+			en.notify(new ArrayList<Player>(players));
 		}
 	}
 }

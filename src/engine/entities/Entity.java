@@ -3,9 +3,9 @@ package engine.entities;
 import implementation.Screen;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import util.Environment;
-import util.Printer;
 import engine.behaviors.Drawable;
 import engine.behaviors.Positionable;
 import engine.graphics.Sprite;
@@ -15,45 +15,45 @@ public class Entity implements Positionable, Drawable {
 	protected int width, height;
 	protected Rectangle hitbox;
 	protected Sprite sprite;
+	protected int time;
 	protected boolean alive = false;
 
 	public Entity() {
-		x = y = width = height = 100;
+		width = height = 100;
 		sprite = new Sprite(width, height, 0xFF0000);
-		alive = true;
-		hitbox = new Rectangle((int) x, (int) y, width, height);
+		initialize(100, 100);
 	}
 	
 	public Entity(double x, double y) {
-		this.x = x;
-		this.y = y;
+		initialize(x, y);
 		width = height = 100;
 		sprite = new Sprite(width, height, 0xFF0000);
-		alive = true;
-		hitbox = new Rectangle((int) x, (int) y, width, height);
 	}
 
 	public Entity(double x, double y, int width, int height) {
-		this.x = x;
-		this.y = y;
+		initialize(x, y);
 		this.width = width;
 		this.height = height;
 		sprite = new Sprite(width, height, 0xFF0000);
-		alive = true;
-		hitbox = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	public Entity(double x, double y, Sprite sprite) {
-		this.x = x;
-		this.y = y;
+		initialize(x, y);
 		this.sprite = sprite;
 		width = sprite.getWidth();
 		height = sprite.getHeight();
+		
+	}
+	
+	private void initialize(double x, double y) {
+		this.x = x;
+		this.y = y;
 		alive = true;
 		hitbox = new Rectangle((int) x, (int) y, width, height);
 	}
 	
 	public void update() {
+		time++;
 		setHitbox();
 	}
 	

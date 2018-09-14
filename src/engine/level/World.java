@@ -4,7 +4,7 @@ import implementation.Screen;
 import util.Environment;
 import util.Keyboard;
 import util.Tilemap;
-import engine.behaviors.FollowPlayer;
+import engine.behaviors.move.FollowPlayer;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.HopeStudent;
 import engine.entities.mobs.Player;

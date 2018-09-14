@@ -1,6 +1,6 @@
 package engine.entities.mobs;
 
-import engine.behaviors.FollowPlayer;
+import engine.behaviors.move.FollowPlayer;
 import engine.graphics.Sprite;
 
 public class HopeStudent extends Chaser {

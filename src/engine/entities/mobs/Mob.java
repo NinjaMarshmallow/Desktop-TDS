@@ -1,10 +1,10 @@
 package engine.entities.mobs;
 
 import implementation.Screen;
-import engine.behaviors.BounceSideways;
 import engine.behaviors.Health;
-import engine.behaviors.MoveBehavior;
-import engine.behaviors.Moveable;
+import engine.behaviors.move.BounceSideways;
+import engine.behaviors.move.MoveBehavior;
+import engine.behaviors.move.Moveable;
 import engine.entities.Entity;
 import engine.entities.gauges.Healthbar;
 import engine.graphics.Sprite;
@@ -31,6 +31,7 @@ public class Mob extends Entity implements Moveable, Health {
 	
 	private void initialize() {
 		baseSpeed = 5;
+		setXSpeed(getBaseSpeed());
 		health = maxHealth = 100;
 		healthbar = new Healthbar(this);
 		moveBehavior = new BounceSideways();

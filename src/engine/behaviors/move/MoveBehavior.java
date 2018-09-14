@@ -1,4 +1,4 @@
-package engine.behaviors;
+package engine.behaviors.move;
 
 import engine.entities.mobs.Mob;
 

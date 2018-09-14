@@ -25,7 +25,7 @@ public class Stats {
 	public final static int FLAMETHROWER_INITIAL_CLIPS = 3;
 	
 	
-	//Watermelon Data
+	// Watermelon Data
 	public final static double WATERMELON_SPEED = 6;
 	public final static double WATERMELON_RANGE = 500;
 	public final static double WATERMELON_POWER = 22;
@@ -35,8 +35,11 @@ public class Stats {
 	public final static int WATERMELON_LAUNCHER_RELOAD_TIME = 5 * Environment.getInstance().getFPS(); // 5 Seconds
 	public final static int WATERMELON_LAUNCHER_INITIAL_CLIPS = 5;
 	
-	//Player Data
+	// Player Data
 	public final static int PLAYER_SPEED = 5;
-	public final static int ENEMY_SPEED = 3;
 	
+	// Enemy Data
+	public final static int ENEMY_SPEED = 3;
+	public final static int ENEMY_MELEE_DAMAGE = 10;
+	public final static int ENEMY_MELEE_RATE = 60;	
 }
