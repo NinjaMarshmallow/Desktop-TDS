@@ -9,7 +9,7 @@ import engine.level.World;
 public class Game {
 	private boolean running = false;
 	private int currentFrame = 0;
-	private int renderLimit = 120;
+	private int renderLimit = 60;
 	private Screen screen;
 	
 	private Thread updateThread, renderThread;
@@ -19,18 +19,20 @@ public class Game {
 	private World world;
 
 	public Game() {
+		
 		mouse = new Mouse();
 		keyboard = new Keyboard();
-		world = new World(keyboard);
 		env = Environment.getInstance();
 		screen = new Screen(env.getWidth(), env.getHeight());
 		screen.addInput(keyboard, mouse);
 		screen.fill(0x0);
+		world = new World(keyboard, screen);
 		updateThread = new Thread("Update") {
 			public void run() {
 				while (running) {
 					double startTime = System.currentTimeMillis();
 					update();
+					render();
 					double endTime = System.currentTimeMillis();
 					double timeTaken = endTime - startTime;
 					double timeBetweenFrames = 1000 / env.getFPS();
@@ -48,9 +50,39 @@ public class Game {
 			}
 		};
 		renderThread = new Thread("Render") {
+			/*
+			 * rivate long last_time = System.nanoTime();
+private double ns = 1000000000/25D;
+private double delta = 0;
+@Override
+public void run() {
+    while(Universe.IsGameRunning) {
+        long time  = System.nanoTime();
+        delta += (int)(time - last_time)/ns;
+        last_time = time;
+        System.out.println(delta);
+        if(delta>=1) {
+            render();
+            delta--;
+        }
+    }
+}
+			 * 
+			 */
 			public void run() {
+				long last_time = System.nanoTime();
+				double ns = 1000000000/60D;
+				double delta = 0;
 				while (running) {
-					double startTime = System.currentTimeMillis();
+					long time  = System.nanoTime();
+			        delta += (int)(time - last_time)/ns;
+			        last_time = time;
+			        if(delta>=1) {
+			            update();
+			            delta--;
+			        }
+			        render();
+					/*double startTime = System.currentTimeMillis();
 					render();
 					double endTime = System.currentTimeMillis();
 					double timeTaken = endTime - startTime;
@@ -66,7 +98,7 @@ public class Game {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-					}
+					}*/
 				}
 			}
 		};
@@ -74,7 +106,7 @@ public class Game {
 
 	public void start() {
 		running = true;
-		updateThread.start();
+		//updateThread.start();
 		renderThread.start();
 	}
 
@@ -90,7 +122,7 @@ public class Game {
 
 	private void render() {
 		screen.clear();
-		world.draw(screen);
+		world.draw();
 		screen.render();
 	}
 }

@@ -36,10 +36,10 @@ public class Stats {
 	public final static int WATERMELON_LAUNCHER_INITIAL_CLIPS = 5;
 	
 	// Player Data
-	public final static int PLAYER_SPEED = 5;
+	public final static double PLAYER_SPEED = 3.6;
 	
 	// Enemy Data
-	public final static int ENEMY_SPEED = 3;
+	public final static double ENEMY_SPEED = 3;
 	public final static int ENEMY_MELEE_DAMAGE = 10;
 	public final static int ENEMY_MELEE_RATE = 60;	
 }

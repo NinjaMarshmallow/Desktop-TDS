@@ -14,19 +14,19 @@ import util.Color;
 import util.Environment;
 import util.Keyboard;
 import util.Mouse;
-import util.Printer;
 import engine.entities.Entity;
 import engine.graphics.Sprite;
-import engine.level.World;
-import engine.level.tile.Tile;
 
 public class Screen {
 
 	private int width, height;
 	private BufferedImage image;
 	private int[] pixels;
+	private int[] pixelBuffer;
 	private Canvas canvas;
 	private JFrame window;
+	private double xScroll, yScroll;
+	public static enum Direction { HORIZONTAL, VERTICAL };
 
 	public Screen(int width, int height) {
 		this.width = width;
@@ -41,8 +41,18 @@ public class Screen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 		window.setLocationRelativeTo(null);
-		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+		pixelBuffer = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+		pixels = new int[pixelBuffer.length];
+		canvas.createBufferStrategy(3);
 		canvas.requestFocus();
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 	
 	public void addInput(Keyboard keyboard, Mouse mouse) {
@@ -63,23 +73,16 @@ public class Screen {
 	}
 	
 	public void renderEntity(Entity e) {
-		for (int y = 0; y < e.getHeight(); y++) {
-			int yLocal = (int) e.getY() + y - e.getHeight()/2;
-			if(yLocal < 0 || yLocal >= height) continue;
-			for (int x = 0; x < e.getWidth(); x++) {
-				int xLocal = (int) e.getX() + x - e.getWidth()/2;
-				if(xLocal < 0 || xLocal >= width) continue;
-				renderPixel(xLocal, yLocal, e.readPixel(x, y));
-			}
-		}
+		renderSprite((int)e.getX(), (int)e.getY(), e.getSprite());
 	}
+	
 	
 	public void renderSprite(int x, int y, Sprite sprite) {
 		for (int startY = 0; startY < sprite.getHeight(); startY++) {
-			int yLocal = (int) y + startY;
+			int yLocal = (int) (y + startY - yScroll);
 			if(yLocal < 0 || yLocal >= height) continue;
 			for (int startX = 0; startX < sprite.getWidth(); startX++) {
-				int xLocal = (int) x + startX;
+				int xLocal = (int) (x + startX - xScroll);
 				if(xLocal < 0 || xLocal >= width) continue;
 				renderPixel(xLocal, yLocal, sprite.getPixelAt(startX, startY));
 			}
@@ -104,10 +107,8 @@ public class Screen {
 	
 	public void render() {
 		BufferStrategy bs = canvas.getBufferStrategy();
-		if (bs == null) {
-			Printer.print("Created Buffer Strategy");
-			canvas.createBufferStrategy(3);
-			return;
+		for(int i = 0; i < pixelBuffer.length; i++) {
+			pixelBuffer[i] = pixels[i];
 		}
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, window.getWidth(), window.getHeight(), null);
@@ -117,8 +118,31 @@ public class Screen {
 	
 	private void renderPixel(int x, int y, int color) {
 		if(color != Color.NO_DRAW_PINK && color != Color.NO_DRAW_BLACK) {
-			pixels[x + y * width] = color;
+			int xPosition = x;
+			int yPosition = y;
+			int arrayLocation = xPosition + yPosition * width;
+			if(arrayLocation >= 0 && arrayLocation < pixels.length) pixels[arrayLocation] = color;
 		}
-		
+	}
+	
+	private void setScroll(int xScroll, int yScroll) {
+		this.xScroll = xScroll;
+		this.yScroll = yScroll;
+	}
+	
+	public double getXScroll() {
+		return xScroll;
+	}
+	
+	public double getYScroll() {
+		return yScroll;
+	}
+	
+	public void shift(Direction dir, double vel) {
+		if(dir == Direction.HORIZONTAL) {
+			xScroll += vel;
+		} else if (dir == Direction.VERTICAL) {
+			yScroll += vel;
+		}
 	}
 }

@@ -4,7 +4,7 @@ package util;
 public class Environment {
 	private static Environment env;
 	private final int FPS = 60;
-	private final int WIDTH = 800, HEIGHT = 600;
+	private final int WIDTH = 1600, HEIGHT = 900;
 	
 	private Environment() {
 	}

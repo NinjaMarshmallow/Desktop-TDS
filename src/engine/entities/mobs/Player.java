@@ -1,5 +1,6 @@
 package engine.entities.mobs;
 
+import util.Environment;
 import util.Keyboard;
 import util.Mouse;
 import util.Stats;
@@ -13,7 +14,7 @@ public class Player extends Mob {
 	private Weapon weapon;
 	
 	public Player(Keyboard keyboard) {
-		super(100, 100, Sprite.PLAYER);
+		super(Environment.getInstance().getWidth()/2, Environment.getInstance().getHeight()/2, Sprite.PLAYER);
 		initialize(keyboard);
 	}
 	
@@ -31,6 +32,8 @@ public class Player extends Mob {
 		this.keyboard = keyboard;
 		this.weapon = new WatermelonLauncher(this);
 		baseSpeed = Stats.PLAYER_SPEED;
+		this.x -= this.getWidth()/2;
+		this.y -= this.getHeight()/2;
 	}
 	
 	public void setWeapon(Weapon weapon) {
@@ -64,8 +67,8 @@ public class Player extends Mob {
 	
 	public void handleShooting() {
 		if(Mouse.getB() == 1) {
-			double mx = Mouse.getX();
-			double my = Mouse.getY();
+			double mx = Mouse.getXWithOffset();
+			double my = Mouse.getYWithOffset();
 			double angle = angleTo(mx, my);
 			weapon.shoot(angle);
 		}

@@ -25,7 +25,7 @@ public class Projectile extends Entity {
 		this.owner = owner;
 		this.angle = angle;
 		speed = Stats.DEFAULT_SPEED;
-		range = Stats.DEFAULT_SPEED;
+		range = Stats.DEFAULT_RANGE;
 		power = Stats.DEFAULT_POWER;
 		sprite = new Sprite(10, 10, Color.ORANGE);
 		width = sprite.getWidth();
@@ -50,7 +50,7 @@ public class Projectile extends Entity {
 	
 	public void update() {
 		age = System.currentTimeMillis() - start;
-		if(!onScreen() || distanceTraveled > range) kill();
+		if(distanceTraveled > range) kill();
 		move();
 	}
 	

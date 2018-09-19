@@ -137,6 +137,10 @@ public class Entity implements Positionable, Drawable {
 	public int getSize() {
 		return height > width ? height : width;
 	}
+	
+	public Sprite getSprite() {
+		return sprite;
+	}
 
 	public boolean collides(Positionable pos) {
 		int px = (int) (pos.getX() - pos.getWidth()/2);

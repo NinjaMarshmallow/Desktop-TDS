@@ -2,7 +2,7 @@ package util;
 
 public class Printer {
 
-	private static boolean debug = true;
+	private static boolean debug = false;
 	public static final int NORMAL = 0;
 	public static final int WARNING = 1;
 	public static final int ERROR = 2;

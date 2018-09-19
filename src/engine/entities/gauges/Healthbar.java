@@ -28,7 +28,7 @@ public class Healthbar extends Entity {
 	
 	public void move() {
 		x = owner.getX();
-		y = owner.getY() - offset - height - owner.getHeight()/2;
+		y = owner.getY() - offset - height;
 	}
 	
 	private void drawRemainingHP() {
