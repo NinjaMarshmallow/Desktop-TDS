@@ -4,11 +4,15 @@ import implementation.Screen;
 import util.Environment;
 import util.Keyboard;
 import util.Mouse;
-import util.Tilemap;
+import util.Printer;
+import engine.behaviors.move.FollowPlayer;
 import engine.entities.mobs.Enemy;
+import engine.entities.mobs.HopeStudent;
 import engine.entities.mobs.Player;
 import engine.graphics.Sprite;
 import engine.level.tile.Tile;
+import engine.level.tile.TileFactory;
+import engine.level.tile.VoidTile;
 import engine.management.Mediator;
 
 public class World {
@@ -23,16 +27,16 @@ public class World {
 	private Tile[] tiles;
 	private Screen screen;
 	private int time;
-	
+
 	public World(Keyboard keyboard, Screen screen) {
 		this.keyboard = keyboard;
 		this.screen = screen;
 		mediator = Mediator.getInstance();
 		player = new Player(keyboard);
-		//enemy = new HopeStudent(500, 400);
-		//enemy.setMoveBehavior(new FollowPlayer(player));
-		//mediator.add(enemy);
-		
+		enemy = new HopeStudent(500, 400);
+		enemy.setMoveBehavior(new FollowPlayer(player));
+		mediator.add(enemy);
+
 		mediator.add(player);
 		tileSprite = Sprite.WORLD;
 		tileWidth = tileSprite.getWidth();
@@ -41,83 +45,98 @@ public class World {
 		height = tileHeight * TILE_SIZE;
 		time = 0;
 		tiles = new Tile[tileSprite.getWidth() * tileSprite.getHeight()];
-		load();
+		loadTiles();
 	}
-	
-	private void load() {
-		for(int y = 0; y < tileHeight; y++) {
-			for(int x = 0; x < tileWidth; x++) {
+
+	private void loadTiles() {
+		for (int y = 0; y < tileHeight; y++) {
+			for (int x = 0; x < tileWidth; x++) {
 				int color = tileSprite.getPixelAt(x, y);
-				tiles[x + y * tileWidth] = Tilemap.getTileFromColor(color);
+				Tile tile = TileFactory.createTile(x * TILE_SIZE, y * TILE_SIZE, color);
+				tiles[x + y * tileWidth] = tile;
+				Mediator.getInstance().add(tile);
 			}
 		}
 	}
 	
+	private Tile getTile(int x, int y) {
+		for(int i = 0; i < tiles.length; i++) {
+			Tile tile = tiles[i];
+			if(tile.getX() == x && tile.getY() == y) {
+				return tile;
+			}
+		}
+		return new VoidTile(x, y);
+	}
+
 	public void update() {
 		mediator.update();
 		scrollScreen();
 	}
-	
+
 	private void scrollScreen() {
-		screen.shift(Screen.Direction.HORIZONTAL, player.getXSpeed());
-		screen.shift(Screen.Direction.VERTICAL, player.getYSpeed());
-		Mouse.shift(Mouse.VERTICAL, player.getYSpeed());
-		Mouse.shift(Mouse.HORIZONTAL, player.getXSpeed());
-//		if(playerIsLeftEdge() && playerMovingLeft() || playerIsRightEdge() && playerMovingRight()) {
-//			
-//		}
-//		if(playerIsTopEdge() && playerMovingUp() || playerIsBottomEdge() && playerMovingDown()) {
-//			
-//		}
+		int xScroll = (int)player.getX() - screen.getWidth()/2 + player.getWidth()/2;
+		int yScroll = (int)player.getY() - screen.getHeight()/2 + player.getHeight()/2;
+		screen.setScroll(xScroll, yScroll);
+		Mouse.setOffset(xScroll, yScroll);
+		// if(playerIsLeftEdge() && playerMovingLeft() || playerIsRightEdge() &&
+		// playerMovingRight()) {
+		//
+		// }
+		// if(playerIsTopEdge() && playerMovingUp() || playerIsBottomEdge() &&
+		// playerMovingDown()) {
+		//
+		// }
 	}
+
 	private boolean playerIsTopEdge() {
-		return player.getY() - screen.getYScroll() + player.getHeight()/2 < (Environment.getInstance().getHeight() * 0.2);
+		return player.getY() - screen.getYScroll() + player.getHeight() / 2 < (Environment
+				.getInstance().getHeight() * 0.2);
 	}
-	
+
 	private boolean playerIsBottomEdge() {
-		return player.getY()  - screen.getYScroll() + player.getHeight()/2 > (Environment.getInstance().getHeight() * 0.8);
+		return player.getY() - screen.getYScroll() + player.getHeight() / 2 > (Environment
+				.getInstance().getHeight() * 0.8);
 	}
-	
+
 	private boolean playerIsLeftEdge() {
-		return player.getX() - screen.getXScroll() + player.getWidth()/2 < (Environment.getInstance().getWidth() * 0.2);
+		return player.getX() - screen.getXScroll() + player.getWidth() / 2 < (Environment
+				.getInstance().getWidth() * 0.2);
 	}
-	
+
 	private boolean playerIsRightEdge() {
-		return player.getX() - screen.getXScroll() + player.getWidth()/2 > (Environment.getInstance().getWidth() * 0.8);
+		return player.getX() - screen.getXScroll() + player.getWidth() / 2 > (Environment
+				.getInstance().getWidth() * 0.8);
 	}
-	
+
 	private boolean playerMovingUp() {
 		return player.getYSpeed() < 0;
 	}
-	
+
 	private boolean playerMovingDown() {
 		return player.getYSpeed() > 0;
 	}
-	
+
 	private boolean playerMovingLeft() {
 		return player.getXSpeed() < 0;
 	}
-	
+
 	private boolean playerMovingRight() {
 		return player.getXSpeed() > 0;
 	}
-	
+
 	public void draw() {
-//		int x0 = (xScroll -  TILE_SIZE) / TILE_SIZE;
-//		int y0 = (yScroll - TILE_SIZE) / TILE_SIZE;
-//		int x1 = (xScroll + Environment.getInstance().getWidth() + 16) / 16;
-//		int y1 = (yScroll + Environment.getInstance().getHeight() + 16) / 16;
-//		for(int y = y0; y < y1; y++) {
-//			for(int x = x0; x < x0; x++) {
-//				screen.renderSprite(x, y, tiles[x + y * tileWidth].getSprite());
-//			}
-//		}
-		for(int y = 0; y < tileHeight; y++) {
-			int yp = y * TILE_SIZE;
-			for(int x = 0; x < tileWidth; x++) {
-				int xp = x * TILE_SIZE;
-				screen.renderSprite(xp, yp, tiles[x + y * tileWidth].getSprite());
-			}
+		// int x0 = (xScroll - TILE_SIZE) / TILE_SIZE;
+		// int y0 = (yScroll - TILE_SIZE) / TILE_SIZE;
+		// int x1 = (xScroll + Environment.getInstance().getWidth() + 16) / 16;
+		// int y1 = (yScroll + Environment.getInstance().getHeight() + 16) / 16;
+		// for(int y = y0; y < y1; y++) {
+		// for(int x = x0; x < x0; x++) {
+		// screen.renderSprite(x, y, tiles[x + y * tileWidth].getSprite());
+		// }
+		// }
+		for(int i = 0; i < tiles.length; i++) {
+			screen.renderTile(tiles[i]);
 		}
 		mediator.drawEntities(screen);
 		mediator.drawEnemies(screen);

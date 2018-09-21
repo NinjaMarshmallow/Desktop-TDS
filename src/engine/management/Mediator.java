@@ -9,11 +9,11 @@ import java.util.List;
 import util.Printer;
 import engine.behaviors.Drawable;
 import engine.behaviors.PlayerObserver;
-import engine.entities.Entity;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
 import engine.graphics.AnimatedSprite;
+import engine.level.tile.Tile;
 
 public class Mediator {
 	private static final int PROJECTILE_LIMIT = 200;
@@ -22,8 +22,9 @@ public class Mediator {
 	private List<Projectile> projectiles;
 	private List<Enemy> enemies;
 	private List<Player> players;
+	private List<Tile> tiles;
 	private List<AnimatedSprite> animations;
-	
+
 	private List<PlayerObserver> playerObservers;
 	private static Mediator instance;
 
@@ -39,24 +40,25 @@ public class Mediator {
 		enemies = new ArrayList<Enemy>();
 		players = new ArrayList<Player>();
 		animations = new ArrayList<AnimatedSprite>();
+		tiles = new ArrayList<Tile>();
 		lists = new ArrayList<List<?>>();
 		lists.add(entities);
 		lists.add(projectiles);
 		lists.add(enemies);
 		lists.add(players);
-		
+		lists.add(tiles);
+
 		playerObservers = new ArrayList<PlayerObserver>();
 
 	}
 
 	public void update() {
 		Printer.print(projectiles.size());
-		updateList(entities);
-		updateList(projectiles);
-		updateList(enemies);
-		updateList(players);
-		updateList(animations);
+		for (int i = 0; i < lists.size(); i++) {
+			updateList(lists.get(i));
+		}
 		collideProjectilesWithEnemies();
+		collidePlayerWithSolids();
 		// collideEnemiesWithPlayer();
 
 	}
@@ -96,6 +98,29 @@ public class Mediator {
 		}
 	}
 
+	private void collidePlayerWithSolids() {
+		for (int p = 0; p < players.size(); p++) {
+			for (int t = 0; t < tiles.size(); t++) {
+				Tile tile = tiles.get(t);
+				if(tile.isTraversable()) continue;
+				if(!tile.isSolid()) continue;
+				Player player = players.get(p);
+				if (player.collides(tile)) {
+					boolean movingUp = player.getYSpeed() < 0;
+					boolean movingDown = player.getYSpeed() > 0;
+					boolean movingLeft = player.getXSpeed() < 0;
+					boolean movingRight = player.getXSpeed() > 0;
+					if(movingUp) {
+						player.setY(tile.getY() + tile.getHeight());
+						
+					}
+				}
+				
+				
+			}
+		}
+	}
+
 	public void add(Drawable e) {
 		if (e instanceof Projectile) {
 			if (projectiles.size() < PROJECTILE_LIMIT)
@@ -104,6 +129,8 @@ public class Mediator {
 			enemies.add((Enemy) e);
 		} else if (e instanceof Player) {
 			players.add((Player) e);
+		} else if (e instanceof Tile) {
+			tiles.add((Tile)e);
 		} else {
 			entities.add(e);
 		}
@@ -153,9 +180,9 @@ public class Mediator {
 	public void addPlayersObserver(PlayerObserver playerObserver) {
 		playerObservers.add(playerObserver);
 	}
-	
+
 	public void notifyPlayerObservers() {
-		for(int i = 0;i < playerObservers.size(); i++) {
+		for (int i = 0; i < playerObservers.size(); i++) {
 			PlayerObserver en = playerObservers.get(i);
 			en.notify(new ArrayList<Player>(players));
 		}

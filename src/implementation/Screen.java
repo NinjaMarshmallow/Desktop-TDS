@@ -14,8 +14,10 @@ import util.Color;
 import util.Environment;
 import util.Keyboard;
 import util.Mouse;
+import util.Printer;
 import engine.entities.Entity;
 import engine.graphics.Sprite;
+import engine.level.tile.Tile;
 
 public class Screen {
 
@@ -76,6 +78,10 @@ public class Screen {
 		renderSprite((int)e.getX(), (int)e.getY(), e.getSprite());
 	}
 	
+	public void renderTile(Tile t) {
+		renderSprite((int)t.getX(), (int)t.getY(), t.getSprite());
+	}
+	
 	
 	public void renderSprite(int x, int y, Sprite sprite) {
 		for (int startY = 0; startY < sprite.getHeight(); startY++) {
@@ -125,7 +131,7 @@ public class Screen {
 		}
 	}
 	
-	private void setScroll(int xScroll, int yScroll) {
+	public void setScroll(int xScroll, int yScroll) {
 		this.xScroll = xScroll;
 		this.yScroll = yScroll;
 	}

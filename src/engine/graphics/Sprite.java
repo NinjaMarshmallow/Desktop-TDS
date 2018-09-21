@@ -15,7 +15,8 @@ public class Sprite {
 	// Entity Sprites
 	public static Sprite EMMA = new Sprite("/mobs/emma.png");
 	public static Sprite TYLER = new Sprite("/mobs/tyler.png");
-	public static Sprite PLAYER = EMMA;
+	
+	public static Sprite PLAYER = TYLER;
 
 	public static Sprite HOPE_STUDENT = new Sprite("/mobs/hope_student.png");
 
@@ -34,12 +35,9 @@ public class Sprite {
 	public static Sprite EXPLOSION_3 = new Sprite("/anim/fire/fire03.png");
 
 	// Watermelon Explosion
-	public static Sprite MELON_EXPLOSION_1 = new Sprite(
-			"/anim/melon/melon_explosion01.png");
-	public static Sprite MELON_EXPLOSION_2 = new Sprite(
-			"/anim/melon/melon_explosion02.png");
-	public static Sprite MELON_EXPLOSION_3 = new Sprite(
-			"/anim/melon/melon_explosion03.png");
+	public static Sprite MELON_EXPLOSION_1 = new Sprite("/anim/melon/melon_explosion01.png");
+	public static Sprite MELON_EXPLOSION_2 = new Sprite("/anim/melon/melon_explosion02.png");
+	public static Sprite MELON_EXPLOSION_3 = new Sprite("/anim/melon/melon_explosion03.png");
 
 	// Tiles
 	public static Sprite VOID_TILE = new Sprite(World.TILE_SIZE,
@@ -54,8 +52,6 @@ public class Sprite {
 	public static Sprite FLOWER_TILE = new Sprite("/tiles/flower.png", GRASS_TILE);
 	public static Sprite ALT_GRASS_TILE = new Sprite("/tiles/grass2.png");
 	
-	
-
 	public Sprite(int width, int height, int color) {
 		this.width = width;
 		this.height = height;
@@ -74,7 +70,6 @@ public class Sprite {
 	}
 	
 	public Sprite(String path, Sprite background) {
-		
 		load(path);
 		if(width != background.getWidth() || height != background.getHeight()) {
 			throw new UnsupportedOperationException("Width and Height must match in order to create an overlay Sprite");
@@ -86,9 +81,7 @@ public class Sprite {
 					pixels[x + y * width] = background.getPixelAt(x, y);
 				}
 			}
-			 
 		}
-		
 	}
 
 	public void fill(int color) {
@@ -130,10 +123,7 @@ public class Sprite {
 			image.getRGB(0, 0, width, height, pixels, 0, width);
 		} catch (Exception q) {
 			q.printStackTrace();
-			System.out
-					.println("File "
-							+ path
-							+ " not found! Using a blank orange 50px by 50px Sprite instead...");
+			System.out.println("File " + path + " not found! Using a blank orange 50px by 50px Sprite instead...");
 			width = height = 50;
 			pixels = new int[width * height];
 			fill(Color.ORANGE);
