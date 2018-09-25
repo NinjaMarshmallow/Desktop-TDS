@@ -61,7 +61,6 @@ public class Mediator {
 			updateList(lists.get(i));
 		}
 		collideProjectilesWithEnemies();
-		//collidePlayerWithSolids();
 		collideProjectilesWithSolids();
 		// collideEnemiesWithPlayer();
 
@@ -101,41 +100,6 @@ public class Mediator {
 			}
 		}
 	}
-
-//	private void collidePlayerWithSolids() {
-//		for (int p = 0; p < players.size(); p++) {
-//			for (int t = 0; t < tiles.size(); t++) {
-//				Tile tile = tiles.get(t);
-//				if (tile.isTraversable())
-//					continue;
-//				if (!tile.isSolid())
-//					continue;
-//				Player player = players.get(p);
-//				if (player.collides(tile)) {
-//					if (player.collideX(tile)) {
-//						boolean movingLeft = player.getXSpeed() < 0;
-//						boolean movingRight = player.getXSpeed() > 0;
-//
-//						if (movingLeft) {
-//							player.setX(player.getX() - player.getXSpeed());
-//						} else if (movingRight) {
-//							player.setX(player.getX() - player.getXSpeed());
-//						}
-//					}
-//					if (player.collideY(tile)) {
-//						boolean movingUp = player.getYSpeed() < 0;
-//						boolean movingDown = player.getYSpeed() > 0;
-//						if (movingUp) {
-//							player.setY(player.getY() - player.getYSpeed());
-//						} else if (movingDown) {
-//							player.setY(player.getY() - player.getYSpeed());
-//						}
-//
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	private void collideProjectilesWithSolids() {
 		for (int i = 0; i < projectiles.size(); i++) {

@@ -15,6 +15,7 @@ public class Sprite {
 	// Entity Sprites
 	public static Sprite EMMA = new Sprite("/mobs/emma.png");
 	public static Sprite TYLER = new Sprite("/mobs/tyler.png");
+	public static Sprite PURPLE_BOX = new Sprite("/mobs/box.png");
 	
 	public static Sprite PLAYER = TYLER;
 

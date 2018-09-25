@@ -137,15 +137,4 @@ public class Tile implements ITile, Positionable, Drawable {
 	public boolean isAlive() {
 		return true;
 	}
-
-	public boolean collideX(Positionable pos) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean collideY(Positionable pos) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

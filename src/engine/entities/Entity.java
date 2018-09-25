@@ -58,7 +58,7 @@ public class Entity implements Positionable, Drawable {
 	}
 	
 	private void setHitbox() {
-		hitbox.setBounds((int)(x - width/2), (int)(y - height/2), width, height);
+		hitbox.setBounds((int)x, (int)y, width, height);
 	}
 	
 	public Rectangle getHitbox() {
@@ -119,7 +119,7 @@ public class Entity implements Positionable, Drawable {
 
 	public void draw(Screen screen) {
 		screen.renderEntity(this);
-		//screen.renderHitbox(hitbox);
+		screen.renderHitbox(hitbox);
 	}
 
 	public int readPixel(int x, int y) {
@@ -145,7 +145,7 @@ public class Entity implements Positionable, Drawable {
 	public boolean collides(Positionable pos) {
 		int px = (int) (pos.getX() - pos.getWidth()/2);
 		int py = (int) (pos.getY() - pos.getHeight()/2);
-		Rectangle thisRect = new Rectangle((int) x - width/2, (int) y - height/2, width, height);
+		Rectangle thisRect = new Rectangle((int) x, (int) y, width, height);
 		Rectangle otherRect = new Rectangle(px, py, pos.getWidth(), pos.getHeight());
 		return thisRect.intersects(otherRect);
 	}
@@ -157,27 +157,5 @@ public class Entity implements Positionable, Drawable {
 			return false;
 		}
 		return true;
-	}
-
-	public boolean collideX(Positionable pos) {
-		int selfx1 = (int) x - height/2;
-		int selfx2 = (int) x + height/2;
-		int px1 = (int) (pos.getX() - pos.getHeight()/2);
-		int px2 = px1 + pos.getHeight();
-		if(selfx1 < px1 && px1 < selfx2 || selfx1 < px2 && px2 < selfx2 ) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean collideY(Positionable pos) {
-		int selfy1 = (int) y - height/2;
-		int selfy2 = (int) y + height/2;
-		int py1 = (int) (pos.getY() - pos.getHeight()/2);
-		int py2 = py1 + pos.getHeight();
-		if(selfy1 < py1 && py1 < selfy2 || selfy1 < py2 && py2 < selfy2 ) {
-			return true;
-		}
-		return false;
 	}
 }

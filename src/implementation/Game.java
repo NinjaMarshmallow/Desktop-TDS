@@ -11,15 +11,13 @@ public class Game {
 	private int currentFrame = 0;
 	private int renderLimit = 60;
 	private Screen screen;
-	
-	private Thread updateThread, renderThread;
+	private Thread updateThread, thread;
 	private Environment env;
 	private Keyboard keyboard;
 	private Mouse mouse;
 	private World world;
 
 	public Game() {
-		
 		mouse = new Mouse();
 		keyboard = new Keyboard();
 		env = Environment.getInstance();
@@ -49,26 +47,7 @@ public class Game {
 				}
 			}
 		};
-		renderThread = new Thread("Render") {
-			/*
-			 * rivate long last_time = System.nanoTime();
-private double ns = 1000000000/25D;
-private double delta = 0;
-@Override
-public void run() {
-    while(Universe.IsGameRunning) {
-        long time  = System.nanoTime();
-        delta += (int)(time - last_time)/ns;
-        last_time = time;
-        System.out.println(delta);
-        if(delta>=1) {
-            render();
-            delta--;
-        }
-    }
-}
-			 * 
-			 */
+		thread = new Thread("Render") {
 			public void run() {
 				long last_time = System.nanoTime();
 				double ns = 1000000000/60D;
@@ -82,23 +61,6 @@ public void run() {
 			            delta--;
 			        }
 			        render();
-					/*double startTime = System.currentTimeMillis();
-					render();
-					double endTime = System.currentTimeMillis();
-					double timeTaken = endTime - startTime;
-					double timeBetweenFrames = 1000 / renderLimit;
-					if (timeTaken > timeBetweenFrames) {
-						if (renderLimit > 30) renderLimit -= 30;
-						Printer.print("Rendering is taking too long. Switching to " + renderLimit + " FPS", Printer.FLAGS.WARNING);
-						
-					} else {
-						int sleepTime = (int) (timeBetweenFrames - timeTaken);
-						try {
-							Thread.sleep(sleepTime);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}*/
 				}
 			}
 		};
@@ -107,7 +69,7 @@ public void run() {
 	public void start() {
 		running = true;
 		//updateThread.start();
-		renderThread.start();
+		thread.start();
 	}
 
 	public void stop() {

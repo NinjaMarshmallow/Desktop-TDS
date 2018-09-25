@@ -79,7 +79,7 @@ public class Screen {
 	}
 	
 	public void renderTile(Tile t) {
-		renderSprite((int)t.getX(), (int)t.getY(), t.getSprite());
+		renderSprite((int)t.getX() - t.getWidth()/2, (int)t.getY() - t.getHeight()/2, t.getSprite());
 	}
 	
 	
@@ -96,18 +96,20 @@ public class Screen {
 	}
 	
 	public void renderHitbox(Rectangle rect) {
-		for(int y = rect.y; y < rect.y + rect.height; y++) {
-			if(rect.y < 0 || rect.y + rect.height > Environment.getInstance().getHeight()) continue;
-			if(rect.x < 0 || rect.x + rect.width > Environment.getInstance().getWidth()) continue;
-			pixels[rect.x + y * width] = 0x0;
-			pixels[rect.x + rect.width + y * width] = 0x0;
+		for(int y = 0; y < rect.height; y++) {
+			int xLocal = (int) (rect.x - xScroll);
+			int yLocal = (int) (rect.y + y - yScroll);
+			if(yLocal < 0 || yLocal + rect.height > Environment.getInstance().getHeight()) continue;
+			renderPixel(xLocal, yLocal, 0x0);
+			renderPixel(xLocal + rect.width, yLocal, 0x0);
 		}
 		
-		for(int x = rect.x; x < rect.x + rect.width; x++) {
-			if(rect.x < 0 || rect.x + rect.width > Environment.getInstance().getWidth()) continue;
-			if(rect.y < 0 || rect.y + rect.height > Environment.getInstance().getHeight()) continue;
-			pixels[x + rect.y * width] = 0x0;
-			pixels[x + (rect.y + rect.height) * width] = 0x0;
+		for(int x = 0; x < rect.width; x++) {
+			int xLocal = (int) (rect.x + x - xScroll);
+			int yLocal = (int) (rect.y - yScroll);
+			if(xLocal < 0 || xLocal + rect.width > Environment.getInstance().getWidth()) continue;
+			renderPixel(xLocal, yLocal, 0x0);
+			renderPixel(xLocal, yLocal + rect.height, 0x0);
 		}
 	}
 	
