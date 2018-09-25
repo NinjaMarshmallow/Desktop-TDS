@@ -1,18 +1,26 @@
 package engine.entities.mobs;
 
 import implementation.Screen;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import engine.behaviors.Health;
+import engine.behaviors.TileObserver;
 import engine.behaviors.move.BounceSideways;
 import engine.behaviors.move.MoveBehavior;
 import engine.behaviors.move.Moveable;
 import engine.entities.Entity;
 import engine.entities.gauges.Healthbar;
 import engine.graphics.Sprite;
+import engine.level.tile.Tile;
+import engine.management.Mediator;
 
-public class Mob extends Entity implements Moveable, Health {
+public class Mob extends Entity implements Moveable, Health, TileObserver {
 	protected double baseSpeed, xSpeed, ySpeed, health, maxHealth;
 	protected Healthbar healthbar;
 	protected MoveBehavior moveBehavior;
+	protected List<Tile> tiles;
 	
 	public Mob() {
 		super();
@@ -35,6 +43,8 @@ public class Mob extends Entity implements Moveable, Health {
 		health = maxHealth = 100;
 		healthbar = new Healthbar(this);
 		moveBehavior = new BounceSideways();
+		Mediator.getInstance().addTileObserver(this);
+		tiles = new ArrayList<Tile>();
 	}
 	
 	public void update() {
@@ -46,8 +56,13 @@ public class Mob extends Entity implements Moveable, Health {
 	
 	public void move() {
 		moveBehavior.execute(this);
-		this.x += getXSpeed();
-		this.y += getYSpeed();
+		if(!collision(getXSpeed(), 0)) {
+			this.x += getXSpeed();
+			
+		}
+		if(!collision(0, getYSpeed())) {
+			this.y += getYSpeed();
+		}
 	}
 	
 	public double getBaseSpeed() {
@@ -103,5 +118,26 @@ public class Mob extends Entity implements Moveable, Health {
 	public void draw(Screen screen) {
 		super.draw(screen);
 		screen.renderEntity(healthbar);
+	}
+
+	public void notifyOfTiles(List<Tile> tiles) {
+		this.tiles = tiles;
+	}
+	
+	private boolean collision(double xa, double ya) {
+		boolean result = false;
+		this.x += xa;
+		this.y += ya;
+		for(int i = 0; i < tiles.size(); i++) {
+			Tile tile = tiles.get(i);
+			if(!tile.isTraversable()) {
+				if (collides(tile)) {
+					result = true;
+				}
+			}
+		}
+		this.x -= xa;
+		this.y -= ya;
+		return result;
 	}
 }

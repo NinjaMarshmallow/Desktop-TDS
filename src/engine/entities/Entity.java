@@ -158,4 +158,26 @@ public class Entity implements Positionable, Drawable {
 		}
 		return true;
 	}
+
+	public boolean collideX(Positionable pos) {
+		int selfx1 = (int) x - height/2;
+		int selfx2 = (int) x + height/2;
+		int px1 = (int) (pos.getX() - pos.getHeight()/2);
+		int px2 = px1 + pos.getHeight();
+		if(selfx1 < px1 && px1 < selfx2 || selfx1 < px2 && px2 < selfx2 ) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean collideY(Positionable pos) {
+		int selfy1 = (int) y - height/2;
+		int selfy2 = (int) y + height/2;
+		int py1 = (int) (pos.getY() - pos.getHeight()/2);
+		int py2 = py1 + pos.getHeight();
+		if(selfy1 < py1 && py1 < selfy2 || selfy1 < py2 && py2 < selfy2 ) {
+			return true;
+		}
+		return false;
+	}
 }

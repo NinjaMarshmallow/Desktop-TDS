@@ -28,7 +28,7 @@ public class Enemy extends Mob implements PlayerObserver {
 		players = new ArrayList<Player>();
 	}
 	
-	public void notify(List<Player> players) {
+	public void notifyOfPlayers(List<Player> players) {
 		Printer.print("New Player List!");
 		this.players = players;
 	}

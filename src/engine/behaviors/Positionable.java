@@ -13,5 +13,7 @@ public interface Positionable {
 	public double angleTo(Positionable pos);
 	public double angleTo(double x, double y);
 	public boolean collides(Positionable pos);
+	public boolean collideX(Positionable pos);
+	public boolean collideY(Positionable pos);
 	public void update();
 }

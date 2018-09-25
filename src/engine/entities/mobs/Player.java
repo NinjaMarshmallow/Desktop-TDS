@@ -5,6 +5,7 @@ import util.Keyboard;
 import util.Mouse;
 import util.Stats;
 import engine.behaviors.Weapon;
+import engine.behaviors.move.KeyboardControlled;
 import engine.entities.weapons.WatermelonLauncher;
 import engine.graphics.Sprite;
 
@@ -30,6 +31,7 @@ public class Player extends Mob {
 	
 	private void initialize(Keyboard keyboard) {
 		this.keyboard = keyboard;
+		this.setMoveBehavior(new KeyboardControlled(keyboard));
 		this.weapon = new WatermelonLauncher(this);
 		baseSpeed = Stats.PLAYER_SPEED;
 		this.x -= this.getWidth()/2;
@@ -45,24 +47,6 @@ public class Player extends Mob {
 		handleShooting();
 		super.update();
 		
-	}
-	
-	public void move() {
-		xSpeed = ySpeed = 0;
-		if (keyboard.up) {
-			ySpeed = -baseSpeed;
-		}
-		if (keyboard.down) {
-			ySpeed = baseSpeed;
-		}
-		if (keyboard.left) {
-			xSpeed = -baseSpeed;
-		}
-		if (keyboard.right) {
-			xSpeed = baseSpeed;
-		}
-		this.x += xSpeed;
-		this.y += ySpeed;
 	}
 	
 	public void handleShooting() {

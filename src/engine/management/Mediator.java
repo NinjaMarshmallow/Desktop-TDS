@@ -9,6 +9,7 @@ import java.util.List;
 import util.Printer;
 import engine.behaviors.Drawable;
 import engine.behaviors.PlayerObserver;
+import engine.behaviors.TileObserver;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
@@ -26,6 +27,7 @@ public class Mediator {
 	private List<AnimatedSprite> animations;
 
 	private List<PlayerObserver> playerObservers;
+	private List<TileObserver> tileObservers;
 	private static Mediator instance;
 
 	public static Mediator getInstance() {
@@ -49,6 +51,7 @@ public class Mediator {
 		lists.add(tiles);
 
 		playerObservers = new ArrayList<PlayerObserver>();
+		tileObservers = new ArrayList<TileObserver>();
 
 	}
 
@@ -58,7 +61,8 @@ public class Mediator {
 			updateList(lists.get(i));
 		}
 		collideProjectilesWithEnemies();
-		collidePlayerWithSolids();
+		//collidePlayerWithSolids();
+		collideProjectilesWithSolids();
 		// collideEnemiesWithPlayer();
 
 	}
@@ -80,7 +84,7 @@ public class Mediator {
 			Printer.print("Error caught and ignored");
 		}
 		notifyPlayerObservers();
-
+		notifyTileObservers();
 	}
 
 	private void collideProjectilesWithEnemies() {
@@ -98,25 +102,53 @@ public class Mediator {
 		}
 	}
 
-	private void collidePlayerWithSolids() {
-		for (int p = 0; p < players.size(); p++) {
+//	private void collidePlayerWithSolids() {
+//		for (int p = 0; p < players.size(); p++) {
+//			for (int t = 0; t < tiles.size(); t++) {
+//				Tile tile = tiles.get(t);
+//				if (tile.isTraversable())
+//					continue;
+//				if (!tile.isSolid())
+//					continue;
+//				Player player = players.get(p);
+//				if (player.collides(tile)) {
+//					if (player.collideX(tile)) {
+//						boolean movingLeft = player.getXSpeed() < 0;
+//						boolean movingRight = player.getXSpeed() > 0;
+//
+//						if (movingLeft) {
+//							player.setX(player.getX() - player.getXSpeed());
+//						} else if (movingRight) {
+//							player.setX(player.getX() - player.getXSpeed());
+//						}
+//					}
+//					if (player.collideY(tile)) {
+//						boolean movingUp = player.getYSpeed() < 0;
+//						boolean movingDown = player.getYSpeed() > 0;
+//						if (movingUp) {
+//							player.setY(player.getY() - player.getYSpeed());
+//						} else if (movingDown) {
+//							player.setY(player.getY() - player.getYSpeed());
+//						}
+//
+//					}
+//				}
+//			}
+//		}
+//	}
+
+	private void collideProjectilesWithSolids() {
+		for (int i = 0; i < projectiles.size(); i++) {
 			for (int t = 0; t < tiles.size(); t++) {
 				Tile tile = tiles.get(t);
-				if(tile.isTraversable()) continue;
-				if(!tile.isSolid()) continue;
-				Player player = players.get(p);
-				if (player.collides(tile)) {
-					boolean movingUp = player.getYSpeed() < 0;
-					boolean movingDown = player.getYSpeed() > 0;
-					boolean movingLeft = player.getXSpeed() < 0;
-					boolean movingRight = player.getXSpeed() > 0;
-					if(movingUp) {
-						player.setY(tile.getY() + tile.getHeight());
-						
-					}
+				if (tile.isTraversable())
+					continue;
+				if (!tile.isSolid())
+					continue;
+				Projectile projectile = projectiles.get(i);
+				if (projectile.collides(tile)) {
+					projectile.kill();
 				}
-				
-				
 			}
 		}
 	}
@@ -130,7 +162,7 @@ public class Mediator {
 		} else if (e instanceof Player) {
 			players.add((Player) e);
 		} else if (e instanceof Tile) {
-			tiles.add((Tile)e);
+			tiles.add((Tile) e);
 		} else {
 			entities.add(e);
 		}
@@ -143,6 +175,8 @@ public class Mediator {
 			enemies.remove(e);
 		} else if (e instanceof Player) {
 			players.remove(e);
+		} else if (e instanceof Tile) {
+			tiles.remove(e);
 		} else {
 			entities.remove(e);
 		}
@@ -180,11 +214,21 @@ public class Mediator {
 	public void addPlayersObserver(PlayerObserver playerObserver) {
 		playerObservers.add(playerObserver);
 	}
+	
+	public void addTileObserver(TileObserver tileObserver) {
+		tileObservers.add(tileObserver);
+	}
 
 	public void notifyPlayerObservers() {
 		for (int i = 0; i < playerObservers.size(); i++) {
 			PlayerObserver en = playerObservers.get(i);
-			en.notify(new ArrayList<Player>(players));
+			en.notifyOfPlayers(new ArrayList<Player>(players));
+		}
+	}
+	public void notifyTileObservers() {
+		for (int i = 0; i < tileObservers.size(); i++) {
+			TileObserver en = tileObservers.get(i);
+			en.notifyOfTiles(new ArrayList<Tile>(tiles));
 		}
 	}
 }

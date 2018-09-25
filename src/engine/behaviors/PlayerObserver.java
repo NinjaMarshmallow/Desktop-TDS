@@ -6,6 +6,6 @@ import engine.entities.mobs.Player;
 
 public interface PlayerObserver {
 	
-	public void notify(List<Player> players);
+	public void notifyOfPlayers(List<Player> players);
 
 }
