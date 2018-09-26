@@ -16,7 +16,7 @@ import engine.level.tile.TileFactory;
 import engine.level.tile.VoidTile;
 import engine.management.Mediator;
 
-public class World {
+public class Level {
 	public static final int TILE_SIZE = Sprite.BRICK_TILE.getSize();
 	private double x, y;
 	private int width, height, tileWidth, tileHeight;
@@ -24,34 +24,32 @@ public class World {
 	private Player player;
 	private Enemy enemy;
 	private Spawner spawner;
-	private Mediator mediator;
-	private Sprite tileSprite;
+	private Sprite tilemap;
 	private Tile[] tiles;
 	private Screen screen;
 	private int time;
 
-	public World(Keyboard keyboard, Screen screen) {
+	public Level(Keyboard keyboard, Screen screen, Sprite tilemap) {
 		this.keyboard = keyboard;
 		this.screen = screen;
-		mediator = Mediator.getInstance();
+		this.tilemap = tilemap;
+		tileWidth = tilemap.getWidth();
+		tileHeight = tilemap.getHeight();
+		width = tileWidth * TILE_SIZE;
+		height = tileHeight * TILE_SIZE;
 		player = new Player(keyboard);
 		enemy = new HopeStudent(500, 400);
 		enemy.setMoveBehavior(new FollowPlayer(player));
 		spawner = new Spawner(100, 100, new EnemySpawnBehavior());
-		tileSprite = Sprite.WORLD;
-		tileWidth = tileSprite.getWidth();
-		tileHeight = tileSprite.getHeight();
-		width = tileWidth * TILE_SIZE;
-		height = tileHeight * TILE_SIZE;
 		time = 0;
-		tiles = new Tile[tileSprite.getWidth() * tileSprite.getHeight()];
+		tiles = new Tile[tilemap.getWidth() * tilemap.getHeight()];
 		loadTiles();
 	}
 
 	private void loadTiles() {
 		for (int y = 0; y < tileHeight; y++) {
 			for (int x = 0; x < tileWidth; x++) {
-				int color = tileSprite.getPixelAt(x, y);
+				int color = tilemap.getPixelAt(x, y);
 				Tile tile = TileFactory.createTile(x * TILE_SIZE, y * TILE_SIZE, color);
 				tiles[x + y * tileWidth] = tile;
 				Mediator.getInstance().add(tile);
@@ -70,7 +68,7 @@ public class World {
 	}
 
 	public void update() {
-		mediator.update();
+		Mediator.getInstance().update();
 		scrollScreen();
 	}
 
@@ -138,6 +136,7 @@ public class World {
 		for(int i = 0; i < tiles.length; i++) {
 			screen.renderTile(tiles[i]);
 		}
+		Mediator mediator = Mediator.getInstance();
 		mediator.drawEntities(screen);
 		mediator.drawEnemies(screen);
 		mediator.drawPlayers(screen);

@@ -3,7 +3,8 @@ import util.Environment;
 import util.Keyboard;
 import util.Mouse;
 import util.Printer;
-import engine.level.World;
+import engine.graphics.Sprite;
+import engine.level.Level;
 
 
 public class Game {
@@ -15,7 +16,7 @@ public class Game {
 	private Environment env;
 	private Keyboard keyboard;
 	private Mouse mouse;
-	private World world;
+	private Level world;
 
 	public Game() {
 		mouse = new Mouse();
@@ -24,7 +25,7 @@ public class Game {
 		screen = new Screen(env.getWidth(), env.getHeight());
 		screen.addInput(keyboard, mouse);
 		screen.fill(0x0);
-		world = new World(keyboard, screen);
+		world = new Level(keyboard, screen, Sprite.LEVEL0);
 		updateThread = new Thread("Update") {
 			public void run() {
 				while (running) {

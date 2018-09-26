@@ -6,7 +6,7 @@ import util.Mouse;
 import util.Stats;
 import engine.behaviors.Weapon;
 import engine.behaviors.move.KeyboardControlled;
-import engine.entities.weapons.WatermelonLauncher;
+import engine.entities.weapons.LightningShooter;
 import engine.graphics.Sprite;
 
 public class Player extends Mob {
@@ -32,7 +32,7 @@ public class Player extends Mob {
 	private void initialize(Keyboard keyboard) {
 		this.keyboard = keyboard;
 		this.setMoveBehavior(new KeyboardControlled(keyboard));
-		this.weapon = new WatermelonLauncher(this);
+		this.weapon = new LightningShooter(this);
 		baseSpeed = Stats.PLAYER_SPEED;
 		this.x -= this.getWidth()/2;
 		this.y -= this.getHeight()/2;

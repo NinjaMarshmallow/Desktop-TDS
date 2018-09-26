@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Color;
+import util.Environment;
 import util.Printer;
 import util.Stats;
 import engine.behaviors.PlayerObserver;
@@ -37,7 +38,7 @@ public class Enemy extends Mob implements PlayerObserver {
 		super.update();
 		for(int i =0; i < players.size(); i++) {
 			Player player = players.get(i);
-			if(collides(player) && time % meleeRate == 0) {
+			if(collides(player) && time % Environment.getInstance().getFPS()/meleeRate == 0) {
 				player.damage(meleeDamage);
 			}
 		}

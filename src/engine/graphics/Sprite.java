@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import util.Color;
-import engine.level.World;
+import engine.level.Level;
 
 public class Sprite {
 
@@ -22,12 +22,14 @@ public class Sprite {
 
 	public static Sprite HOPE_STUDENT = new Sprite("/mobs/hope_student.png");
 
-	public static Sprite WORLD = new Sprite("/maps/world.png");
+	public static Sprite LEVEL0 = new Sprite("/maps/level0.png");
+	public static Sprite LEVEL1 = new Sprite("/maps/level1.png");
 	public static Sprite MAP = new Sprite("/maps/map.png");
 
 	// Projectile Sprites
 	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
 	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
+	public static Sprite LIGHTNING = new Sprite("/projectiles/bolt.png");
 
 	// Animation Sprites
 
@@ -40,10 +42,16 @@ public class Sprite {
 	public static Sprite MELON_EXPLOSION_1 = new Sprite("/anim/melon/melon_explosion01.png");
 	public static Sprite MELON_EXPLOSION_2 = new Sprite("/anim/melon/melon_explosion02.png");
 	public static Sprite MELON_EXPLOSION_3 = new Sprite("/anim/melon/melon_explosion03.png");
+	
+	//Electric Explosion
+	public static Sprite ELECTRIC_EXPLOSION_1 = new Sprite("/anim/electric/electric01.png");
+	public static Sprite ELECTRIC_EXPLOSION_2 = new Sprite("/anim/electric/electric02.png");
+	public static Sprite ELECTRIC_EXPLOSION_3 = new Sprite("/anim/electric/electric03.png");
+	
 
 	// Tiles
-	public static Sprite VOID_TILE = new Sprite(World.TILE_SIZE,
-			World.TILE_SIZE, Color.PINK);
+	public static Sprite VOID_TILE = new Sprite(Level.TILE_SIZE,
+			Level.TILE_SIZE, Color.PINK);
 	public static Sprite GRASS_TILE = new Sprite("/tiles/grass.png");
 	public static Sprite DARK_GRASS_TILE = new Sprite("/tiles/darkgrass.png");
 	public static Sprite SAND_TILE = new Sprite("/tiles/sand.png");

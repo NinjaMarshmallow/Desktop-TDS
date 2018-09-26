@@ -14,6 +14,7 @@ public class AnimatedSprite extends Sprite implements Drawable {
 	
 	public static final int EXPLOSION = 1;
 	public static final int WATERMELON = 2;
+	public static final int ELECTRIC = 3;
 	
 	private Sprite currentSprite;
 	private Sprite[] frames;
