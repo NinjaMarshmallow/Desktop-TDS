@@ -44,6 +44,7 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		healthbar = new Healthbar(this);
 		moveBehavior = new BounceSideways();
 		Mediator.getInstance().addTileObserver(this);
+		Mediator.getInstance().add(this);
 		tiles = new ArrayList<Tile>();
 	}
 	

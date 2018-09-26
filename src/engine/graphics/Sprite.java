@@ -11,7 +11,8 @@ public class Sprite {
 
 	private int width, height;
 	private int[] pixels;
-
+	// Null Sprite
+	public static Sprite NULL_SPRITE = new Sprite(100, 100, Color.NO_DRAW);
 	// Entity Sprites
 	public static Sprite EMMA = new Sprite("/mobs/emma.png");
 	public static Sprite TYLER = new Sprite("/mobs/tyler.png");

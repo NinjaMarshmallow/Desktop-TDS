@@ -4,8 +4,9 @@ import implementation.Screen;
 import util.Environment;
 import util.Keyboard;
 import util.Mouse;
-import util.Printer;
+import engine.behaviors.EnemySpawnBehavior;
 import engine.behaviors.move.FollowPlayer;
+import engine.entities.Spawner;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.HopeStudent;
 import engine.entities.mobs.Player;
@@ -22,6 +23,7 @@ public class World {
 	private Keyboard keyboard;
 	private Player player;
 	private Enemy enemy;
+	private Spawner spawner;
 	private Mediator mediator;
 	private Sprite tileSprite;
 	private Tile[] tiles;
@@ -35,9 +37,7 @@ public class World {
 		player = new Player(keyboard);
 		enemy = new HopeStudent(500, 400);
 		enemy.setMoveBehavior(new FollowPlayer(player));
-		mediator.add(enemy);
-
-		mediator.add(player);
+		spawner = new Spawner(100, 100, new EnemySpawnBehavior());
 		tileSprite = Sprite.WORLD;
 		tileWidth = tileSprite.getWidth();
 		tileHeight = tileSprite.getHeight();

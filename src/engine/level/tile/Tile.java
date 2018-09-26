@@ -4,11 +4,12 @@ import implementation.Screen;
 
 import java.awt.Rectangle;
 
+import engine.behaviors.Collideable;
 import engine.behaviors.Drawable;
 import engine.behaviors.Positionable;
 import engine.graphics.Sprite;
 
-public class Tile implements ITile, Positionable, Drawable {
+public class Tile implements ITile, Collideable, Drawable {
 //	public static Tile GRASS = new Tile(Color.GRASS, Sprite.GRASS_TILE, false, true);
 //	public static Tile DIRT = new Tile(Color.DIRT, Sprite.DIRT_TILE, false, true);
 //	public static Tile DARK_GRASS = new Tile(Color.DARK_GRASS, Sprite.DARK_GRASS_TILE, false, true);
@@ -115,11 +116,11 @@ public class Tile implements ITile, Positionable, Drawable {
 		return result;
 	}
 
-	public boolean collides(Positionable pos) {
-		int px = (int) (pos.getX() - pos.getWidth()/2);
-		int py = (int) (pos.getY() - pos.getHeight()/2);
+	public boolean collides(Collideable col) {
+		int px = (int) (col.getX() - col.getWidth()/2);
+		int py = (int) (col.getY() - col.getHeight()/2);
 		Rectangle thisRect = new Rectangle((int) x - width/2, (int) y - height/2, width, height);
-		Rectangle otherRect = new Rectangle(px, py, pos.getWidth(), pos.getHeight());
+		Rectangle otherRect = new Rectangle(px, py, col.getWidth(), col.getHeight());
 		return thisRect.intersects(otherRect);
 	}
 

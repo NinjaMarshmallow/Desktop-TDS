@@ -10,6 +10,7 @@ import util.Printer;
 import engine.behaviors.Drawable;
 import engine.behaviors.PlayerObserver;
 import engine.behaviors.TileObserver;
+import engine.entities.Spawner;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
@@ -25,6 +26,7 @@ public class Mediator {
 	private List<Player> players;
 	private List<Tile> tiles;
 	private List<AnimatedSprite> animations;
+	private List<Spawner> spawners;
 
 	private List<PlayerObserver> playerObservers;
 	private List<TileObserver> tileObservers;
@@ -42,6 +44,7 @@ public class Mediator {
 		enemies = new ArrayList<Enemy>();
 		players = new ArrayList<Player>();
 		animations = new ArrayList<AnimatedSprite>();
+		spawners = new ArrayList<Spawner>();
 		tiles = new ArrayList<Tile>();
 		lists = new ArrayList<List<?>>();
 		lists.add(entities);
@@ -49,6 +52,7 @@ public class Mediator {
 		lists.add(enemies);
 		lists.add(players);
 		lists.add(tiles);
+		lists.add(spawners);
 
 		playerObservers = new ArrayList<PlayerObserver>();
 		tileObservers = new ArrayList<TileObserver>();
@@ -56,7 +60,6 @@ public class Mediator {
 	}
 
 	public void update() {
-		Printer.print(projectiles.size());
 		for (int i = 0; i < lists.size(); i++) {
 			updateList(lists.get(i));
 		}
@@ -127,6 +130,8 @@ public class Mediator {
 			players.add((Player) e);
 		} else if (e instanceof Tile) {
 			tiles.add((Tile) e);
+		} else if (e instanceof Spawner) {
+			spawners.add((Spawner) e);
 		} else {
 			entities.add(e);
 		}
@@ -141,6 +146,8 @@ public class Mediator {
 			players.remove(e);
 		} else if (e instanceof Tile) {
 			tiles.remove(e);
+		} else if (e instanceof Spawner) {
+			spawners.remove(e);
 		} else {
 			entities.remove(e);
 		}

@@ -3,14 +3,15 @@ package engine.entities;
 import implementation.Screen;
 
 import java.awt.Rectangle;
-import java.util.List;
 
 import util.Environment;
+import engine.behaviors.Collideable;
 import engine.behaviors.Drawable;
 import engine.behaviors.Positionable;
 import engine.graphics.Sprite;
+import engine.management.Mediator;
 
-public class Entity implements Positionable, Drawable {
+public class Entity implements Collideable, Drawable {
 	protected double x, y;
 	protected int width, height;
 	protected Rectangle hitbox;
@@ -142,11 +143,11 @@ public class Entity implements Positionable, Drawable {
 		return sprite;
 	}
 
-	public boolean collides(Positionable pos) {
-		int px = (int) (pos.getX() - pos.getWidth()/2);
-		int py = (int) (pos.getY() - pos.getHeight()/2);
+	public boolean collides(Collideable col) {
+		int px = (int) (col.getX() - col.getWidth()/2);
+		int py = (int) (col.getY() - col.getHeight()/2);
 		Rectangle thisRect = new Rectangle((int) x, (int) y, width, height);
-		Rectangle otherRect = new Rectangle(px, py, pos.getWidth(), pos.getHeight());
+		Rectangle otherRect = new Rectangle(px, py, col.getWidth(), col.getHeight());
 		return thisRect.intersects(otherRect);
 	}
 	
