@@ -50,17 +50,21 @@ public class Sprite {
 	
 
 	// Tiles
-	public static Sprite VOID_TILE = new Sprite(Level.TILE_SIZE,
-			Level.TILE_SIZE, Color.PINK);
+	public static Sprite VOID_TILE = new Sprite(Level.TILE_SIZE, Level.TILE_SIZE, Color.PINK);
 	public static Sprite GRASS_TILE = new Sprite("/tiles/grass.png");
 	public static Sprite DARK_GRASS_TILE = new Sprite("/tiles/darkgrass.png");
 	public static Sprite SAND_TILE = new Sprite("/tiles/sand.png");
 	public static Sprite WATER_TILE = new Sprite("/tiles/water.png");
 	public static Sprite BRICK_TILE = new Sprite("/tiles/brick.png");
 	public static Sprite STONE_WALL_TILE = new Sprite("/tiles/stone.png");
+	public static Sprite STONE_PATH_TILE = new Sprite("/tiles/stone_path.png");
 	public static Sprite DIRT_TILE = new Sprite("/tiles/dirt.png");
 	public static Sprite FLOWER_TILE = new Sprite("/tiles/flower.png", GRASS_TILE);
 	public static Sprite ALT_GRASS_TILE = new Sprite("/tiles/grass2.png");
+	public static Sprite DOOR_TOP_TILE = new Sprite("/tiles/door_top.png");
+	public static Sprite DOOR_BOTTOM_TILE = new Sprite("/tiles/door_bottom.png");
+	
+	
 	
 	public Sprite(int width, int height, int color) {
 		this.width = width;

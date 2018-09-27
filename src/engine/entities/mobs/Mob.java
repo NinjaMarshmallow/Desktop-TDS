@@ -141,4 +141,8 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		this.y -= ya;
 		return result;
 	}
+
+	public void setBaseSpeed(double speed) {
+		this.baseSpeed = speed;
+	}
 }

@@ -5,6 +5,7 @@ import engine.entities.mobs.Mob;
 
 public class KeyboardControlled implements MoveBehavior {
 	private Keyboard keyboard;
+	private boolean sprint = false;
 	public KeyboardControlled() {
 		this.keyboard = new Keyboard();
 	}
@@ -31,6 +32,13 @@ public class KeyboardControlled implements MoveBehavior {
 		}
 		if (keyboard.right) {
 			m.setXSpeed(m.getBaseSpeed());
+		}
+		if (keyboard.sprint && !sprint) {
+			m.setBaseSpeed(m.getBaseSpeed() * 2);
+			sprint = true;
+		} else if (!keyboard.sprint && sprint) {
+			m.setBaseSpeed(m.getBaseSpeed() / 2);
+			sprint = false;
 		}
 	}
 

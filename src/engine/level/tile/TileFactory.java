@@ -6,6 +6,9 @@ import engine.level.tile.ground.DarkGrassTile;
 import engine.level.tile.ground.DirtTile;
 import engine.level.tile.ground.GrassTile;
 import engine.level.tile.ground.SandTile;
+import engine.level.tile.ground.StonePathTile;
+import engine.level.tile.interactable.DoorBottomTile;
+import engine.level.tile.interactable.DoorTopTile;
 import engine.level.tile.walls.BrickWallTile;
 import engine.level.tile.walls.StoneWallTile;
 
@@ -29,6 +32,12 @@ public class TileFactory {
 			return new StoneWallTile(x, y);
 		case Color.FLOWER:
 			return new FlowerTile(x, y);
+		case Color.STONE_PATH:
+			return new StonePathTile(x, y);
+		case Color.DOOR_TOP:
+			return new DoorTopTile(x, y);
+		case Color.DOOR_BOTTOM:
+			return new DoorBottomTile(x, y);
 		default:
 			return new VoidTile(x, y);
 		}

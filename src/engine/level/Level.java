@@ -38,7 +38,9 @@ public class Level {
 		width = tileWidth * TILE_SIZE;
 		height = tileHeight * TILE_SIZE;
 		player = new Player(keyboard);
-		enemy = new HopeStudent(500, 400);
+		player.setX(4 * TILE_SIZE);
+		player.setY(4 * TILE_SIZE);
+		enemy = new HopeStudent(8 * TILE_SIZE, 14 *TILE_SIZE);
 		enemy.setMoveBehavior(new FollowPlayer(player));
 		spawner = new Spawner(100, 100, new EnemySpawnBehavior());
 		time = 0;

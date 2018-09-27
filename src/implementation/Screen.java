@@ -96,7 +96,6 @@ public class Screen {
 	}
 	
 	public void renderHitbox(Rectangle rect) {
-		int counter = 0;
 		for(int y = 0; y < rect.height; y++) {
 			int xLocal = (int) (rect.x - xScroll);
 			int yLocal = (int) (rect.y + y - yScroll);
@@ -104,9 +103,7 @@ public class Screen {
 			if(xLocal < 0 || xLocal + rect.width > width) continue;
 			renderPixel(xLocal, yLocal, 0x0);
 			renderPixel(xLocal + rect.width, yLocal, 0x0);
-			counter += 2;
 		}
-		System.out.println("height: " + rect.height + ", " + "Count: " + counter);
 		
 		for(int x = 0; x < rect.width; x++) {
 			int xLocal = (int) (rect.x + x - xScroll);

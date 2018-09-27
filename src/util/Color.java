@@ -13,6 +13,7 @@ public class Color {
 	public static final int BLACK = 0x0;
 	public static final int WHITE = 0xFFFFFF;
 	public static final int GRAY = 0x888888;
+	public static final int LIGHT_GRAY = 0xBBBBBB;
 
 	public static final int RED = 0xFF0000;
 	public static final int GREEN = 0x00FF00;
@@ -30,6 +31,8 @@ public class Color {
 	public static final int PINK = 0xFF7AE8;
 	public static final int SKY_BLUE = 0xBCFCFF;
 	public static final int BROWN = 0x996600;
+	public static final int WOOD_BROWN = 0xDD6600;
+	public static final int WOOD_BROWN2 = 0xDD7700;
 
 	public static final int LIMEADE = 0x80BB00;
 	public static final int TAN = 0xDDBB88;
@@ -48,5 +51,8 @@ public class Color {
 	public static final int STONE_WALL = GRAY + 0xFF000000;
 	public static final int FLOWER = YELLOW + 0xFF000000;
 	public static final int DIRT = BROWN + 0xFF000000;
-	
+	public static final int STONE_PATH = LIGHT_GRAY + 0xFF000000;
+	public static final int DOOR_TOP = WOOD_BROWN + 0xFF000000;
+	public static final int DOOR_BOTTOM = WOOD_BROWN2 + 0xFF000000;
 }
+

@@ -25,7 +25,7 @@ public class Game {
 		screen = new Screen(env.getWidth(), env.getHeight());
 		screen.addInput(keyboard, mouse);
 		screen.fill(0x0);
-		world = new Level(keyboard, screen, Sprite.LEVEL0);
+		world = new Level(keyboard, screen, Sprite.LEVEL1);
 		updateThread = new Thread("Update") {
 			public void run() {
 				while (running) {
