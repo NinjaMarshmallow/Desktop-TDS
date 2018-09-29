@@ -84,6 +84,7 @@ public class Screen {
 	
 	
 	public void renderSprite(int x, int y, Sprite sprite) {
+		if(sprite == null) return;
 		for (int startY = 0; startY < sprite.getHeight(); startY++) {
 			int yLocal = (int) (y + startY - yScroll);
 			if(yLocal < 0 || yLocal >= height) continue;

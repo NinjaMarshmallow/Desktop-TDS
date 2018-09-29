@@ -7,6 +7,7 @@ import util.Mouse;
 import engine.behaviors.EnemySpawnBehavior;
 import engine.behaviors.move.FollowPlayer;
 import engine.entities.Spawner;
+import engine.entities.items.Key;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.HopeStudent;
 import engine.entities.mobs.Player;
@@ -40,12 +41,13 @@ public class Level {
 		player = new Player(keyboard);
 		player.setX(4 * TILE_SIZE);
 		player.setY(4 * TILE_SIZE);
-		enemy = new HopeStudent(8 * TILE_SIZE, 14 *TILE_SIZE);
+		enemy = new HopeStudent(8 * TILE_SIZE, 14 * TILE_SIZE);
 		enemy.setMoveBehavior(new FollowPlayer(player));
 		spawner = new Spawner(100, 100, new EnemySpawnBehavior());
 		time = 0;
 		tiles = new Tile[tilemap.getWidth() * tilemap.getHeight()];
 		loadTiles();
+		Mediator.getInstance().add(new Key(27 * TILE_SIZE, 6 * TILE_SIZE));
 	}
 
 	private void loadTiles() {
@@ -72,6 +74,9 @@ public class Level {
 	public void update() {
 		Mediator.getInstance().update();
 		scrollScreen();
+		for(int i = 0; i< tiles.length; i++) {
+			tiles[i].update();
+		}
 	}
 
 	private void scrollScreen() {
@@ -126,19 +131,11 @@ public class Level {
 	}
 
 	public void draw() {
-		// int x0 = (xScroll - TILE_SIZE) / TILE_SIZE;
-		// int y0 = (yScroll - TILE_SIZE) / TILE_SIZE;
-		// int x1 = (xScroll + Environment.getInstance().getWidth() + 16) / 16;
-		// int y1 = (yScroll + Environment.getInstance().getHeight() + 16) / 16;
-		// for(int y = y0; y < y1; y++) {
-		// for(int x = x0; x < x0; x++) {
-		// screen.renderSprite(x, y, tiles[x + y * tileWidth].getSprite());
-		// }
-		// }
 		for(int i = 0; i < tiles.length; i++) {
 			screen.renderTile(tiles[i]);
 		}
 		Mediator mediator = Mediator.getInstance();
+		mediator.drawItems(screen);
 		mediator.drawEntities(screen);
 		mediator.drawEnemies(screen);
 		mediator.drawPlayers(screen);

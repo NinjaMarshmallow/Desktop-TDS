@@ -5,14 +5,19 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import util.Color;
+import util.Environment;
 import engine.level.Level;
 
 public class Sprite {
 
 	private int width, height;
 	private int[] pixels;
-	// Null Sprite
+	
+	// Null Sprites
 	public static Sprite NULL_SPRITE = new Sprite(100, 100, Color.NO_DRAW);
+	public static Sprite NULL_ITEM_INVENTORY = new Sprite(40, 40, Color.GOLD);
+	public static Sprite NULL_ITEM_OVERWORLD = new Sprite(20, 20, Color.GOLD);
+	
 	// Entity Sprites
 	public static Sprite EMMA = new Sprite("/mobs/emma.png");
 	public static Sprite TYLER = new Sprite("/mobs/tyler.png");
@@ -30,6 +35,10 @@ public class Sprite {
 	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
 	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
 	public static Sprite LIGHTNING = new Sprite("/projectiles/bolt.png");
+	
+	// Item Sprites
+	public static Sprite KEY_OVERWORLD = new Sprite("/items/key_overworld.png");
+	public static Sprite KEY_INVENTORY = new Sprite("/items/key_inventory.png");
 
 	// Animation Sprites
 

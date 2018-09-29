@@ -8,9 +8,11 @@ import java.util.List;
 
 import util.Printer;
 import engine.behaviors.Drawable;
+import engine.behaviors.ItemObserver;
 import engine.behaviors.PlayerObserver;
 import engine.behaviors.TileObserver;
 import engine.entities.Spawner;
+import engine.entities.items.Item;
 import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
 import engine.entities.projectiles.Projectile;
@@ -27,9 +29,12 @@ public class Mediator {
 	private List<Tile> tiles;
 	private List<AnimatedSprite> animations;
 	private List<Spawner> spawners;
+	private List<Item> items;
 
 	private List<PlayerObserver> playerObservers;
 	private List<TileObserver> tileObservers;
+	private List<ItemObserver> itemObservers;
+	
 	private static Mediator instance;
 
 	public static Mediator getInstance() {
@@ -45,7 +50,9 @@ public class Mediator {
 		players = new ArrayList<Player>();
 		animations = new ArrayList<AnimatedSprite>();
 		spawners = new ArrayList<Spawner>();
+		items = new ArrayList<Item>();
 		tiles = new ArrayList<Tile>();
+		
 		lists = new ArrayList<List<?>>();
 		lists.add(entities);
 		lists.add(projectiles);
@@ -53,9 +60,11 @@ public class Mediator {
 		lists.add(players);
 		lists.add(tiles);
 		lists.add(spawners);
+		lists.add(items);
 
 		playerObservers = new ArrayList<PlayerObserver>();
 		tileObservers = new ArrayList<TileObserver>();
+		itemObservers = new ArrayList<ItemObserver>();
 
 	}
 
@@ -87,6 +96,7 @@ public class Mediator {
 		}
 		notifyPlayerObservers();
 		notifyTileObservers();
+		notifyItemObservers();
 	}
 
 	private void collideProjectilesWithEnemies() {
@@ -132,6 +142,8 @@ public class Mediator {
 			tiles.add((Tile) e);
 		} else if (e instanceof Spawner) {
 			spawners.add((Spawner) e);
+		}  else if (e instanceof Item) {
+			items.add((Item) e);
 		} else {
 			entities.add(e);
 		}
@@ -148,9 +160,15 @@ public class Mediator {
 			tiles.remove(e);
 		} else if (e instanceof Spawner) {
 			spawners.remove(e);
+		} else if (e instanceof Item) {
+			items.remove((Item) e);
 		} else {
 			entities.remove(e);
 		}
+	}
+	
+	public void drawItems(Screen screen) {
+		drawList(screen, items);
 	}
 
 	public void drawEntities(Screen screen) {
@@ -189,6 +207,10 @@ public class Mediator {
 	public void addTileObserver(TileObserver tileObserver) {
 		tileObservers.add(tileObserver);
 	}
+	
+	public void addItemObserver(ItemObserver itemObserver) {
+		itemObservers.add(itemObserver);
+	}
 
 	public void notifyPlayerObservers() {
 		for (int i = 0; i < playerObservers.size(); i++) {
@@ -200,6 +222,13 @@ public class Mediator {
 		for (int i = 0; i < tileObservers.size(); i++) {
 			TileObserver en = tileObservers.get(i);
 			en.notifyOfTiles(new ArrayList<Tile>(tiles));
+		}
+	}
+	
+	public void notifyItemObservers() {
+		for (int i = 0; i < itemObservers.size(); i++) {
+			ItemObserver en = itemObservers.get(i);
+			en.notifyOfItems(new ArrayList<Item>(items));
 		}
 	}
 }

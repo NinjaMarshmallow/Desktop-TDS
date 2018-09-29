@@ -50,5 +50,7 @@ public class Stats {
 	// Enemy Data
 	public final static double ENEMY_SPEED = 3;
 	public final static int ENEMY_MELEE_DAMAGE = 10;
-	public final static int ENEMY_MELEE_RATE = 60;	
+	public final static int ENEMY_MELEE_RATE = 60;
+	public final static int CHASER_RANGE = 500;
+	public final static int HOPE_STUDENT_RANGE = 500;
 }
