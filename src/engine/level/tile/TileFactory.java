@@ -1,43 +1,34 @@
 package engine.level.tile;
 
 import util.Color;
-import engine.level.tile.decoration.FlowerTile;
-import engine.level.tile.ground.DarkGrassTile;
-import engine.level.tile.ground.DirtTile;
-import engine.level.tile.ground.GrassTile;
-import engine.level.tile.ground.SandTile;
-import engine.level.tile.ground.StonePathTile;
-import engine.level.tile.interactable.DoorBottomTile;
-import engine.level.tile.interactable.DoorTopTile;
-import engine.level.tile.walls.BrickWallTile;
-import engine.level.tile.walls.StoneWallTile;
+import engine.graphics.Sprite;
 
 public class TileFactory {
 	
 	public static Tile createTile(int x, int y, int color) {
 		switch(color) {
 		case Color.GRASS:
-			return new GrassTile(x, y);
+			return new Tile(x, y, Sprite.GRASS_TILE, false, true);
 		case Color.DIRT:
-			return new DirtTile(x, y);
+			return new Tile(x, y, Sprite.DIRT_TILE, false, true);
 		case Color.DARK_GRASS:
-			return new DarkGrassTile(x, y);
+			return new Tile(x, y, Sprite.DARK_GRASS_TILE, false, true);
 		case Color.SAND:
-			return new SandTile(x, y);
+			return new Tile(x, y, Sprite.SAND_TILE, false, true);
 		case Color.WATER:
-			return new WaterTile(x, y);
+			return new Tile(x, y, Sprite.WATER_TILE, false, false);
 		case Color.BRICK:
-			return new BrickWallTile(x, y);
+			return new WallTile(x, y, Sprite.BRICK_TILE);
 		case Color.STONE_WALL:
-			return new StoneWallTile(x, y);
+			return new WallTile(x, y, Sprite.STONE_WALL_TILE);
 		case Color.FLOWER:
-			return new FlowerTile(x, y);
+			return new GroundTile(x, y, Sprite.FLOWER_TILE);
 		case Color.STONE_PATH:
-			return new StonePathTile(x, y);
+			return new GroundTile(x, y, Sprite.STONE_PATH_TILE);
 		case Color.DOOR_TOP:
-			return new DoorTopTile(x, y);
+			return new DoorTile(x, y, Sprite.DOOR_TOP_TILE);
 		case Color.DOOR_BOTTOM:
-			return new DoorBottomTile(x, y);
+			return new DoorTile(x, y, Sprite.DOOR_BOTTOM_TILE);
 		default:
 			return new VoidTile(x, y);
 		}

@@ -14,6 +14,8 @@ import engine.behaviors.move.KeyboardControlled;
 import engine.entities.items.Item;
 import engine.entities.weapons.WatermelonLauncher;
 import engine.graphics.Sprite;
+import engine.level.tile.DoorTile;
+import engine.level.tile.Tile;
 import engine.management.Mediator;
 
 public class Player extends Mob implements ItemObserver {
@@ -56,7 +58,25 @@ public class Player extends Mob implements ItemObserver {
 		keyboard.update();
 		handleShooting();
 		super.update();
-		
+	}
+	
+	protected boolean collision(double xa, double ya) {
+		boolean result = false;
+		this.x += xa;
+		this.y += ya;
+		for(int i = 0; i < tiles.size(); i++) {
+			Tile tile = tiles.get(i);
+			if(!tile.isTraversable() && collides(tile)) {
+				if(tile instanceof DoorTile) {
+					DoorTile doorTile = (DoorTile) tile;
+					doorTile.open();
+				}
+				result = true;
+			}
+		}
+		this.x -= xa;
+		this.y -= ya;
+		return result;
 	}
 	
 	private void handleShooting() {

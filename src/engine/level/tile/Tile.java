@@ -22,7 +22,7 @@ public class Tile implements ITile, Collideable, Drawable {
 	protected int x, y, width, height;
 	protected Sprite sprite;
 	protected boolean solid, traversable;
-	
+	protected int time = 0;
 	public Tile() {
 		sprite = Sprite.VOID_TILE;
 		solid = false;
@@ -125,6 +125,10 @@ public class Tile implements ITile, Collideable, Drawable {
 	}
 
 	public void update() {
+		time++;
+		if(time > 7000) {
+			time = 0;
+		}
 	}
 
 	public void draw(Screen screen) {

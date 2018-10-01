@@ -125,16 +125,14 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		this.tiles = tiles;
 	}
 	
-	private boolean collision(double xa, double ya) {
+	protected boolean collision(double xa, double ya) {
 		boolean result = false;
 		this.x += xa;
 		this.y += ya;
 		for(int i = 0; i < tiles.size(); i++) {
 			Tile tile = tiles.get(i);
-			if(!tile.isTraversable()) {
-				if (collides(tile)) {
+			if(!tile.isTraversable() && collides(tile)) {
 					result = true;
-				}
 			}
 		}
 		this.x -= xa;
