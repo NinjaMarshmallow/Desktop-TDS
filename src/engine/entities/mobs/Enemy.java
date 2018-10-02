@@ -22,7 +22,7 @@ public class Enemy extends Mob implements PlayerObserver {
 	public Enemy(double x, double y, int width, int height) {
 		super(x, y, width, height);
 		baseSpeed = Stats.ENEMY_SPEED;
-		sprite = new Sprite(width, height, Color.RED);
+		sprite = new Sprite(width, height, Color.FOREST_GREEN);
 		meleeDamage = Stats.ENEMY_MELEE_DAMAGE;
 		meleeRate = Stats.ENEMY_MELEE_RATE;
 		Mediator.getInstance().addPlayersObserver(this);

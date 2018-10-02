@@ -8,6 +8,7 @@ public class Color {
 	public static final int NO_DRAW_BLACK = 0xFF000007; // Alpha Channel for
 														// comparing colors
 	public static final int NO_DRAW = NO_DRAW_PINK;
+	
 
 	// Normal Colors
 	public static final int BLACK = 0x0;
@@ -54,5 +55,12 @@ public class Color {
 	public static final int STONE_PATH = LIGHT_GRAY + 0xFF000000;
 	public static final int DOOR_TOP = WOOD_BROWN + 0xFF000000;
 	public static final int DOOR_BOTTOM = WOOD_BROWN2 + 0xFF000000;
+	
+	// Enemymapping Colors
+	public static final int ENEMY = GREEN + 0xFF000000;
+	public static final int HOPE_STUDENT = ORANGE + 0xFF000000;
+	
+	public static final int[] enemyColors = { ENEMY, HOPE_STUDENT };
+	
 }
 

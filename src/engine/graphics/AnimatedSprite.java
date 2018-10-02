@@ -61,11 +61,14 @@ public class AnimatedSprite extends Sprite implements Drawable {
 		this.x = x;
 		this.y = y;
 		Mediator.getInstance().add(this);
+		Printer.print("Play!");
+		System.out.println("Play");
 		
 	}
 
 	public void update() {
 		if(!alive) {
+			System.out.println("Remove");
 			Mediator.getInstance().remove(this);
 		} else {
 			int mod = ((int) (7/animationSpeed));
@@ -81,6 +84,7 @@ public class AnimatedSprite extends Sprite implements Drawable {
 	}
 
 	public void draw(Screen screen) {
+		System.out.println(currentSprite == null);
 		screen.renderSprite(x, y, currentSprite);
 	}
 

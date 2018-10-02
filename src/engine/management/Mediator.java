@@ -22,7 +22,7 @@ import engine.level.tile.Tile;
 public class Mediator {
 	private static final int PROJECTILE_LIMIT = 200;
 	private List<List<?>> lists;
-	private List<Drawable> entities;
+	private List<Drawable> drawables;
 	private List<Projectile> projectiles;
 	private List<Enemy> enemies;
 	private List<Player> players;
@@ -35,6 +35,7 @@ public class Mediator {
 	private List<TileObserver> tileObservers;
 	private List<ItemObserver> itemObservers;
 	
+	
 	private static Mediator instance;
 
 	public static Mediator getInstance() {
@@ -44,7 +45,7 @@ public class Mediator {
 	}
 
 	private Mediator() {
-		entities = new ArrayList<Drawable>();
+		drawables = new ArrayList<Drawable>();
 		projectiles = new ArrayList<Projectile>();
 		enemies = new ArrayList<Enemy>();
 		players = new ArrayList<Player>();
@@ -54,8 +55,9 @@ public class Mediator {
 		tiles = new ArrayList<Tile>();
 		
 		lists = new ArrayList<List<?>>();
-		lists.add(entities);
+		lists.add(drawables);
 		lists.add(projectiles);
+		lists.add(animations);
 		lists.add(enemies);
 		lists.add(players);
 		lists.add(tiles);
@@ -74,7 +76,6 @@ public class Mediator {
 		}
 		collideProjectilesWithEnemies();
 		collideProjectilesWithSolids();
-		// collideEnemiesWithPlayer();
 
 	}
 
@@ -130,40 +131,44 @@ public class Mediator {
 		}
 	}
 
-	public void add(Drawable e) {
-		if (e instanceof Projectile) {
+	public void add(Drawable draw) {
+		if (draw instanceof Projectile) {
 			if (projectiles.size() < PROJECTILE_LIMIT)
-				projectiles.add((Projectile) e);
-		} else if (e instanceof Enemy) {
-			enemies.add((Enemy) e);
-		} else if (e instanceof Player) {
-			players.add((Player) e);
-		} else if (e instanceof Tile) {
-			tiles.add((Tile) e);
-		} else if (e instanceof Spawner) {
-			spawners.add((Spawner) e);
-		}  else if (e instanceof Item) {
-			items.add((Item) e);
+				projectiles.add((Projectile) draw);
+		} else if (draw instanceof Enemy) {
+			enemies.add((Enemy) draw);
+		} else if (draw instanceof Player) {
+			players.add((Player) draw);
+		} else if (draw instanceof Tile) {
+			tiles.add((Tile) draw);
+		} else if (draw instanceof AnimatedSprite) {
+			animations.add((AnimatedSprite) draw);
+		} else if (draw instanceof Spawner) {
+			spawners.add((Spawner) draw);
+		}  else if (draw instanceof Item) {
+			items.add((Item) draw);
 		} else {
-			entities.add(e);
+			drawables.add(draw);
 		}
 	}
 
-	public void remove(Drawable e) {
-		if (e instanceof Projectile) {
-			projectiles.remove(e);
-		} else if (e instanceof Enemy) {
-			enemies.remove(e);
-		} else if (e instanceof Player) {
-			players.remove(e);
-		} else if (e instanceof Tile) {
-			tiles.remove(e);
-		} else if (e instanceof Spawner) {
-			spawners.remove(e);
-		} else if (e instanceof Item) {
-			items.remove((Item) e);
+	public void remove(Drawable draw) {
+		if (draw instanceof Projectile) {
+			projectiles.remove(draw);
+		} else if (draw instanceof Enemy) {
+			enemies.remove(draw);
+		} else if (draw instanceof Player) {
+			players.remove(draw);
+		} else if (draw instanceof Tile) {
+			tiles.remove(draw);
+		} else if (draw instanceof AnimatedSprite) {
+			animations.remove(draw);
+		} else if (draw instanceof Spawner) {
+			spawners.remove(draw);
+		} else if (draw instanceof Item) {
+			items.remove((Item) draw);
 		} else {
-			entities.remove(e);
+			drawables.remove(draw);
 		}
 	}
 	
@@ -172,7 +177,7 @@ public class Mediator {
 	}
 
 	public void drawEntities(Screen screen) {
-		drawList(screen, entities);
+		drawList(screen, drawables);
 	}
 
 	public void drawProjectiles(Screen screen) {
@@ -185,6 +190,10 @@ public class Mediator {
 
 	public void drawPlayers(Screen screen) {
 		drawList(screen, players);
+	}
+	
+	public void drawAnimations(Screen screen) {
+		drawList(screen, animations);
 	}
 
 	private void drawList(Screen screen, List<?> list) {

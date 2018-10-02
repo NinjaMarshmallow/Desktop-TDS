@@ -29,6 +29,7 @@ public class Sprite {
 
 	public static Sprite LEVEL0 = new Sprite("/maps/level0.png");
 	public static Sprite LEVEL1 = new Sprite("/maps/level1.png");
+	public static Sprite LEVEL1_ENEMIES = new Sprite("/maps/level1_enemies.png");
 	public static Sprite MAP = new Sprite("/maps/map.png");
 
 	// Projectile Sprites

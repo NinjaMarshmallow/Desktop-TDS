@@ -12,6 +12,7 @@ import engine.behaviors.ItemObserver;
 import engine.behaviors.Weapon;
 import engine.behaviors.move.KeyboardControlled;
 import engine.entities.items.Item;
+import engine.entities.items.Key;
 import engine.entities.weapons.WatermelonLauncher;
 import engine.graphics.Sprite;
 import engine.level.tile.DoorTile;
@@ -68,8 +69,14 @@ public class Player extends Mob implements ItemObserver {
 			Tile tile = tiles.get(i);
 			if(!tile.isTraversable() && collides(tile)) {
 				if(tile instanceof DoorTile) {
-					DoorTile doorTile = (DoorTile) tile;
-					doorTile.open();
+					for(int j = 0; j < inventory.size(); j++) {
+						Item item = inventory.get(j);
+						if(item instanceof Key) {
+							DoorTile doorTile = (DoorTile) tile;
+							doorTile.open();
+							break;
+						}
+					}
 				}
 				result = true;
 			}

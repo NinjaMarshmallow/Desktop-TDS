@@ -1,17 +1,20 @@
 package engine.level;
 
 import implementation.Screen;
-import util.Environment;
+
+import java.util.ArrayList;
+
+import util.Color;
 import util.Keyboard;
 import util.Mouse;
-import engine.behaviors.EnemySpawnBehavior;
 import engine.behaviors.move.FollowPlayer;
 import engine.entities.Spawner;
 import engine.entities.items.Key;
 import engine.entities.mobs.Enemy;
-import engine.entities.mobs.HopeStudent;
+import engine.entities.mobs.EnemyFactory;
 import engine.entities.mobs.Player;
 import engine.graphics.Sprite;
+import engine.level.tile.DoorTile;
 import engine.level.tile.Tile;
 import engine.level.tile.TileFactory;
 import engine.level.tile.VoidTile;
@@ -30,35 +33,95 @@ public class Level {
 	private Screen screen;
 	private int time;
 
-	public Level(Keyboard keyboard, Screen screen, Sprite tilemap) {
+	public Level(Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap) {
 		this.keyboard = keyboard;
 		this.screen = screen;
+		time = 0;
+		initializeTiles(tilemap);
+		bindDoors();
+		initializePlayer();
+		placeEnemies(enemymap);
+		initializeItems();
+	}
+	
+	private void initializeTiles(Sprite tilemap) {
 		this.tilemap = tilemap;
 		tileWidth = tilemap.getWidth();
 		tileHeight = tilemap.getHeight();
 		width = tileWidth * TILE_SIZE;
 		height = tileHeight * TILE_SIZE;
+		tiles = new Tile[tilemap.getWidth() * tilemap.getHeight()];
+		loadTiles();
+	}
+	
+	private void initializePlayer() {
 		player = new Player(keyboard);
 		player.setX(4 * TILE_SIZE);
 		player.setY(4 * TILE_SIZE);
-		enemy = new HopeStudent(8 * TILE_SIZE, 14 * TILE_SIZE);
-		enemy.setMoveBehavior(new FollowPlayer(player));
-		spawner = new Spawner(100, 100, new EnemySpawnBehavior());
-		time = 0;
-		tiles = new Tile[tilemap.getWidth() * tilemap.getHeight()];
-		loadTiles();
+	}
+	
+	private void placeEnemies(Sprite enemymap) {
+		//spawner = new Spawner(100, 100, new EnemySpawnBehavior());
+		for (int y = 0; y < tileHeight; y++) {
+			for (int x = 0; x < tileWidth; x++) {
+				int color = enemymap.getPixelAt(x, y);
+				if (!isEnemyPlacementColor(color)) continue;
+				Enemy enemy = EnemyFactory.createEnemy(x * TILE_SIZE, y * TILE_SIZE, color);
+				enemy.setMoveBehavior(new FollowPlayer(player));
+				enemy.setX(enemy.getX() - enemy.getWidth()/2);
+				enemy.setY(enemy.getY() - enemy.getHeight()/2);
+			}
+		}
+	}
+	
+	private boolean isEnemyPlacementColor(int color) {
+		for(int i = 0; i < Color.enemyColors.length; i++) {
+			if(Color.enemyColors[i] == color) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void initializeItems() {
 		Mediator.getInstance().add(new Key(27 * TILE_SIZE, 6 * TILE_SIZE));
 	}
 
 	private void loadTiles() {
 		for (int y = 0; y < tileHeight; y++) {
 			for (int x = 0; x < tileWidth; x++) {
-				int color = tilemap.getPixelAt(x, y);
-				Tile tile = TileFactory.createTile(x * TILE_SIZE, y * TILE_SIZE, color);
-				tiles[x + y * tileWidth] = tile;
-				Mediator.getInstance().add(tile);
+				Tile tile = buildTile(x, y);
+				placeTile(x, y, tile);
 			}
 		}
+	}
+	
+	private Tile buildTile(int x, int y) {
+		int color = tilemap.getPixelAt(x, y);
+		return TileFactory.createTile(x * TILE_SIZE, y * TILE_SIZE, color);
+	}
+	
+	private void placeTile(int x, int y, Tile tile) {
+		tiles[x + y * tileWidth] = tile;
+		Mediator.getInstance().add(tile);
+	}
+	
+	private void bindDoors() {
+		for (int y = 0; y < tileHeight; y++) {
+			for (int x = 0; x < tileWidth; x++) {
+				Tile tile = getTile(x * TILE_SIZE, y * TILE_SIZE);
+				if(tile instanceof DoorTile) {
+					bindDoor((DoorTile) tile);
+				}
+			}
+		}
+	}
+	
+	private void bindDoor(DoorTile door) {
+		Tile right = getTile((int)door.getX() + TILE_SIZE, (int)door.getY());
+		Tile down = getTile((int) door.getX(), (int) door.getY() + TILE_SIZE);
+		if (right instanceof DoorTile) door.bind((DoorTile) right);
+		if (down instanceof DoorTile) door.bind((DoorTile) down);
 	}
 	
 	private Tile getTile(int x, int y) {
@@ -70,7 +133,7 @@ public class Level {
 		}
 		return new VoidTile(x, y);
 	}
-
+	
 	public void update() {
 		Mediator.getInstance().update();
 		scrollScreen();
@@ -84,50 +147,6 @@ public class Level {
 		int yScroll = (int)player.getY() - screen.getHeight()/2 + player.getHeight()/2;
 		screen.setScroll(xScroll, yScroll);
 		Mouse.setOffset(xScroll, yScroll);
-		// if(playerIsLeftEdge() && playerMovingLeft() || playerIsRightEdge() &&
-		// playerMovingRight()) {
-		//
-		// }
-		// if(playerIsTopEdge() && playerMovingUp() || playerIsBottomEdge() &&
-		// playerMovingDown()) {
-		//
-		// }
-	}
-
-	private boolean playerIsTopEdge() {
-		return player.getY() - screen.getYScroll() + player.getHeight() / 2 < (Environment
-				.getInstance().getHeight() * 0.2);
-	}
-
-	private boolean playerIsBottomEdge() {
-		return player.getY() - screen.getYScroll() + player.getHeight() / 2 > (Environment
-				.getInstance().getHeight() * 0.8);
-	}
-
-	private boolean playerIsLeftEdge() {
-		return player.getX() - screen.getXScroll() + player.getWidth() / 2 < (Environment
-				.getInstance().getWidth() * 0.2);
-	}
-
-	private boolean playerIsRightEdge() {
-		return player.getX() - screen.getXScroll() + player.getWidth() / 2 > (Environment
-				.getInstance().getWidth() * 0.8);
-	}
-
-	private boolean playerMovingUp() {
-		return player.getYSpeed() < 0;
-	}
-
-	private boolean playerMovingDown() {
-		return player.getYSpeed() > 0;
-	}
-
-	private boolean playerMovingLeft() {
-		return player.getXSpeed() < 0;
-	}
-
-	private boolean playerMovingRight() {
-		return player.getXSpeed() > 0;
 	}
 
 	public void draw() {
@@ -139,6 +158,7 @@ public class Level {
 		mediator.drawEntities(screen);
 		mediator.drawEnemies(screen);
 		mediator.drawPlayers(screen);
+		mediator.drawAnimations(screen);
 		mediator.drawProjectiles(screen);
 	}
 }
