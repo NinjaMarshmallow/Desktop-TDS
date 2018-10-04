@@ -27,7 +27,7 @@ public class Stats {
 	// Watermelon Data
 	public final static double WATERMELON_SPEED = 6;
 	public final static double WATERMELON_RANGE = 500;
-	public final static double WATERMELON_POWER = 22;
+	public final static double WATERMELON_POWER = 15;
 	
 	public final static int WATERMELON_LAUNCHER_MAX_AMMO = 5;
 	public final static int WATERMELON_LAUNCHER_FIRE_RATE = 2;

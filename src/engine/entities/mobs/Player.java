@@ -56,7 +56,6 @@ public class Player extends Mob implements ItemObserver {
 	}
 	
 	public void update() {
-		keyboard.update();
 		handleShooting();
 		super.update();
 	}

@@ -2,19 +2,22 @@ package implementation;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
 import util.Color;
-import util.Environment;
 import util.Keyboard;
 import util.Mouse;
-import util.Printer;
+import util.TextObject;
 import engine.entities.Entity;
 import engine.graphics.Sprite;
 import engine.level.tile.Tile;
@@ -28,6 +31,7 @@ public class Screen {
 	private Canvas canvas;
 	private JFrame window;
 	private double xScroll, yScroll;
+	private List<TextObject> textObjects;
 	public static enum Direction { HORIZONTAL, VERTICAL };
 
 	public Screen(int width, int height) {
@@ -47,6 +51,7 @@ public class Screen {
 		pixels = new int[pixelBuffer.length];
 		canvas.createBufferStrategy(3);
 		canvas.requestFocus();
+		textObjects = new ArrayList<TextObject>();
 	}
 	
 	public int getWidth() {
@@ -97,23 +102,48 @@ public class Screen {
 	}
 	
 	public void renderHitbox(Rectangle rect) {
-		for(int y = 0; y < rect.height; y++) {
-			int xLocal = (int) (rect.x - xScroll);
-			int yLocal = (int) (rect.y + y - yScroll);
-			if(yLocal < 0 || yLocal + rect.height > height) continue;
-			if(xLocal < 0 || xLocal + rect.width > width) continue;
-			renderPixel(xLocal, yLocal, 0x0);
-			renderPixel(xLocal + rect.width, yLocal, 0x0);
+		renderRectangleFrame(rect.x, rect.y, rect.width, rect.height, 0x0);
+	}
+	
+	public void renderRectangle(int xp, int yp, int width, int height, int fgColor, int bgColor) {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				int xLocal = (int) xp + x;
+				int yLocal = (int) yp + y;
+				if(yLocal < 0 || yLocal > this.height) continue;
+				if(xLocal < 0 || xLocal > this.width) continue;
+				renderPixel(xLocal, yLocal, bgColor);
+			}
+		}
+		renderRectangleFrame(xp, yp, width, height, fgColor);
+	}
+	
+	public void renderRectangleFrame(int xp, int yp, int width, int height, int color) {
+		for(int y = 0; y < height; y++) {
+			int xLocal = (int) (xp - xScroll);
+			int yLocal = (int) (yp + y - yScroll);
+			if(yLocal < 0 || yLocal + height > this.height) continue;
+			if(xLocal < 0 || xLocal + width > this.width) continue;
+			renderPixel(xLocal, yLocal, color);
+			renderPixel(xLocal + width, yLocal, color);
 		}
 		
-		for(int x = 0; x < rect.width; x++) {
-			int xLocal = (int) (rect.x + x - xScroll);
-			int yLocal = (int) (rect.y - yScroll);
-			if(yLocal < 0 || yLocal + rect.height > height) continue;
-			if(xLocal < 0 || xLocal + rect.width > width) continue;
-			renderPixel(xLocal, yLocal, 0x0);
-			renderPixel(xLocal, yLocal + rect.height, 0x0);
+		for(int x = 0; x < width; x++) {
+			int xLocal = (int) (xp + x - xScroll);
+			int yLocal = (int) (yp - yScroll);
+			if(yLocal < 0 || yLocal + height > this.height) continue;
+			if(xLocal < 0 || xLocal + width > this.width) continue;
+			renderPixel(xLocal, yLocal, color);
+			renderPixel(xLocal, yLocal + height, color);
 		}
+	}
+	
+	public void renderText(int x, int y, String text, Font font, int color) {
+		textObjects.add(new TextObject(x, y, text, font, color));
+	}
+	
+	public void clearText() {
+		textObjects.clear();
 	}
 	
 	public void render() {
@@ -123,6 +153,14 @@ public class Screen {
 		}
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, window.getWidth(), window.getHeight(), null);
+		for(int i = 0; i < textObjects.size(); i++) {
+			TextObject textObject = textObjects.get(i);
+			g.setColor(new java.awt.Color(textObject.getColor()));
+			g.setFont(textObject.getFont());
+			FontMetrics fm = g.getFontMetrics();
+			int stringWidth = fm.stringWidth(textObject.getText());
+			g.drawString(textObject.getText(), textObject.getX() - stringWidth/2, textObject.getY() + fm.getAscent()/3);
+		}
 		g.dispose();
 		bs.show();
 	}

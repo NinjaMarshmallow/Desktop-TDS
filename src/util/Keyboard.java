@@ -9,6 +9,7 @@ public class Keyboard implements KeyListener{
 	public boolean up, down, left, right;
 	public boolean sprint;
 	public boolean exit;
+	public boolean menu;
 	
 	public void update() {
 		up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
@@ -16,6 +17,7 @@ public class Keyboard implements KeyListener{
 		down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
 		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
 		sprint = keys[KeyEvent.VK_SHIFT];
+		menu = keys[KeyEvent.VK_ESCAPE];
 		
 		exit = keys[KeyEvent.VK_1];
 		

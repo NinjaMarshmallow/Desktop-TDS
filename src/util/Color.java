@@ -39,6 +39,7 @@ public class Color {
 	public static final int TAN = 0xDDBB88;
 	public static final int LAVENDER = 0xDBBDDD;
 	public static final int BRICK_RED = 0x990000;
+	public static final int MAROON = 0x800000;
 
 	// Tilemapping Colors
 	public static final int GRASS = GREEN + 0xFF000000;
@@ -59,6 +60,9 @@ public class Color {
 	// Enemymapping Colors
 	public static final int ENEMY = GREEN + 0xFF000000;
 	public static final int HOPE_STUDENT = ORANGE + 0xFF000000;
+	
+	//Menu Colors
+	public static final int MENU_BACKGROUND = SKY_BLUE;
 	
 	public static final int[] enemyColors = { ENEMY, HOPE_STUDENT };
 	
