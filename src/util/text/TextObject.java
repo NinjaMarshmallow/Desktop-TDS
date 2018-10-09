@@ -1,6 +1,8 @@
-package util;
+package util.text;
 
 import java.awt.Font;
+
+import util.Color;
 
 
 public class TextObject {
@@ -10,17 +12,26 @@ public class TextObject {
 	private Font font;
 	
 	public TextObject(String text) {
-		this.text = text;
-		x = y = 0;
+		initialize(0, 0, text);
 		this.color = Color.BLACK;
 	}
 	
+	public TextObject(int x, int y, String text) {
+		initialize(x, y, text);
+		this.color = Color.BLACK;
+		this.font = new Font("Cambria", Font.PLAIN, 24);
+	}
+	
 	public TextObject(int x, int y, String text, Font font, int color) {
-		this.text = text;
-		this.x = x;
-		this.y = y;
+		initialize(x, y, text);
 		this.color = color;
 		this.font = font;
+	}
+	
+	private void initialize(int x, int y, String text) {
+		this.x = x;
+		this.y = y;
+		this.text = text;
 	}
 	
 	public void setColor(int color) {

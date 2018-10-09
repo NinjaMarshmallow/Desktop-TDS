@@ -66,5 +66,13 @@ public class Color {
 	
 	public static final int[] enemyColors = { ENEMY, HOPE_STUDENT };
 	
+	public static int lighten(int color) {
+		return color + 0x333333;
+	}
+	
+	public static int darken(int color) {
+		return color - 0x333333;
+	}
+	
 }
 

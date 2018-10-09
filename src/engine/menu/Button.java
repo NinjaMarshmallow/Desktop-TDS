@@ -7,6 +7,7 @@ import java.awt.Font;
 import util.Color;
 import util.Environment;
 import util.Mouse;
+import util.text.TextObject;
 import engine.behaviors.Positionable;
 
 public class Button implements Positionable {
@@ -16,23 +17,48 @@ public class Button implements Positionable {
 	protected String text;
 	protected Font font;
 	public Button() {
-		this.x = Environment.getInstance().getWidth()/2;
-		this.y = Environment.getInstance().getHeight()/2;
-		width = 300;
-		height = 100;
-		backgroundColor = normalColor = Color.GOLD;
-		highlightColor = Color.SAND;
-		foregroundColor = Color.MAROON;
-		text = "Play";
-		font = new Font("Consolas", Font.BOLD, 24);
+		initializePosition(Environment.getInstance().getWidth()/2, Environment.getInstance().getHeight()/4, 300, 100);
+		initializeStyle(Color.GOLD, Color.MAROON, "Play", new Font("Consolas", Font.BOLD, 24));
 	}
 	
 	public Button(int x, int y, int width, int height, int backgroundColor, int foregroundColor, String text) {
-		
+		initializePosition(x, y, width, height);
+		initializeStyle(backgroundColor, foregroundColor, text, new Font("Consolas", Font.BOLD, 24));
 	}
 	
-	public Button(Button button, int position, int padding) {
-		
+	public Button(Button button, int position, int padding, String text) {
+		int yOffset = 0, xOffset = 0;
+		switch(position) {
+		case 0:
+			yOffset = button.height - padding;
+			break;
+		case 1:
+			xOffset = button.width + padding;
+			break;
+		case 2:
+			yOffset = button.height + padding;
+			break;
+		case 3:
+			xOffset = button.width - padding;
+			break;
+		}
+		initializePosition((int)button.getX() + xOffset, (int)button.getY() + yOffset, button.width, button.height);
+		initializeStyle(button.backgroundColor, button.foregroundColor, text, button.font);
+	}
+	
+	private void initializePosition(int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
+	private void initializeStyle( int backgroundColor, int foregroundColor, String text, Font font) {
+		this.backgroundColor = normalColor = backgroundColor;
+		this.highlightColor = Color.lighten(normalColor);
+		this.foregroundColor = foregroundColor;
+		this.text = text;
+		this.font = font;
 	}
 	
 	public void setClickBehavior(ClickBehavior clickBehavior) {
@@ -64,7 +90,12 @@ public class Button implements Positionable {
 	}
 	
 	public boolean contains(int x, int y) {
-		return true;
+		if(x > this.x - width/2 && x < this.x + width/2 ) {
+			if(y > this.y - height/2 && y < this.y + height/2) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void draw(Screen screen) {

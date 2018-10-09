@@ -32,6 +32,7 @@ public class Level {
 	private Tile[] tiles;
 	private Screen screen;
 	private int time;
+	private Sprite thumbnail;
 
 	public Level(Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap) {
 		this.keyboard = keyboard;

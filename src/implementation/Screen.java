@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 import util.Color;
 import util.Keyboard;
 import util.Mouse;
-import util.TextObject;
+import util.text.TextObject;
 import engine.entities.Entity;
 import engine.graphics.Sprite;
 import engine.level.tile.Tile;
@@ -71,6 +71,7 @@ public class Screen {
 	public void clear() {
 		int black = 0x0;
 		this.fill(black);
+		clearText();
 	}
 
 	public void fill(int color) {
@@ -140,6 +141,10 @@ public class Screen {
 	
 	public void renderText(int x, int y, String text, Font font, int color) {
 		textObjects.add(new TextObject(x, y, text, font, color));
+	}
+	
+	public void renderText(TextObject to) {
+		textObjects.add(to);
 	}
 	
 	public void clearText() {

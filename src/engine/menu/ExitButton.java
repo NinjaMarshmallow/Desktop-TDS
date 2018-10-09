@@ -9,7 +9,11 @@ public class ExitButton extends Button {
 		super();
 		text = "Exit";
 		clickBehavior = new ExitProgram();
-		y = Environment.getInstance().getHeight()/2 + 200;
+		y = Environment.getInstance().getHeight()/2 + 400;
 	}
-
+	
+	public ExitButton(Button button, int position, int padding) {
+		super(button, position, padding, "Exit");
+		clickBehavior = new ExitProgram();
+	}
 }
