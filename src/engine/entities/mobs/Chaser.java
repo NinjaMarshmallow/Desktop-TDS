@@ -2,7 +2,6 @@ package engine.entities.mobs;
 
 import util.Stats;
 import engine.behaviors.move.FollowPlayer;
-import engine.behaviors.move.MoveBehavior;
 import engine.behaviors.move.MoveRandomly;
 import engine.graphics.Sprite;
 

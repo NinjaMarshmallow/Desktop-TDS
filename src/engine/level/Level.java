@@ -1,9 +1,6 @@
 package engine.level;
 
 import implementation.Screen;
-
-import java.util.ArrayList;
-
 import util.Color;
 import util.Keyboard;
 import util.Mouse;
@@ -21,32 +18,40 @@ import engine.level.tile.VoidTile;
 import engine.management.Mediator;
 
 public class Level {
-	public static final int TILE_SIZE = Sprite.BRICK_TILE.getSize();
-	private double x, y;
+	public static final int TILE_SIZE = Sprite.TILE_SIZE;
 	private int width, height, tileWidth, tileHeight;
 	private Keyboard keyboard;
 	private Player player;
 	private Enemy enemy;
 	private Spawner spawner;
-	private Sprite tilemap;
+	private Sprite tilemap, enemymap;
 	private Tile[] tiles;
 	private Screen screen;
 	private int time;
 	private Sprite thumbnail;
+	private int spawnX, spawnY;
+	private String name;
 
-	public Level(Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap) {
-		this.keyboard = keyboard;
-		this.screen = screen;
-		time = 0;
-		initializeTiles(tilemap);
-		bindDoors();
-		initializePlayer();
-		placeEnemies(enemymap);
-		initializeItems();
+	public Level(String name, Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap) {
+		initialize(name, keyboard, screen, tilemap, enemymap, 4, 4);
 	}
 	
-	private void initializeTiles(Sprite tilemap) {
+	public Level(String name, Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap, int x, int y) {
+		initialize(name, keyboard, screen, tilemap, enemymap, x, y);
+	}
+	
+	private void initialize(String name, Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap, int x, int y) {
+		this.name = name;
+		this.keyboard = keyboard;
+		this.screen = screen;
 		this.tilemap = tilemap;
+		this.enemymap = enemymap;
+		this.spawnX = x;
+		this.spawnY = y;
+		time = 0;
+	}
+	
+	private void initializeTiles() {
 		tileWidth = tilemap.getWidth();
 		tileHeight = tilemap.getHeight();
 		width = tileWidth * TILE_SIZE;
@@ -55,14 +60,15 @@ public class Level {
 		loadTiles();
 	}
 	
-	private void initializePlayer() {
+	private void initializePlayer(int x, int y) {
 		player = new Player(keyboard);
-		player.setX(4 * TILE_SIZE);
-		player.setY(4 * TILE_SIZE);
+		player.setX(x * TILE_SIZE);
+		player.setY(y * TILE_SIZE);
 	}
 	
-	private void placeEnemies(Sprite enemymap) {
+	private void placeEnemies() {
 		//spawner = new Spawner(100, 100, new EnemySpawnBehavior());
+		if (enemymap == null) return;
 		for (int y = 0; y < tileHeight; y++) {
 			for (int x = 0; x < tileWidth; x++) {
 				int color = enemymap.getPixelAt(x, y);
@@ -161,5 +167,21 @@ public class Level {
 		mediator.drawPlayers(screen);
 		mediator.drawAnimations(screen);
 		mediator.drawProjectiles(screen);
+	}
+	
+	public void start() {
+		initializeTiles();
+		bindDoors();
+		initializePlayer(spawnX, spawnY);
+		placeEnemies();
+		initializeItems();
+	}
+	
+	public void stop() {
+		Mediator.getInstance().clear();
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

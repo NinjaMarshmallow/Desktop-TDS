@@ -1,6 +1,5 @@
 package engine.menu.click;
 
-import engine.menu.ClickBehavior;
 import engine.menu.Menu;
 
 public class StartGame implements ClickBehavior {

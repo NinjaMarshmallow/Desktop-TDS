@@ -172,6 +172,16 @@ public class Mediator {
 		}
 	}
 	
+	public void clear() {
+		projectiles.clear();
+		enemies.clear();
+		players.clear();
+		tiles.clear();
+		animations.clear();
+		spawners.clear();
+		items.clear();
+	}
+	
 	public void drawItems(Screen screen) {
 		drawList(screen, items);
 	}

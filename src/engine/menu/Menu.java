@@ -9,6 +9,7 @@ import java.util.List;
 import util.Color;
 import util.Environment;
 import util.text.TextObject;
+import engine.menu.button.Button;
 
 public class Menu {
 	
@@ -75,6 +76,9 @@ public class Menu {
 	}
 	
 	public Menu nextMenu() {
-		return next;
+		play = false;
+		Menu result = next;
+		next = null;
+		return result;
 	}
 }

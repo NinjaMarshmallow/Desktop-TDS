@@ -9,7 +9,6 @@ import engine.behaviors.Collideable;
 import engine.behaviors.Drawable;
 import engine.behaviors.Positionable;
 import engine.graphics.Sprite;
-import engine.management.Mediator;
 
 public class Entity implements Collideable, Drawable {
 	protected double x, y;

@@ -1,7 +1,6 @@
-package engine.management;
+package engine.management.state;
 
 import implementation.Screen;
-import engine.menu.LevelSelectMenu;
 import engine.menu.MainMenu;
 import engine.menu.Menu;
 
@@ -34,4 +33,6 @@ public class MenuState implements State {
 	public boolean isReadyForStateChange() {
 		return menu.isReady();
 	}
+
+	public void start() {}
 }

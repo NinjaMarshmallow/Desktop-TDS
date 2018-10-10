@@ -1,54 +1,35 @@
-package engine.menu;
+package engine.menu.button;
 
 import implementation.Screen;
 
 import java.awt.Font;
 
 import util.Color;
-import util.Environment;
 import util.Mouse;
-import util.text.TextObject;
-import engine.behaviors.Positionable;
+import engine.menu.click.ClickBehavior;
 
-public class Button implements Positionable {
+public class Button {
 	protected int x, y, width, height;
 	protected ClickBehavior clickBehavior;
 	protected int backgroundColor, foregroundColor, normalColor, highlightColor;
 	protected String text;
 	protected Font font;
 	public Button() {
-		initializePosition(Environment.getInstance().getWidth()/2, Environment.getInstance().getHeight()/4, 300, 100);
+		initializePosition(300, 100);
 		initializeStyle(Color.GOLD, Color.MAROON, "Play", new Font("Consolas", Font.BOLD, 24));
 	}
 	
-	public Button(int x, int y, int width, int height, int backgroundColor, int foregroundColor, String text) {
-		initializePosition(x, y, width, height);
+	public Button(int width, int height, int backgroundColor, int foregroundColor, String text) {
+		initializePosition(width, height);
 		initializeStyle(backgroundColor, foregroundColor, text, new Font("Consolas", Font.BOLD, 24));
 	}
 	
-	public Button(Button button, int position, int padding, String text) {
-		int yOffset = 0, xOffset = 0;
-		switch(position) {
-		case 0:
-			yOffset = button.height - padding;
-			break;
-		case 1:
-			xOffset = button.width + padding;
-			break;
-		case 2:
-			yOffset = button.height + padding;
-			break;
-		case 3:
-			xOffset = button.width - padding;
-			break;
-		}
-		initializePosition((int)button.getX() + xOffset, (int)button.getY() + yOffset, button.width, button.height);
-		initializeStyle(button.backgroundColor, button.foregroundColor, text, button.font);
+	public Button(String text) {
+		initializePosition(300, 100);
+		initializeStyle(Color.GOLD, Color.MAROON, text, new Font("Consolas", Font.BOLD, 24));
 	}
 	
-	private void initializePosition(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
+	private void initializePosition(int width, int height) {
 		this.width = width;
 		this.height = height;
 	}
@@ -66,6 +47,7 @@ public class Button implements Positionable {
 	}
 	
 	public void click() {
+		Mouse.resetB();
 		this.clickBehavior.onClick();
 	}
 	
@@ -103,36 +85,28 @@ public class Button implements Positionable {
 		screen.renderText(x, y, text, font, foregroundColor);
 	}
 
-	public void setX(double x) {
-		this.x = (int)x;
+	public void setX(int x) {
+		this.x = x;
 	}
 
-	public void setY(double y) {
-		this.y = (int)y;
+	public void setY(int y) {
+		this.y = y;
 	}
 
-	public double getX() {
+	public int getX() {
 		return x;
 	}
 
-	public double getY() {
+	public int getY() {
 		return y;
 	}
-
-	public double distanceTo(Positionable pos) {
-		return 0;
+	
+	public int getWidth() {
+		return width;
 	}
-
-	public double distanceTo(double x, double y) {
-		return 0;
-	}
-
-	public double angleTo(Positionable pos) {
-		return 0;
-	}
-
-	public double angleTo(double x, double y) {
-		return 0;
+	
+	public int getHeight() {
+		return height;
 	}
 
 }

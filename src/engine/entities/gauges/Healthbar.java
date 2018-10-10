@@ -1,7 +1,6 @@
 package engine.entities.gauges;
 
 import util.Color;
-import util.Printer;
 import engine.entities.Entity;
 import engine.entities.mobs.Mob;
 

@@ -1,4 +1,4 @@
-package engine.menu;
+package engine.menu.click;
 
 public interface ClickBehavior {
 	

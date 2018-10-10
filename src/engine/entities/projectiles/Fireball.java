@@ -2,7 +2,6 @@ package engine.entities.projectiles;
 
 import util.Stats;
 import engine.entities.Entity;
-import engine.graphics.AnimatedSprite;
 import engine.graphics.Sprite;
 
 public class Fireball extends Projectile {

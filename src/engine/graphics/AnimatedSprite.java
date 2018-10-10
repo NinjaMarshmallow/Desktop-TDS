@@ -2,7 +2,6 @@ package engine.graphics;
 
 import implementation.Screen;
 
-import java.util.Arrays;
 import java.util.List;
 
 import util.Color;

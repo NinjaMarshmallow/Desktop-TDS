@@ -1,6 +1,5 @@
 package engine.menu.click;
 
-import engine.menu.ClickBehavior;
 
 public class ExitProgram implements ClickBehavior {
 

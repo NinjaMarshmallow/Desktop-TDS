@@ -5,13 +5,13 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import util.Color;
-import util.Environment;
 import engine.level.Level;
 
 public class Sprite {
 
 	private int width, height;
 	private int[] pixels;
+	public static final int TILE_SIZE = 60;
 	
 	// Null Sprites
 	public static Sprite NULL_SPRITE = new Sprite(100, 100, Color.NO_DRAW);
@@ -151,6 +151,19 @@ public class Sprite {
 			width = height = 50;
 			pixels = new int[width * height];
 			fill(Color.ORANGE);
+		}
+	}
+	
+	public static Sprite loadLevel(String path) {
+		try {
+			BufferedImage image = ImageIO.read(Sprite.class.getResource(path));
+			int width = image.getWidth();
+			int height = image.getHeight();
+			int[] pixels = new int[width * height];
+			image.getRGB(0, 0, width, height, pixels, 0, width);
+			return new Sprite(width, height, pixels);
+		} catch (Exception q) {
+			return null;
 		}
 	}
 	

@@ -1,7 +1,6 @@
 package engine.level.tile;
 
 import engine.graphics.Sprite;
-import util.Color;
 
 public class VoidTile extends Tile {
 	

@@ -24,6 +24,10 @@ public class Mouse implements MouseListener, MouseMotionListener{
 		return mouseB;
 	}
 	
+	public static void resetB() {
+		mouseB = -1;
+	}
+	
 	public static void setOffset(int x, int y) {
 		xOffset = x;
 		yOffset = y;

@@ -4,9 +4,10 @@ import util.Keyboard;
 import util.Mouse;
 import engine.graphics.Sprite;
 import engine.level.Level;
-import engine.management.GameState;
-import engine.management.MenuState;
-import engine.management.State;
+import engine.management.LevelManager;
+import engine.management.state.GameState;
+import engine.management.state.MenuState;
+import engine.management.state.State;
 
 
 public class Game {
@@ -29,7 +30,14 @@ public class Game {
 		screen = new Screen(env.getWidth(), env.getHeight());
 		screen.addInput(keyboard, mouse);
 		screen.fill(0x0);
-		gameState = new GameState(new Level(keyboard, screen, Sprite.LEVEL1, Sprite.LEVEL1_ENEMIES));
+		try {
+			LevelManager.build(screen, keyboard);
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.err.println("Can't load Levels");
+		}
+		
+		gameState = new GameState();
 		menuState = new MenuState(gameState);
 		state = menuState;
 		thread = new Thread("Update") {
@@ -65,8 +73,8 @@ public class Game {
 		if(keyboard.menu) state = menuState;
 		state.update();
 		if(state.isReadyForStateChange()) {
-			screen.clearText();
 			state = state.changeState();
+			state.start();
 		}
 		currentFrame++;
 		currentFrame %= env.getFPS();
