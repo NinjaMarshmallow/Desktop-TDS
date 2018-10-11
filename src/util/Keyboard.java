@@ -4,12 +4,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener{
-	
+	private static Keyboard instance;
 	private boolean[] keys = new boolean[1000];
 	public boolean up, down, left, right;
 	public boolean sprint;
 	public boolean exit;
 	public boolean menu;
+	
+	public static void build() {
+		instance = new Keyboard();
+	}
+	
+	public static Keyboard getInstance() {
+		if(instance == null) {
+			instance = new Keyboard();
+		}
+		return instance;
+	}
 	
 	public void update() {
 		up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];

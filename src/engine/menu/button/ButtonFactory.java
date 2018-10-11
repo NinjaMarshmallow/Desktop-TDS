@@ -1,10 +1,13 @@
 package engine.menu.button;
 
+import util.PlayerData;
 import engine.level.Level;
 import engine.menu.LevelSelectMenu;
 import engine.menu.Menu;
 import engine.menu.OptionsMenu;
+import engine.menu.click.ChooseCharacter;
 import engine.menu.click.ClickBehavior;
+import engine.menu.click.CompoundClickBehavior;
 import engine.menu.click.ExitProgram;
 import engine.menu.click.PlayLevel;
 import engine.menu.click.SwitchMenu;
@@ -43,7 +46,10 @@ public class ButtonFactory {
 	
 	public static Button createPlayLevelButton(Level level, Menu levelSelect) {
 		return createButton(level.getName(), new PlayLevel(level, levelSelect));
-		
+	}
+	
+	public static Button createChooseCharacterButton(PlayerData data, Menu menu, Menu prev) {
+		return createButton(data.name, new CompoundClickBehavior(new ChooseCharacter(data), new SwitchMenu(menu, prev)));
 	}
 
 }

@@ -28,17 +28,7 @@ public class LevelSelectMenu extends Menu {
 	private void addButtons() {
 		for(int i = 0; i < LevelManager.getInstance().getNumberOfLevels(); i++) {
 			buttons.add(ButtonFactory.createPlayLevelButton(LevelManager.getInstance().getLevel(i), this));
-			
 		}
-		addBackButton();
+		buttons.add(ButtonFactory.createBackButton(this, prevMenu));
 	}
-	
-	
-	private void addBackButton() {
-		Button back = ButtonFactory.createBackButton(this, prevMenu);
-		buttons.add(back);
-	}
-	
-	
-
 }

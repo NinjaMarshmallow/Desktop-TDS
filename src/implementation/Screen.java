@@ -52,6 +52,8 @@ public class Screen {
 		canvas.createBufferStrategy(3);
 		canvas.requestFocus();
 		textObjects = new ArrayList<TextObject>();
+		addInput();
+		fill(0x0);
 	}
 	
 	public int getWidth() {
@@ -62,8 +64,9 @@ public class Screen {
 		return height;
 	}
 	
-	public void addInput(Keyboard keyboard, Mouse mouse) {
-		canvas.addKeyListener(keyboard);
+	public void addInput() {
+		Mouse mouse = new Mouse();
+		canvas.addKeyListener(Keyboard.getInstance());
 		canvas.addMouseListener(mouse);
 		canvas.addMouseMotionListener(mouse);
 	}

@@ -1,9 +1,12 @@
 package engine.level;
 
+import java.util.List;
+
 import implementation.Screen;
 import util.Color;
 import util.Keyboard;
 import util.Mouse;
+import engine.behaviors.PlayerObserver;
 import engine.behaviors.move.FollowPlayer;
 import engine.entities.Spawner;
 import engine.entities.items.Key;
@@ -17,7 +20,7 @@ import engine.level.tile.TileFactory;
 import engine.level.tile.VoidTile;
 import engine.management.Mediator;
 
-public class Level {
+public class Level implements PlayerObserver {
 	public static final int TILE_SIZE = Sprite.TILE_SIZE;
 	private int width, height, tileWidth, tileHeight;
 	private Keyboard keyboard;
@@ -32,17 +35,16 @@ public class Level {
 	private int spawnX, spawnY;
 	private String name;
 
-	public Level(String name, Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap) {
-		initialize(name, keyboard, screen, tilemap, enemymap, 4, 4);
+	public Level(String name, Screen screen, Sprite tilemap, Sprite enemymap) {
+		initialize(name, screen, tilemap, enemymap, 4, 4);
 	}
 	
-	public Level(String name, Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap, int x, int y) {
-		initialize(name, keyboard, screen, tilemap, enemymap, x, y);
+	public Level(String name, Screen screen, Sprite tilemap, Sprite enemymap, int x, int y) {
+		initialize(name, screen, tilemap, enemymap, x, y);
 	}
 	
-	private void initialize(String name, Keyboard keyboard, Screen screen, Sprite tilemap, Sprite enemymap, int x, int y) {
+	private void initialize(String name, Screen screen, Sprite tilemap, Sprite enemymap, int x, int y) {
 		this.name = name;
-		this.keyboard = keyboard;
 		this.screen = screen;
 		this.tilemap = tilemap;
 		this.enemymap = enemymap;
@@ -61,9 +63,8 @@ public class Level {
 	}
 	
 	private void initializePlayer(int x, int y) {
-		player = new Player(keyboard);
-		player.setX(x * TILE_SIZE);
-		player.setY(y * TILE_SIZE);
+		Mediator.getInstance().spawnPlayers(x * TILE_SIZE, y * TILE_SIZE);
+		Mediator.getInstance().addPlayersObserver(this);
 	}
 	
 	private void placeEnemies() {
@@ -74,9 +75,6 @@ public class Level {
 				int color = enemymap.getPixelAt(x, y);
 				if (!isEnemyPlacementColor(color)) continue;
 				Enemy enemy = EnemyFactory.createEnemy(x * TILE_SIZE, y * TILE_SIZE, color);
-				enemy.setMoveBehavior(new FollowPlayer(player));
-				enemy.setX(enemy.getX() - enemy.getWidth()/2);
-				enemy.setY(enemy.getY() - enemy.getHeight()/2);
 			}
 		}
 	}
@@ -183,5 +181,18 @@ public class Level {
 	
 	public String getName() {
 		return name;
+	}
+
+	public void notifyOfPlayers(List<Player> players) {
+		if(players.isEmpty()) {
+			this.stop();
+			this.player.reset();
+			Mediator.getInstance().add(this.player);
+			this.start();
+			
+		} else {
+			this.player = players.get(0);
+		}
+		
 	}
 }

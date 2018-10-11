@@ -21,29 +21,34 @@ import engine.management.Mediator;
 
 public class Player extends Mob implements ItemObserver {
 	
-	private Keyboard keyboard;
 	private Weapon weapon;
 	private List<Item> inventory;
+	private String name;
 	
-	public Player(Keyboard keyboard) {
+	public Player() {
 		super(Environment.getInstance().getWidth()/2, Environment.getInstance().getHeight()/2, Sprite.PLAYER);
-		initialize(keyboard);
+		initialize("Player 1");
 	}
 	
-	public Player(double x, double y, Keyboard keyboard) {
+	public Player(double x, double y) {
 		super(x, y, Sprite.PLAYER);
-		initialize(keyboard);
+		initialize("Player 1");
 	}
 	
-	public Player(double x, double y, Sprite sprite, Keyboard keyboard) {
+	public Player(double x, double y, Sprite sprite) {
 		super(x, y, sprite);
-		initialize(keyboard);
+		initialize("Player 1");
 	}
 	
-	private void initialize(Keyboard keyboard) {
-		this.keyboard = keyboard;
+	public Player(String name, Sprite sprite) {
+		super(-sprite.getWidth(), -sprite.getHeight(), sprite);
+		initialize(name);
+	}
+	
+	private void initialize(String name) {
+		this.name = name;
 		baseSpeed = Stats.PLAYER_SPEED;
-		this.setMoveBehavior(new KeyboardControlled(keyboard));
+		this.setMoveBehavior(new KeyboardControlled(Keyboard.getInstance()));
 		this.weapon = new WatermelonLauncher(this);
 		this.x -= this.getWidth()/2;
 		this.y -= this.getHeight()/2;
@@ -105,5 +110,12 @@ public class Player extends Mob implements ItemObserver {
 				}
 			}
 		}
+	}
+	
+	public void reset() {
+		this.health = maxHealth;
+		this.inventory.clear();
+		this.alive = true;
+		this.initialize(this.name);
 	}
 }

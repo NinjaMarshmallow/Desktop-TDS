@@ -25,18 +25,15 @@ public class Game {
 
 	public Game() {
 		mouse = new Mouse();
-		keyboard = new Keyboard();
+		Keyboard.build();
 		env = Environment.getInstance();
 		screen = new Screen(env.getWidth(), env.getHeight());
-		screen.addInput(keyboard, mouse);
-		screen.fill(0x0);
 		try {
-			LevelManager.build(screen, keyboard);
+			LevelManager.build(screen);
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.err.println("Can't load Levels");
 		}
-		
 		gameState = new GameState();
 		menuState = new MenuState(gameState);
 		state = menuState;
@@ -69,6 +66,7 @@ public class Game {
 	}
 
 	private void update() {
+		Keyboard keyboard = Keyboard.getInstance();
 		keyboard.update();
 		if(keyboard.menu) state = menuState;
 		state.update();

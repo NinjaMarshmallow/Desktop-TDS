@@ -18,6 +18,7 @@ public class Menu {
 	protected boolean play = false;
 	protected TextObject title;
 	protected Menu next;
+	protected Menu parent;
 	protected int ABOVE = 0, BELOW = 2, RIGHT = 1, LEFT = 3;
 	protected int normalPadding = 100;
 	
@@ -80,5 +81,9 @@ public class Menu {
 		Menu result = next;
 		next = null;
 		return result;
+	}
+	
+	public Menu getParent() {
+		return this.parent;
 	}
 }

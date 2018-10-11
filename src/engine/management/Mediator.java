@@ -47,13 +47,12 @@ public class Mediator {
 	private Mediator() {
 		drawables = new ArrayList<Drawable>();
 		projectiles = new ArrayList<Projectile>();
-		enemies = new ArrayList<Enemy>();
 		players = new ArrayList<Player>();
+		enemies = new ArrayList<Enemy>();
 		animations = new ArrayList<AnimatedSprite>();
 		spawners = new ArrayList<Spawner>();
 		items = new ArrayList<Item>();
 		tiles = new ArrayList<Tile>();
-		
 		lists = new ArrayList<List<?>>();
 		lists.add(drawables);
 		lists.add(projectiles);
@@ -76,7 +75,7 @@ public class Mediator {
 		}
 		collideProjectilesWithEnemies();
 		collideProjectilesWithSolids();
-
+		System.out.println("Number of Players: " + players.size());
 	}
 
 	private void updateList(List<?> list) {
@@ -128,6 +127,14 @@ public class Mediator {
 					projectile.kill();
 				}
 			}
+		}
+	}
+	
+	public void spawnPlayers(int x, int y) {
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			player.setX(x);
+			player.setY(y);
 		}
 	}
 
