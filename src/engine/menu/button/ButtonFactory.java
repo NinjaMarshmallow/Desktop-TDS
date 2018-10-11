@@ -2,6 +2,7 @@ package engine.menu.button;
 
 import util.PlayerData;
 import engine.level.Level;
+import engine.management.Mediator;
 import engine.menu.LevelSelectMenu;
 import engine.menu.Menu;
 import engine.menu.OptionsMenu;

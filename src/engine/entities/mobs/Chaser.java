@@ -7,6 +7,7 @@ import engine.graphics.Sprite;
 
 public class Chaser extends Enemy {
 	protected double range;
+	protected Player target;
 	public Chaser() {
 		super();
 	}
@@ -29,6 +30,7 @@ public class Chaser extends Enemy {
 	}
 	
 	public void setTargetPlayer(Player player) {
+		target = player;
 		moveBehavior = new FollowPlayer(player);
 	}
 	

@@ -54,6 +54,8 @@ public class Player extends Mob implements ItemObserver {
 		this.y -= this.getHeight()/2;
 		inventory = new ArrayList<Item>();
 		Mediator.getInstance().addItemObserver(this);
+		width = Sprite.TILE_SIZE;
+		height = (int) (Sprite.TILE_SIZE * 1.617);
 	}
 	
 	public void setWeapon(Weapon weapon) {

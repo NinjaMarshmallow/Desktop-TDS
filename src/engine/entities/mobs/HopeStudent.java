@@ -4,6 +4,7 @@ import java.util.Random;
 
 import util.Stats;
 import engine.behaviors.move.FollowPlayer;
+import engine.behaviors.move.MoveInCircles;
 import engine.graphics.Sprite;
 
 public class HopeStudent extends Chaser {
@@ -21,12 +22,20 @@ public class HopeStudent extends Chaser {
 	
 	public void update() {
 		super.update();
-//		if(!players.isEmpty() && this.moveBehavior instanceof MoveInCircles) {
-//			setTargetPlayer(players.get(new Random().nextInt(players.size())));
-//		}
+		if(!players.isEmpty() && !hasTarget()) {
+			setTargetPlayer(players.get(new Random().nextInt(players.size())));
+		}
 	}
 	
 	public void setTargetPlayer(Player player) {
 		moveBehavior = new FollowPlayer(player);
+	}
+	
+	public boolean hasTarget() {
+		return target != null;
+	}
+	
+	public Player getTarget() {
+		return target;
 	}
 }

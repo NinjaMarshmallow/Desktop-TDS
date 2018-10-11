@@ -14,6 +14,7 @@ public class ChooseCharacter implements ClickBehavior {
 	}
 	
 	public void onClick() {
+		Mediator.getInstance().clear();
 		new Player(playerData.name, playerData.sprite);
 	}
 }

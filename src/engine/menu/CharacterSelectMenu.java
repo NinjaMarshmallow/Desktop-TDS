@@ -9,6 +9,7 @@ import util.text.TextObject;
 import engine.entities.mobs.Player;
 import engine.graphics.Sprite;
 import engine.management.LevelManager;
+import engine.management.Mediator;
 import engine.menu.button.Button;
 import engine.menu.button.ButtonFactory;
 
