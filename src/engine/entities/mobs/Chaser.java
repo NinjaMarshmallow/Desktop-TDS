@@ -1,5 +1,8 @@
 package engine.entities.mobs;
 
+import java.util.Random;
+
+import util.Environment;
 import util.Stats;
 import engine.behaviors.move.FollowPlayer;
 import engine.behaviors.move.MoveRandomly;
@@ -27,6 +30,21 @@ public class Chaser extends Enemy {
 		this.range = range;
 		moveBehavior = new MoveRandomly();
 
+	}
+	
+	public void update() {
+		super.update();
+		if(time % Environment.getInstance().getFPS() == 0 && !players.isEmpty() && !hasTarget()) {
+			setTargetPlayer(players.get(new Random().nextInt(players.size())));
+		}
+	}
+	
+	public boolean hasTarget() {
+		return target != null;
+	}
+	
+	public Player getTarget() {
+		return target;
 	}
 	
 	public void setTargetPlayer(Player player) {

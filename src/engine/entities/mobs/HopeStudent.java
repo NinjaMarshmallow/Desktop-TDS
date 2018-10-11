@@ -15,27 +15,9 @@ public class HopeStudent extends Chaser {
 	
 	public HopeStudent(double x, double y) {
 		super(x, y, Sprite.HOPE_STUDENT, Stats.HOPE_STUDENT_RANGE);
-		if(!players.isEmpty()) {
-			setTargetPlayer(players.get(new Random().nextInt(players.size())));
-		}
-	}
-	
-	public void update() {
-		super.update();
-		if(!players.isEmpty() && !hasTarget()) {
-			setTargetPlayer(players.get(new Random().nextInt(players.size())));
-		}
 	}
 	
 	public void setTargetPlayer(Player player) {
 		moveBehavior = new FollowPlayer(player);
-	}
-	
-	public boolean hasTarget() {
-		return target != null;
-	}
-	
-	public Player getTarget() {
-		return target;
 	}
 }

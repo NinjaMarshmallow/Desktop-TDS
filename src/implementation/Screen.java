@@ -31,6 +31,7 @@ public class Screen {
 	private Canvas canvas;
 	private JFrame window;
 	private double xScroll, yScroll;
+	private static String title;
 	private List<TextObject> textObjects;
 	public static enum Direction { HORIZONTAL, VERTICAL };
 
@@ -201,5 +202,14 @@ public class Screen {
 		} else if (dir == Direction.VERTICAL) {
 			yScroll += vel;
 		}
+	}
+	
+	public void printFPS(String fpsText) {
+		window.setTitle(fpsText + " --- " + title);
+	}
+	
+	public void setTitle(String newTitle) {
+		title = newTitle;
+		window.setTitle(title);
 	}
 }

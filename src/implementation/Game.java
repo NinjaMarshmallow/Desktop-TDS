@@ -21,13 +21,18 @@ public class Game {
 	private Keyboard keyboard;
 	private Mouse mouse;
 	private Level world;
+	private static final String title = "Watermelons";
 	private State state, gameState, menuState;
+	private int updates = 0, frames = 0;
+	private static final int ONE_SECOND = 1000000000;
+	private long lastSecond = 0;
 
 	public Game() {
 		mouse = new Mouse();
 		Keyboard.build();
 		env = Environment.getInstance();
 		screen = new Screen(env.getWidth(), env.getHeight());
+		screen.setTitle(title);
 		try {
 			LevelManager.build(screen);
 		} catch(Exception e) {
@@ -49,8 +54,15 @@ public class Game {
 			        if(delta>=1) {
 			            update();
 			            delta--;
+			            updates++;
 			        }
 			        render();
+			        frames++;
+			        if(System.nanoTime() - lastSecond > ONE_SECOND) {
+			        	lastSecond = System.nanoTime();
+			        	screen.printFPS("UPS: " + updates + ", " + "FPS: " + frames);
+			        	updates = frames = 0;
+			        }
 				}
 			}
 		};
