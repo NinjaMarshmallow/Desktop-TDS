@@ -176,7 +176,8 @@ public class Level implements PlayerObserver {
 	}
 	
 	public void stop() {
-		Mediator.getInstance().clear();
+		screen.setScroll(0, 0);
+		Mediator.getInstance().clearLevel();
 	}
 	
 	public String getName() {
@@ -187,7 +188,6 @@ public class Level implements PlayerObserver {
 		if(players.isEmpty()) {
 			this.stop();
 			this.player.reset();
-			Mediator.getInstance().add(this.player);
 			this.start();
 			
 		} else {

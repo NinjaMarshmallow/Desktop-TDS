@@ -68,6 +68,10 @@ public class Menu {
 		return play;
 	}
 	
+	public void reset() {
+		play = false;
+	}
+	
 	public void setNextMenu(Menu menu) {
 		this.next = menu;
 	}

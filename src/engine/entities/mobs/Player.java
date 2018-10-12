@@ -119,5 +119,6 @@ public class Player extends Mob implements ItemObserver {
 		this.inventory.clear();
 		this.alive = true;
 		this.initialize(this.name);
+		Mediator.getInstance().add(this);
 	}
 }

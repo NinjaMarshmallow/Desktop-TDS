@@ -27,6 +27,8 @@ public class MenuState implements State {
 	}
 
 	public State changeState() {
+		changeState = false;
+		menu.reset();
 		return gameState;
 	}
 

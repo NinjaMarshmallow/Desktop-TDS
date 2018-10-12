@@ -8,11 +8,16 @@ public class GameState implements State {
 	private Level level;
 	private boolean changeState = false;
 	public GameState() {
+		this.level = LevelManager.getInstance().getCurrentLevel();
 	}
 	
 	public void start() {
 		this.level = LevelManager.getInstance().getCurrentLevel();
 		this.level.start();
+	}
+	
+	public void switchLevel() {
+		this.level.stop();
 	}
 	
 	public void update() {

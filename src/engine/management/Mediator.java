@@ -66,7 +66,6 @@ public class Mediator {
 		playerObservers = new ArrayList<PlayerObserver>();
 		tileObservers = new ArrayList<TileObserver>();
 		itemObservers = new ArrayList<ItemObserver>();
-
 	}
 
 	public void update() {
@@ -133,6 +132,7 @@ public class Mediator {
 	public void spawnPlayers(int x, int y) {
 		for (int i = 0; i < players.size(); i++) {
 			Player player = players.get(i);
+			player.heal(100);
 			player.setX(x);
 			player.setY(y);
 		}
@@ -187,6 +187,16 @@ public class Mediator {
 		animations.clear();
 		spawners.clear();
 		items.clear();
+	}
+	
+	public void clearLevel() {
+		projectiles.clear();
+		enemies.clear();
+		tiles.clear();
+		animations.clear();
+		spawners.clear();
+		items.clear();
+		playerObservers.clear();
 	}
 	
 	public void drawItems(Screen screen) {

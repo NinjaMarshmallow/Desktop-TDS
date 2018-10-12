@@ -80,7 +80,10 @@ public class Game {
 	private void update() {
 		Keyboard keyboard = Keyboard.getInstance();
 		keyboard.update();
-		if(keyboard.menu) state = menuState;
+		if(keyboard.menu) {
+			state = menuState;
+			screen.setScroll(0, 0);
+		}
 		state.update();
 		if(state.isReadyForStateChange()) {
 			state = state.changeState();
