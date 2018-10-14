@@ -21,6 +21,7 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 	protected Healthbar healthbar;
 	protected MoveBehavior moveBehavior;
 	protected List<Tile> tiles;
+	protected Sprite left, right;
 	
 	public Mob() {
 		super();
@@ -46,6 +47,9 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		Mediator.getInstance().addTileObserver(this);
 		Mediator.getInstance().add(this);
 		tiles = new ArrayList<Tile>();
+		left = sprite;
+		right = sprite.flipX();
+		sprite = right;
 	}
 	
 	public void update() {
@@ -53,6 +57,7 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		healthbar.update();
 		if(health <= 0) kill();
 		move();
+		//animate();
 	}
 	
 	public void move() {
@@ -63,6 +68,14 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		}
 		if(!collision(0, getYSpeed())) {
 			this.y += getYSpeed();
+		}
+	}
+	
+	protected void animate() {
+		if(xSpeed < 0) {
+			sprite = left;
+		} else if (xSpeed > 0) {
+			sprite = right;
 		}
 	}
 	

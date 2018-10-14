@@ -20,6 +20,7 @@ public class PlayerData {
 		players = new ArrayList<PlayerData>();
 		players.add(new PlayerData("Emma", Sprite.EMMA));
 		players.add(new PlayerData("Tyler", Sprite.TYLER));
+		players.add(new PlayerData("Jack", Sprite.JACK));
 	}
 			
 	

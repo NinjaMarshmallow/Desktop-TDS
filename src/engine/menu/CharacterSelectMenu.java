@@ -15,16 +15,12 @@ import engine.menu.button.ButtonFactory;
 
 public class CharacterSelectMenu extends Menu {
 	private Player selectedPlayer;
-	private List<Sprite> sprites;
 	private Menu nextMenu;
 	private Menu prevMenu;
 	public CharacterSelectMenu(Menu prevMenu, Menu nextMenu) {
 		super(new TextObject(Environment.getInstance().getWidth()/2, 100, "Character Select"));
 		this.nextMenu = nextMenu;
 		this.prevMenu = prevMenu;
-		sprites = new ArrayList<Sprite>();
-		sprites.add(Sprite.TYLER);
-		sprites.add(Sprite.EMMA);
 		addButtons();
 		for(int i = 0; i < buttons.size(); i++) {
 			Button button = buttons.get(i);

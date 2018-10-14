@@ -16,20 +16,18 @@ public class Chaser extends Enemy {
 	}
 	
 	public Chaser(double x, double y, Sprite sprite) {
-		super(x, y, sprite.getWidth(), sprite.getHeight());
-		initialize(sprite, Stats.CHASER_RANGE);
+		super(x, y, sprite);
+		initialize(Stats.CHASER_RANGE);
 	}
 	
 	public Chaser(double x, double y, Sprite sprite, double range) {
-		super(x, y, sprite.getWidth(), sprite.getHeight());
-		initialize(sprite, range);
+		super(x, y, sprite);
+		initialize(range);
 	}
 	
-	private void initialize(Sprite sprite, double range) {
-		this.sprite = sprite;
+	private void initialize(double range) {
 		this.range = range;
 		moveBehavior = new MoveRandomly();
-
 	}
 	
 	public void update() {

@@ -19,11 +19,13 @@ public class Color {
 	public static final int RED = 0xFF0000;
 	public static final int GREEN = 0x00FF00;
 	public static final int BLUE = 0x0000FF;
-
+	
+	public static final int YELLOW = 0xFFFF00;
+	public static final int MAGENTA = 0xFF00FF;
+	public static final int CYAN = 0x00FFFF;
+	
 	public static final int ORANGE = 0xFFA000;
 	public static final int PURPLE = 0x9900FF;
-	public static final int YELLOW = 0xFFFF00;
-
 	public static final int ROYAL_BLUE = 0x009DFF;
 	public static final int FOREST_GREEN = 0x077700;
 	public static final int GOLD = 0xF2DA00;
@@ -75,4 +77,5 @@ public class Color {
 	}
 	
 }
+
 

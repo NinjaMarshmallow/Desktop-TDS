@@ -74,7 +74,6 @@ public class Mediator {
 		}
 		collideProjectilesWithEnemies();
 		collideProjectilesWithSolids();
-		System.out.println("Number of Players: " + players.size());
 	}
 
 	private void updateList(List<?> list) {

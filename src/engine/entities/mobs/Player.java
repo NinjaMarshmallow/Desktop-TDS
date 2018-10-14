@@ -63,8 +63,19 @@ public class Player extends Mob implements ItemObserver {
 	}
 	
 	public void update() {
-		handleShooting();
 		super.update();
+		handleShooting();
+		animate();
+		
+	}
+	
+	protected void animate() {
+		double mx = Mouse.getXWithOffset();
+		if(mx > x) {
+			sprite = right;
+		} else if(mx < x) {
+			sprite = left;
+		}
 	}
 	
 	protected boolean collision(double xa, double ya) {
@@ -98,6 +109,7 @@ public class Player extends Mob implements ItemObserver {
 			double my = Mouse.getYWithOffset();
 			double angle = angleTo(mx, my);
 			weapon.shoot(angle);
+			
 		}
 	}
 

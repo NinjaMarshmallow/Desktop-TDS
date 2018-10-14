@@ -21,6 +21,7 @@ public class Sprite {
 	// Entity Sprites
 	public static Sprite EMMA = new Sprite("/mobs/emma.png");
 	public static Sprite TYLER = new Sprite("/mobs/tyler.png");
+	public static Sprite JACK = new Sprite("/mobs/jack.png");
 	public static Sprite PURPLE_BOX = new Sprite("/mobs/box.png");
 	
 	public static Sprite PLAYER = TYLER;
@@ -36,6 +37,10 @@ public class Sprite {
 	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
 	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
 	public static Sprite LIGHTNING = new Sprite("/projectiles/bolt.png");
+	
+	// Flag Sprites
+	public static Sprite CALVIN_FLAG = new Sprite("/items/calvin_flag.png");
+	public static Sprite HOPE_FLAG = new Sprite("/items/hope_flag.png");
 	
 	// Item Sprites
 	public static Sprite KEY_OVERWORLD = new Sprite("/items/key_overworld.png");
@@ -174,5 +179,15 @@ public class Sprite {
 			for(int x = 0; x < width; x++)
 			pixels[x + y * width] = sprite.getPixelAt(x, y); 
 		}
+	}
+	
+	public Sprite flipX() {
+		int[] newPixels = new int[this.pixels.length];
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				newPixels[x + y * width] = pixels[(width-1) - x + y * width];
+			}
+		}
+		return new Sprite(width, height, newPixels);
 	}
 }
