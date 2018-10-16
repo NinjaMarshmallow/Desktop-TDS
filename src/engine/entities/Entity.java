@@ -11,6 +11,7 @@ import engine.behaviors.Positionable;
 import engine.graphics.Sprite;
 
 public class Entity implements Collideable, Drawable {
+	
 	protected double x, y;
 	protected int width, height;
 	protected Rectangle hitbox;

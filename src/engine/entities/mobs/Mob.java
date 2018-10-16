@@ -50,6 +50,8 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		left = sprite;
 		right = sprite.flipX();
 		sprite = right;
+		width = Sprite.TILE_SIZE;
+		height = (int) (Sprite.TILE_SIZE * 1.617);
 	}
 	
 	public void update() {
@@ -57,7 +59,7 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 		healthbar.update();
 		if(health <= 0) kill();
 		move();
-		//animate();
+		animate();
 	}
 	
 	public void move() {

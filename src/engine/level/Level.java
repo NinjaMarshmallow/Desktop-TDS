@@ -73,8 +73,9 @@ public class Level implements PlayerObserver {
 		for (int y = 0; y < tileHeight; y++) {
 			for (int x = 0; x < tileWidth; x++) {
 				int color = enemymap.getPixelAt(x, y);
-				if (!isEnemyPlacementColor(color)) continue;
-				Enemy enemy = EnemyFactory.createEnemy(x * TILE_SIZE, y * TILE_SIZE, color);
+				if (isEnemyPlacementColor(color)) {
+					EnemyFactory.createEnemy(x * TILE_SIZE, y * TILE_SIZE, color);
+				}
 			}
 		}
 	}

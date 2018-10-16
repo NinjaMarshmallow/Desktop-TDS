@@ -2,8 +2,8 @@ package engine.menu.click;
 
 import util.PlayerData;
 import engine.entities.mobs.Player;
+import engine.entities.weapons.WeaponFactory;
 import engine.management.Mediator;
-import engine.menu.Menu;
 
 public class ChooseCharacter implements ClickBehavior {
 	
@@ -15,6 +15,7 @@ public class ChooseCharacter implements ClickBehavior {
 	
 	public void onClick() {
 		Mediator.getInstance().clear();
-		new Player(playerData.name, playerData.sprite);
+		Player player = new Player(playerData.name, playerData.sprite);
+		player.setWeapon(WeaponFactory.createWeapon(playerData.weapon));
 	}
 }

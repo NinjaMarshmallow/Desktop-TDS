@@ -23,7 +23,7 @@ import engine.graphics.Sprite;
 import engine.level.tile.Tile;
 
 public class Screen {
-
+	private boolean debug;
 	private int width, height;
 	private BufferedImage image;
 	private int[] pixels;
@@ -53,6 +53,7 @@ public class Screen {
 		canvas.createBufferStrategy(3);
 		canvas.requestFocus();
 		textObjects = new ArrayList<TextObject>();
+		debug = false;
 		addInput();
 		fill(0x0);
 	}
@@ -107,7 +108,9 @@ public class Screen {
 	}
 	
 	public void renderHitbox(Rectangle rect) {
-		renderRectangleFrame(rect.x, rect.y, rect.width, rect.height, 0x0);
+		if(debug) {
+			renderRectangleFrame(rect.x, rect.y, rect.width, rect.height, 0x0);
+		}
 	}
 	
 	public void renderRectangle(int xp, int yp, int width, int height, int fgColor, int bgColor) {

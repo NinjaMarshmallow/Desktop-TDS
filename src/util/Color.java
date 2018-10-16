@@ -60,7 +60,7 @@ public class Color {
 	public static final int DOOR_BOTTOM = WOOD_BROWN2 + 0xFF000000;
 	
 	// Enemymapping Colors
-	public static final int ENEMY = GREEN + 0xFF000000;
+	public static final int ENEMY = 0x00EE00 + 0xFF000000;
 	public static final int HOPE_STUDENT = ORANGE + 0xFF000000;
 	
 	//Menu Colors

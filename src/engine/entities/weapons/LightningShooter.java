@@ -6,6 +6,10 @@ import engine.entities.projectiles.Projectile;
 
 public class LightningShooter extends Shooter {
 	
+	public LightningShooter() {
+		super();
+	}
+	
 	public LightningShooter(Entity owner) {
 		super(owner);
 	}

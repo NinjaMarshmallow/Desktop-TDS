@@ -51,7 +51,5 @@ public class Enemy extends Mob implements PlayerObserver {
 				player.damage(meleeDamage);
 			}
 		}
-		
 	}
-	
 }

@@ -17,9 +17,20 @@ public class Shooter implements Weapon {
 	protected int ammo, maxAmmo, clips, reloadTime;
 
 	protected boolean unlimited = true;
-
+	
+	public Shooter() {
+		intialize();
+	}
 	public Shooter(Entity owner) {
 		this.owner = owner;
+		intialize();
+	}
+	
+	public void setOwner(Entity en) {
+		this.owner = en;
+	}
+	
+	private void intialize() {
 		mediator = Mediator.getInstance();
 		fireRate = Stats.DEFAULT_FIRE_RATE;
 		ammo = maxAmmo = Stats.DEFAULT_MAX_AMMO;
@@ -30,7 +41,8 @@ public class Shooter implements Weapon {
 	}
 
 	protected Projectile buildProjectile(double angle) {
-		return new Projectile(owner, angle);
+		if(owner != null) return new Projectile(owner, angle);
+		else return null;
 	}
 
 	public void shoot(double angle) {
@@ -38,7 +50,7 @@ public class Shooter implements Weapon {
 		if (reloadTimer <= 0) {
 			if (hasAmmo()) {
 				if (shootTimer % (int) (Environment.getInstance().getFPS()/fireRate) == 0) {
-					mediator.add(buildProjectile(angle));
+					buildProjectile(angle);
 					if (!unlimited)
 						ammo--;
 				}

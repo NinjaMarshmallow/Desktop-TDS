@@ -44,6 +44,16 @@ public class Stats {
 	public final static int LIGHTNING_SHOOTER_RELOAD_TIME = 2 * Environment.getInstance().getFPS(); // 5 Seconds
 	public final static int LIGHTNING_SHOOTER_INITIAL_CLIPS = 10;
 	
+	// Hatchet Data
+	public final static double HATCHET_SPEED = 6;
+	public final static double HATCHET_RANGE = 800;
+	public final static double HATCHET_POWER = 51;
+	
+	public final static int HATCHET_TOSSER_MAX_AMMO = 5;
+	public final static int HATCHET_TOSSER_FIRE_RATE = 2;
+	public final static int HATCHET_TOSSER_RELOAD_TIME = 2 * Environment.getInstance().getFPS(); // 5 Seconds
+	public final static int HATCHET_TOSSER_INITIAL_CLIPS = 10;
+	
 	// Player Data
 	public final static double PLAYER_SPEED = 5;
 	

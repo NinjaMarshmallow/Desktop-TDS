@@ -6,6 +6,10 @@ import engine.entities.projectiles.Watermelon;
 
 public class WatermelonLauncher extends Shooter {
 	
+	public WatermelonLauncher() {
+		super();
+	}
+	
 	public WatermelonLauncher(Entity owner) {
 		super(owner);
 	}

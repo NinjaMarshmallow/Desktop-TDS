@@ -37,6 +37,7 @@ public class Sprite {
 	public static Sprite FIREBALL = new Sprite("/projectiles/fireball.png");
 	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
 	public static Sprite LIGHTNING = new Sprite("/projectiles/bolt.png");
+	public static Sprite HATCHET = new Sprite("/projectiles/hatchet.png");
 	
 	// Flag Sprites
 	public static Sprite CALVIN_FLAG = new Sprite("/items/calvin_flag.png");
@@ -62,6 +63,11 @@ public class Sprite {
 	public static Sprite ELECTRIC_EXPLOSION_1 = new Sprite("/anim/electric/electric01.png");
 	public static Sprite ELECTRIC_EXPLOSION_2 = new Sprite("/anim/electric/electric02.png");
 	public static Sprite ELECTRIC_EXPLOSION_3 = new Sprite("/anim/electric/electric03.png");
+	
+	//Hatchet Break
+	public static Sprite HATCHET_BREAK_1 = new Sprite("/anim/hatchet/break01.png");
+	public static Sprite HATCHET_BREAK_2 = new Sprite("/anim/hatchet/break02.png");
+	public static Sprite HATCHET_BREAK_3 = new Sprite("/anim/hatchet/break03.png");
 	
 
 	// Tiles
@@ -186,6 +192,36 @@ public class Sprite {
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
 				newPixels[x + y * width] = pixels[(width-1) - x + y * width];
+			}
+		}
+		return new Sprite(width, height, newPixels);
+	}
+	
+	public Sprite flipY() {
+		int[] newPixels = new int[this.pixels.length];
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				newPixels[x + y * width] = pixels[x + (height - 1 - y) * width];
+			}
+		}
+		return new Sprite(width, height, newPixels);
+	}
+	
+	public Sprite rotate90CCW() {
+		int[] newPixels = new int[this.pixels.length];
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				newPixels[y + (width - 1 - x) * width] = pixels[x + y * width];
+			}
+		}
+		return new Sprite(width, height, newPixels);
+	}
+	
+	public Sprite rotate90CW() {
+		int[] newPixels = new int[this.pixels.length];
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				newPixels[x + y * width] = pixels[y + (width - 1 - x) * width];
 			}
 		}
 		return new Sprite(width, height, newPixels);

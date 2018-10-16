@@ -19,6 +19,8 @@ public class AnimationFactory {
 			return new AnimatedSprite(Arrays.asList(Sprite.MELON_EXPLOSION_1, Sprite.MELON_EXPLOSION_2, Sprite.MELON_EXPLOSION_3), 0.7);
 		case AnimatedSprite.ELECTRIC:
 			return new AnimatedSprite(Arrays.asList(Sprite.ELECTRIC_EXPLOSION_1, Sprite.ELECTRIC_EXPLOSION_2, Sprite.ELECTRIC_EXPLOSION_3), 1.2);
+		case AnimatedSprite.HATCHET_BREAK:
+			return new AnimatedSprite(Arrays.asList(Sprite.HATCHET_BREAK_1, Sprite.HATCHET_BREAK_2, Sprite.HATCHET_BREAK_3));
 		default:
 			return new AnimatedSprite();
 		}

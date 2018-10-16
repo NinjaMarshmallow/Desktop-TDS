@@ -10,6 +10,7 @@ import engine.entities.mobs.Player;
 import engine.graphics.AnimatedSprite;
 import engine.graphics.AnimationFactory;
 import engine.graphics.Sprite;
+import engine.management.Mediator;
 
 public class Projectile extends Entity {
 	
@@ -22,20 +23,15 @@ public class Projectile extends Entity {
 	
 	public Projectile(Entity owner, double angle) {
 		super(owner.getX(), owner.getY());
-		this.owner = owner;
-		this.angle = angle;
-		speed = Stats.DEFAULT_SPEED;
-		range = Stats.DEFAULT_RANGE;
-		power = Stats.DEFAULT_POWER;
-		sprite = new Sprite(10, 10, Color.ORANGE);
-		width = sprite.getWidth();
-		height = sprite.getHeight();
-		start = System.currentTimeMillis();
-		hitAnimation = AnimationFactory.createAnimation(this);
+		initialize(owner, angle, new Sprite(10, 10, Color.ORANGE));
 	}
 	
 	public Projectile(Entity owner, double angle, Sprite sprite) {
 		super(owner.getX(), owner.getY());
+		initialize(owner, angle, sprite);
+	}
+	
+	private void initialize(Entity owner, double angle, Sprite sprite) {
 		this.owner = owner;
 		this.angle = angle;
 		this.sprite = sprite;
@@ -46,9 +42,11 @@ public class Projectile extends Entity {
 		height = sprite.getHeight();
 		start = System.currentTimeMillis();
 		hitAnimation = AnimationFactory.createAnimation(this);
+		Mediator.getInstance().add(this);
 	}
 	
 	public void update() {
+		super.update();
 		age = System.currentTimeMillis() - start;
 		if(distanceTraveled > range) kill();
 		move();
@@ -56,10 +54,8 @@ public class Projectile extends Entity {
 	
 	public void move() {
 		distanceTraveled += speed;
-		double xSpeed = Math.cos(angle) * speed;
-		double ySpeed = Math.sin(angle) * speed;
-		this.x += xSpeed;
-		this.y += ySpeed;
+		this.x += Math.cos(angle) * speed;
+		this.y += Math.sin(angle) * speed;
 	}
 	
 	public double getAge() {
@@ -67,7 +63,6 @@ public class Projectile extends Entity {
 	}
 	
 	public void hit(Entity e) {
-		Printer.print(owner + "\t" + e);
 		if(owner instanceof Player) {
 			if(e instanceof Enemy) {
 				Enemy enemy = ((Enemy) e);
@@ -89,6 +84,6 @@ public class Projectile extends Entity {
 	
 	public void kill() {
 		super.kill();
-		hitAnimation.play((int)this.x - this.getWidth()/2, (int)this.y - this.getHeight()/2);
+		hitAnimation.play((int)this.x, (int)this.y);
 	}
 }

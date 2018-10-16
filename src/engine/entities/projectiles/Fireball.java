@@ -12,6 +12,4 @@ public class Fireball extends Projectile {
 		range = Stats.FIREBALL_RANGE;
 		power = Stats.FIREBALL_POWER;
 	}
-	
-
 }
