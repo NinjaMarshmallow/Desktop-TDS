@@ -1,12 +1,9 @@
 package engine.menu;
 
 import util.Environment;
-import util.PlayerData;
 import util.text.TextObject;
-import engine.level.Level;
 import engine.menu.button.Button;
 import engine.menu.button.ButtonFactory;
-import engine.menu.click.StartGame;
 import engine.menu.click.SwitchMenu;
 
 public class MainMenu extends Menu {

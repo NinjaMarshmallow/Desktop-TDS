@@ -5,6 +5,7 @@ import implementation.Screen;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Stats;
 import engine.behaviors.Health;
 import engine.behaviors.TileObserver;
 import engine.behaviors.move.BounceSideways;
@@ -22,6 +23,7 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 	protected MoveBehavior moveBehavior;
 	protected List<Tile> tiles;
 	protected Sprite left, right;
+	protected double meleeDamage = 0;
 	
 	public Mob() {
 		super();
@@ -157,5 +159,9 @@ public class Mob extends Entity implements Moveable, Health, TileObserver {
 
 	public void setBaseSpeed(double speed) {
 		this.baseSpeed = speed;
+	}
+	
+	public void bodyAttack(Mob mob) {
+		mob.damage(meleeDamage);
 	}
 }

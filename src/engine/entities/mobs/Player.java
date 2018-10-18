@@ -12,6 +12,7 @@ import engine.behaviors.ItemObserver;
 import engine.behaviors.Weapon;
 import engine.behaviors.move.KeyboardControlled;
 import engine.entities.items.Item;
+import engine.entities.items.Item.ItemType;
 import engine.entities.items.Key;
 import engine.entities.weapons.WatermelonLauncher;
 import engine.graphics.Sprite;
@@ -64,6 +65,16 @@ public class Player extends Mob implements ItemObserver {
 	public void update() {
 		super.update();
 		handleShooting();
+		updateInventory();
+	}
+	
+	protected void updateInventory() {
+		for(int i = 0; i < inventory.size(); i++) {
+			Item item = inventory.get(i);
+			if(!item.isAlive()) {
+				inventory.remove(item);
+			}
+		}
 	}
 	
 	protected void animate() {
@@ -116,7 +127,11 @@ public class Player extends Mob implements ItemObserver {
 			if(item instanceof Collideable) {
 				if(collides((Collideable)item)) {
 					item.setOwner(this);
-					this.inventory.add(item);
+					if(item.getItemType() == ItemType.IMMEDIATE_USE) {
+						item.use();
+					} else {
+						this.inventory.add(item);
+					}
 					Mediator.getInstance().remove(item);
 				}
 			}
@@ -127,7 +142,9 @@ public class Player extends Mob implements ItemObserver {
 		this.health = maxHealth;
 		this.inventory.clear();
 		this.alive = true;
+		Weapon weapon = this.weapon;
 		this.initialize(this.name);
+		setWeapon(weapon);
 		Mediator.getInstance().add(this);
 	}
 }

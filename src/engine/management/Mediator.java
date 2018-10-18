@@ -13,8 +13,8 @@ import engine.behaviors.PlayerObserver;
 import engine.behaviors.TileObserver;
 import engine.entities.Spawner;
 import engine.entities.items.Item;
-import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Player;
+import engine.entities.mobs.enemy.Enemy;
 import engine.entities.projectiles.Projectile;
 import engine.graphics.AnimatedSprite;
 import engine.level.tile.Tile;
@@ -72,6 +72,7 @@ public class Mediator {
 		for (int i = 0; i < lists.size(); i++) {
 			updateList(lists.get(i));
 		}
+		System.out.println(enemies.size());
 		collideProjectilesWithEnemies();
 		collideProjectilesWithSolids();
 	}
@@ -99,15 +100,27 @@ public class Mediator {
 
 	private void collideProjectilesWithEnemies() {
 		for (int i = 0; i < projectiles.size(); i++) {
-			for (int j = 0; j < enemies.size(); j++) {
-				Projectile p = projectiles.get(i);
-				Enemy e = enemies.get(j);
-				double dist = e.distanceTo(p);
-				double maximumCollisionDistance = e.getSize() + p.getSize();
-				if (dist > maximumCollisionDistance)
-					continue;
-				if (e.collides(p))
-					p.hit(e);
+			Projectile p = projectiles.get(i);
+			if(p.getOwner() instanceof Player) {
+				for (int j = 0; j < enemies.size(); j++) {
+					Enemy e = enemies.get(j);
+					double dist = e.distanceTo(p);
+					double maximumCollisionDistance = e.getSize() + p.getSize();
+					if (dist > maximumCollisionDistance)
+						continue;
+					if (e.collides(p))
+						p.hit(e);
+				}
+			} else if (p.getOwner() instanceof Enemy){
+				for(int j = 0; j < players.size(); j++) {
+					Player player = players.get(j);
+					double dist = player.distanceTo(p);
+					double maximumCollisionDistance = player.getSize() + p.getSize();
+					if (dist > maximumCollisionDistance)
+						continue;
+					if (player.collides(p))
+						p.hit(player);
+				}
 			}
 		}
 	}
@@ -196,6 +209,10 @@ public class Mediator {
 		spawners.clear();
 		items.clear();
 		playerObservers.clear();
+	}
+	
+	public void clearEnemies() {
+		enemies.clear();
 	}
 	
 	public void drawItems(Screen screen) {

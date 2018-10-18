@@ -18,5 +18,7 @@ public class NullWeapon implements Weapon {
 	public void setOwner(Entity en) {
 		owner = en;
 	}
+	
+	public void reset() {}
 
 }

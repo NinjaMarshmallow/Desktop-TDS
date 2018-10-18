@@ -2,7 +2,6 @@ package implementation;
 import util.Environment;
 import util.Keyboard;
 import util.Mouse;
-import engine.graphics.Sprite;
 import engine.level.Level;
 import engine.management.LevelManager;
 import engine.management.state.GameState;
@@ -18,9 +17,6 @@ public class Game {
 	private Screen screen;
 	private Thread updateThread, thread;
 	private Environment env;
-	private Keyboard keyboard;
-	private Mouse mouse;
-	private Level world;
 	private static final String title = "Watermelons";
 	private State state, gameState, menuState;
 	private int updates = 0, frames = 0;
@@ -28,7 +24,6 @@ public class Game {
 	private long lastSecond = 0;
 
 	public Game() {
-		mouse = new Mouse();
 		Keyboard.build();
 		env = Environment.getInstance();
 		screen = new Screen(env.getWidth(), env.getHeight());

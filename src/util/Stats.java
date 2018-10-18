@@ -54,6 +54,12 @@ public class Stats {
 	public final static int HATCHET_TOSSER_RELOAD_TIME = 2 * Environment.getInstance().getFPS(); // 5 Seconds
 	public final static int HATCHET_TOSSER_INITIAL_CLIPS = 10;
 	
+	// Purple Flame Data
+	public final static int PURPLE_FLAME_MAX_AMMO = 5;
+	public final static int PURPLE_FLAME_FIRE_RATE = 2;
+	public final static int PURPLE_FLAME_RELOAD_TIME = 2 * Environment.getInstance().getFPS(); // 5 Seconds
+	public final static int PURPLE_FLAME_INITIAL_CLIPS = 10;
+	
 	// Player Data
 	public final static double PLAYER_SPEED = 5;
 	

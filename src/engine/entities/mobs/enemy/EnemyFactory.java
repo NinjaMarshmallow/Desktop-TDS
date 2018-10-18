@@ -1,4 +1,4 @@
-package engine.entities.mobs;
+package engine.entities.mobs.enemy;
 
 import util.Color;
 
@@ -10,8 +10,13 @@ public class EnemyFactory {
 		case Color.HOPE_STUDENT:
 			enemy = new HopeStudent(x, y);
 			break;
+		case Color.ALBION_STUDENT:
+			enemy = new AlbionStudent(x, y);
+			break;
 		case Color.ENEMY:
 			enemy = new Enemy(x, y, 50, 50);
+			break;
+		default:
 			break;
 		}
 		try {

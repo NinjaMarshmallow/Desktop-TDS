@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.graphics.Sprite;
-import engine.level.Level;
 
 public class LevelData {
 	

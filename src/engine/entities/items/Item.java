@@ -3,7 +3,7 @@ package engine.entities.items;
 import implementation.Screen;
 import engine.behaviors.Drawable;
 import engine.behaviors.Positionable;
-import engine.entities.Entity;
+import engine.entities.mobs.Mob;
 import engine.graphics.Sprite;
 
 public class Item implements Drawable, Positionable {
@@ -13,7 +13,11 @@ public class Item implements Drawable, Positionable {
 	protected Sprite currentSprite;
 	protected double x, y;
 	protected int width, height;
-	protected Entity owner;
+	protected Mob owner;
+	public enum ItemType { INVENTORY, IMMEDIATE_USE };
+	protected ItemType type;
+	protected int uses;
+	protected boolean alive;
 	
 	public Item(int x, int y) {
 		initialize(x, y, Sprite.NULL_ITEM_INVENTORY, Sprite.NULL_ITEM_OVERWORLD);
@@ -31,9 +35,16 @@ public class Item implements Drawable, Positionable {
 		this.inventorySprite = inventory;
 		this.overworldSprite = this.currentSprite = overworld;
 		this.owner = null;
+		this.type = ItemType.INVENTORY;
+		this.uses = 1;
+		this.alive = true;
 	}
 	
-	public void setOwner(Entity owner) {
+	public void use() {
+		uses--;
+	}
+	
+	public void setOwner(Mob owner) {
 		this.owner = owner;
 	}
 
@@ -45,6 +56,9 @@ public class Item implements Drawable, Positionable {
 		}
 		this.width = currentSprite.getWidth();
 		this.height = currentSprite.getHeight();
+		if(uses <= 0) {
+			alive = false;
+		}
 	}
 
 	public void draw(Screen screen) {
@@ -56,7 +70,7 @@ public class Item implements Drawable, Positionable {
 	}
 
 	public boolean isAlive() {
-		return true;
+		return alive;
 	}
 
 	public void setX(double x) {
@@ -82,6 +96,10 @@ public class Item implements Drawable, Positionable {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public ItemType getItemType() {
+		return type;
 	}
 
 	public double distanceTo(Positionable pos) {

@@ -76,4 +76,8 @@ public class Shooter implements Weapon {
 			Printer.print("Out of Ammo...");
 		}
 	}
+	
+	public void reset() {
+		shootTimer = 0;
+	}
 }

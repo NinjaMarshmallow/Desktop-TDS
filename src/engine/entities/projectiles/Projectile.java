@@ -1,12 +1,11 @@
 package engine.entities.projectiles;
 
 import util.Color;
-import util.Printer;
 import util.Stats;
 import engine.entities.Entity;
-import engine.entities.mobs.Enemy;
 import engine.entities.mobs.Mob;
 import engine.entities.mobs.Player;
+import engine.entities.mobs.enemy.Enemy;
 import engine.graphics.AnimatedSprite;
 import engine.graphics.AnimationFactory;
 import engine.graphics.Sprite;
@@ -63,20 +62,15 @@ public class Projectile extends Entity {
 	}
 	
 	public void hit(Entity e) {
-		if(owner instanceof Player) {
-			if(e instanceof Enemy) {
-				Enemy enemy = ((Enemy) e);
-				enemy.damage(power);
-				kill();
-			}
-		} else if (owner instanceof Enemy) {
-			if(e instanceof Player) {
-				Player player = (Player) e;
-				player.damage(power);
-				kill();
-			}
+		Mob mob = null;
+		if(owner instanceof Player && e instanceof Enemy) {
+			mob = ((Enemy) e);
+		} else if (owner instanceof Enemy && e instanceof Player) {
+			mob = (Player) e;
 		} else if(e instanceof Mob) {
-			Mob mob = (Mob) e;
+			mob = (Mob) e;
+		}
+		if(mob != null) {
 			mob.damage(power);
 			kill();
 		}
@@ -85,5 +79,9 @@ public class Projectile extends Entity {
 	public void kill() {
 		super.kill();
 		hitAnimation.play((int)this.x, (int)this.y);
+	}
+	
+	public Entity getOwner() {
+		return owner;
 	}
 }

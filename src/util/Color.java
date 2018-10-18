@@ -62,11 +62,12 @@ public class Color {
 	// Enemymapping Colors
 	public static final int ENEMY = 0x00EE00 + 0xFF000000;
 	public static final int HOPE_STUDENT = ORANGE + 0xFF000000;
+	public static final int ALBION_STUDENT = PURPLE + 0xFF000000;
 	
 	//Menu Colors
 	public static final int MENU_BACKGROUND = SKY_BLUE;
 	
-	public static final int[] enemyColors = { ENEMY, HOPE_STUDENT };
+	public static final int[] enemyColors = { ENEMY, HOPE_STUDENT, ALBION_STUDENT };
 	
 	public static int lighten(int color) {
 		return color + 0x333333;

@@ -1,4 +1,4 @@
-package engine.entities.mobs;
+package engine.entities.mobs.enemy;
 
 import java.util.Random;
 
@@ -6,6 +6,7 @@ import util.Environment;
 import util.Stats;
 import engine.behaviors.move.FollowPlayer;
 import engine.behaviors.move.MoveRandomly;
+import engine.entities.mobs.Player;
 import engine.graphics.Sprite;
 
 public class Chaser extends Enemy {

@@ -1,10 +1,8 @@
-package engine.entities.mobs;
-
-import java.util.Random;
+package engine.entities.mobs.enemy;
 
 import util.Stats;
 import engine.behaviors.move.FollowPlayer;
-import engine.behaviors.move.MoveInCircles;
+import engine.entities.mobs.Player;
 import engine.graphics.Sprite;
 
 public class HopeStudent extends Chaser {

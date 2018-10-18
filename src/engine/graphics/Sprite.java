@@ -27,6 +27,7 @@ public class Sprite {
 	public static Sprite PLAYER = TYLER;
 
 	public static Sprite HOPE_STUDENT = new Sprite("/mobs/hope_student.png");
+	public static Sprite ALBION_STUDENT = new Sprite("/mobs/albion.png");
 
 	public static Sprite LEVEL0 = new Sprite("/maps/level0.png");
 	public static Sprite LEVEL1 = new Sprite("/maps/level1.png");
@@ -38,6 +39,7 @@ public class Sprite {
 	public static Sprite WATERMELON = new Sprite("/projectiles/watermelon.png");
 	public static Sprite LIGHTNING = new Sprite("/projectiles/bolt.png");
 	public static Sprite HATCHET = new Sprite("/projectiles/hatchet.png");
+	public static Sprite PURPLE_FLAME = new Sprite("/projectiles/purple_flame.png");
 	
 	// Flag Sprites
 	public static Sprite CALVIN_FLAG = new Sprite("/items/calvin_flag.png");
@@ -46,6 +48,9 @@ public class Sprite {
 	// Item Sprites
 	public static Sprite KEY_OVERWORLD = new Sprite("/items/key_overworld.png");
 	public static Sprite KEY_INVENTORY = new Sprite("/items/key_inventory.png");
+	
+	public static Sprite MEDKIT_OVERWORLD = new Sprite("/items/medkit_overworld.png");
+	public static Sprite MEDKIT_INVENTORY = new Sprite("/items/medkit_inventory.png");
 
 	// Animation Sprites
 

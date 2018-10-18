@@ -3,8 +3,6 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
-import engine.behaviors.Weapon;
-import engine.entities.weapons.WatermelonLauncher;
 import engine.graphics.Sprite;
 
 public class PlayerData {

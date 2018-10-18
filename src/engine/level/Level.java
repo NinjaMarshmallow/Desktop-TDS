@@ -1,18 +1,17 @@
 package engine.level;
 
+import implementation.Screen;
+
 import java.util.List;
 
-import implementation.Screen;
 import util.Color;
 import util.Keyboard;
 import util.Mouse;
 import engine.behaviors.PlayerObserver;
-import engine.behaviors.move.FollowPlayer;
-import engine.entities.Spawner;
 import engine.entities.items.Key;
-import engine.entities.mobs.Enemy;
-import engine.entities.mobs.EnemyFactory;
+import engine.entities.items.Medkit;
 import engine.entities.mobs.Player;
+import engine.entities.mobs.enemy.EnemyFactory;
 import engine.graphics.Sprite;
 import engine.level.tile.DoorTile;
 import engine.level.tile.Tile;
@@ -25,8 +24,6 @@ public class Level implements PlayerObserver {
 	private int width, height, tileWidth, tileHeight;
 	private Keyboard keyboard;
 	private Player player;
-	private Enemy enemy;
-	private Spawner spawner;
 	private Sprite tilemap, enemymap;
 	private Tile[] tiles;
 	private Screen screen;
@@ -91,6 +88,8 @@ public class Level implements PlayerObserver {
 	
 	private void initializeItems() {
 		Mediator.getInstance().add(new Key(27 * TILE_SIZE, 6 * TILE_SIZE));
+		Mediator.getInstance().add(new Medkit(3 * TILE_SIZE, 8 * TILE_SIZE));
+		Mediator.getInstance().add(new Medkit(12 * TILE_SIZE, 19 * TILE_SIZE));
 	}
 
 	private void loadTiles() {
@@ -169,6 +168,7 @@ public class Level implements PlayerObserver {
 	}
 	
 	public void start() {
+		Mediator.getInstance().clearLevel();
 		initializeTiles();
 		bindDoors();
 		initializePlayer(spawnX, spawnY);
@@ -194,6 +194,5 @@ public class Level implements PlayerObserver {
 		} else {
 			this.player = players.get(0);
 		}
-		
 	}
 }

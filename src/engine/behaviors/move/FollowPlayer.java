@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.behaviors.TileObserver;
-import engine.entities.mobs.Chaser;
 import engine.entities.mobs.Mob;
 import engine.entities.mobs.NullPlayer;
 import engine.entities.mobs.Player;
+import engine.entities.mobs.enemy.Chaser;
 import engine.level.tile.Tile;
 
 public class FollowPlayer implements MoveBehavior, TileObserver{

@@ -1,7 +1,6 @@
 package engine.level;
 
 import implementation.Screen;
-import util.Keyboard;
 import util.LevelData;
 import engine.graphics.Sprite;
 
